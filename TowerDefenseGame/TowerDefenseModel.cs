@@ -14,7 +14,7 @@ namespace TowerDefenseGame
         public List<IEnemy> Enemies { get { return this.enemies; } }
         public List<ITower> Towers { get { return this.towers; } }
         public List<IProjectile> Projectiles { get { return this.projectiles; } }
-        public bool[,] Field { get; set; }
+        public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
         public bool[,] Towerplaces { get; set; }
         public double GameWidth { get; set; }
