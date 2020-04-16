@@ -5,8 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace TowerDefenseGame
 {
@@ -16,6 +18,7 @@ namespace TowerDefenseGame
         TowerDefenseRenderer renderer;
         TowerDefenseModel model;
         Stopwatch stw;
+        DispatcherTimer tickTimer;
 
         public TowerDefenseControl()
         {
@@ -31,25 +34,36 @@ namespace TowerDefenseGame
             Window win = Window.GetWindow(this);
             if (win != null)
             {
+                tickTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(40)
+                };
+                tickTimer.Tick += TickTimer_Tick;
+                tickTimer.Start();
                 //win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
             }
-
             InvalidateVisual();
             stw.Start();
         }
-
-        protected override void OnRender(DrawingContext drawingContext)
+        private void TickTimer_Tick(object sender, EventArgs e)
         {
-            if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());
         }
 
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePos = e.GetPosition(this);
-            Point tilePos = logic.GetTilePos(mousePos);
-            MessageBox.Show(mousePos + "\n" + tilePos);
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                Point tilePos = logic.GetTilePos(mousePos);
+                MessageBox.Show(tilePos.ToString());
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                MessageBox.Show(mousePos.ToString());
+            }
         }
+
         /*
         private void Win_KeyDown(object sender, KeyEventArgs e)
         {
@@ -70,5 +84,9 @@ namespace TowerDefenseGame
             }
         }
         */
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());
+        }
     }
 }
