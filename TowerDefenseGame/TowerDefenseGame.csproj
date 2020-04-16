@@ -61,7 +61,10 @@
     <Compile Include="Interface\ITower.cs" />
     <Compile Include="Interface\IProjectile.cs" />
     <Compile Include="Tower.cs" />
+    <Compile Include="TowerDefenseControl.cs" />
+    <Compile Include="TowerDefenseLogic.cs" />
     <Compile Include="TowerDefenseModel.cs" />
+    <Compile Include="TowerDefenseRenderer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
