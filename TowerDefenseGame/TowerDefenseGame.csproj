@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Enemy.cs" />
+    <Compile Include="GameItem.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
