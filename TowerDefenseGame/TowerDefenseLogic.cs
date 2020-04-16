@@ -39,11 +39,11 @@ namespace TowerDefenseGame
             {
                 if (model.Path[0, i])
                 {
-                    model.EntryPoint = new Point(0, i * model.TileSize);
+                    model.ExitPoint = new Point(0, i * model.TileSize);
                 }
                 if (model.Path[width-1, i])
                 {
-                    model.ExitPoint = new Point(width * model.TileSize, i * model.TileSize);
+                    model.EntryPoint = new Point(width * model.TileSize, i * model.TileSize);
                 }
             }
             for (int x = 0; x < width; x++)
@@ -67,11 +67,53 @@ namespace TowerDefenseGame
         /// This is only a demo version
         /// </summary>
         /// <param name="enemyList"></param>
-        public void MoveEnemy(List<IEnemy> enemyList)
+        public void MoveEnemies(List<IEnemy> enemyList)
         {
-            foreach (IEnemy item in enemyList)
+            foreach (GameItem enemy in enemyList)
             {
+                if (enemy.Destination != null)
+                {
+                    double x = enemy.Area.X + Math.Sign(enemy.Destination.X - enemy.Area.X) * 
+                                 Math.Min(Math.Abs(enemy.Destination.X - enemy.Area.X), 
+                                          (double)enemy.Movement);
+                    double y = enemy.Area.Y + Math.Sign(enemy.Destination.Y - enemy.Area.Y) *
+                                 Math.Min(Math.Abs(enemy.Destination.Y - enemy.Area.Y),
+                                          (double)enemy.Movement);
+                    if ( enemy.Destination.X == x && 
+                         enemy.Destination.Y == y )
+                    {
+                        SetNewDestionation(enemy);
+                    }
+                    enemy.SetXY(x, y);
+                }
+                else
+                {
+                    enemy.Destination = model.EntryPoint;
+                }
+            }
+        }
 
+        private void SetNewDestionation(GameItem enemy)
+        {
+            Point pos = GetTilePos(new Point(enemy.Area.X, enemy.Area.Y));
+            int x = (int)pos.X;
+            int y = (int)pos.Y;
+
+            for (int i = -1; i < 2; i++)
+            {
+                for (int j = -1; j < 2; j++)
+                {
+                    if (x + i >= 0 && y + j >= 0 &&
+                        x + i < model.Path.GetLength(0) && y + j < model.Path.GetLength(1) &&
+                        (i != 0 || j != 0) && (x + i != enemy.Origin.X || y + j != enemy.Origin.Y))
+                    {
+                        if (model.Path[x + i, y + j])
+                        {
+                            MessageBox.Show(x + i+":"+y + j);
+                            enemy.Destination = GetPosTile(new Point(x + i - 1, y + j));
+                        }
+                    }
+                }
             }
         }
 
@@ -137,10 +179,25 @@ namespace TowerDefenseGame
                     }  
             */
         }
-        public Point GetTilePos(Point mousePos) // Pixel position => Tile position
+        /// <summary>
+        /// Converts pixel to tile coordinates
+        /// </summary>
+        /// <param name="mousePos">Pixel coordinates</param>
+        /// <returns>Tile</returns>
+        public Point GetTilePos(Point mousePos)
         {
             return new Point((int)(mousePos.X / model.TileSize),
                             (int)(mousePos.Y / model.TileSize));
+        }
+        /// <summary>
+        /// Gets top left quarter point of Tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns>Point</returns>
+        public Point GetPosTile(Point tile)
+        {
+            return new Point(tile.X * model.TileSize + model.TileSize / 4,
+                              tile.X * model.TileSize + model.TileSize / 4);
         }
     }
 }

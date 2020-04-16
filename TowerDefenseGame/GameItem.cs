@@ -14,22 +14,28 @@ namespace TowerDefenseGame
         {
             get { return area; }
         }
-        public int Dx { get; set; }
-        public int Dy { get; set; }
+        /// <summary>
+        /// Change of distance TILE!
+        /// </summary>
+        public int Movement { get; set; }
+        /// <summary>
+        /// A point to be reached in a straight line TILE!
+        /// </summary>
+        public Point Destination { get; set; }
+        /// <summary>
+        /// Previous position TILE!
+        /// </summary>
+        public Point Origin { get; set; }
         public GameItem(double x, double y, double w, double h)
         {
             area = new Rect(x, y, w, h);
-            Dx = 0;
-            Dy = 0;
+            Movement = 0;
         }
-
-        public void ChangeX(double diff)
+        public GameItem(double x, double y, double w, double h, int m, Point d)
         {
-            area.X += diff;
-        }
-        public void ChangeY(double diff)
-        {
-            area.Y += diff;
+            area = new Rect(x, y, w, h);
+            Movement = m;
+            Destination = d;
         }
         public void SetXY(double x, double y)
         {

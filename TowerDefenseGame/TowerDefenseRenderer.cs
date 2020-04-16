@@ -26,7 +26,21 @@ namespace TowerDefenseGame
             dg.Children.Add(GetBackground());
             dg.Children.Add(GetFields());
             dg.Children.Add(GetPath());
+            AddEnemiesDrawing(dg);
+
             return dg;
+        }
+
+        private void AddEnemiesDrawing(DrawingGroup dg)
+        {
+            Brush enemyBrush = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));
+            foreach (GameItem enemy in model.Enemies)
+            {
+                GeometryDrawing enemyGeo = new GeometryDrawing(enemyBrush,
+                    new Pen(Brushes.Black, 1),
+                    new EllipseGeometry(enemy.Area));
+                dg.Children.Add(enemyGeo);
+            }
         }
 
         private Drawing GetBackground()

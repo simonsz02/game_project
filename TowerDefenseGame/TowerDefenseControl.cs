@@ -23,7 +23,7 @@ namespace TowerDefenseGame
 
         public TowerDefenseControl()
         {
-            Loaded += TowerDefenseControl_Loaded;// += <TAB><ENTER>
+            Loaded += TowerDefenseControl_Loaded;
         }
         private void TowerDefenseControl_Loaded(object sender, RoutedEventArgs e)
         {
@@ -58,11 +58,19 @@ namespace TowerDefenseGame
         private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
         {
             ///TODO create logic of spawning different enemies
-            ///model.Enemies.Add(new Enemy());
+            model.Enemies.Add(new Enemy(model.EntryPoint.X, 
+                                        model.EntryPoint.Y+model.TileSize/4, 
+                                        model.TileSize/2, 
+                                        model.TileSize/2, 
+                                        5,
+                                        model.EntryPoint));
+            InvalidateVisual();
         }
 
         private void TickTimer_Tick(object sender, EventArgs e)
         {
+            logic.MoveEnemies(model.Enemies);
+            InvalidateVisual();
         }
 
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
