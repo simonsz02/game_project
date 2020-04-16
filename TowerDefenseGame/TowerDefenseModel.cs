@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace TowerDefenseGame
 {
@@ -20,6 +21,8 @@ namespace TowerDefenseGame
         public double GameWidth { get; set; }
         public double GameHeight { get; set; }
         public double TileSize { get; set; }
+        public Point EntryPoint { get; set; }
+        public Point ExitPoint { get; set; }
 
         public TowerDefenseModel(double w, double h)
         {

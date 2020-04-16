@@ -35,6 +35,17 @@ namespace TowerDefenseGame
             SetPath(model.Path);
             model.Fields = new bool[width, height];
             model.TileSize = Math.Min(Math.Min((model.GameWidth*0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
+            for (int i = 0; i < height; i++)
+            {
+                if (model.Path[0, i])
+                {
+                    model.EntryPoint = new Point(0, i * model.TileSize);
+                }
+                if (model.Path[width-1, i])
+                {
+                    model.ExitPoint = new Point(width * model.TileSize, i * model.TileSize);
+                }
+            }
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
@@ -42,6 +53,7 @@ namespace TowerDefenseGame
                     if (model.Path[x,y])
                     {
                         model.Fields[x, y] = false;
+
                     }
                     else
                     {
@@ -50,7 +62,11 @@ namespace TowerDefenseGame
                 }
             }
         }
-
+        /// <summary>
+        /// TODO fileLoad
+        /// This is only a demo version
+        /// </summary>
+        /// <param name="enemyList"></param>
         public void MoveEnemy(List<IEnemy> enemyList)
         {
             foreach (IEnemy item in enemyList)

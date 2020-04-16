@@ -19,6 +19,7 @@ namespace TowerDefenseGame
         TowerDefenseModel model;
         Stopwatch stw;
         DispatcherTimer tickTimer;
+        DispatcherTimer spawnEnemyTimer;
 
         public TowerDefenseControl()
         {
@@ -42,10 +43,24 @@ namespace TowerDefenseGame
                 tickTimer.Start();
                 //win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
+
+                spawnEnemyTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(5000)
+                };
+                spawnEnemyTimer.Tick += SpawnEnemyTimer_Tick;
+                spawnEnemyTimer.Start();                
             }
             InvalidateVisual();
             stw.Start();
         }
+
+        private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
+        {
+            ///TODO create logic of spawning different enemies
+            ///model.Enemies.Add(new Enemy());
+        }
+
         private void TickTimer_Tick(object sender, EventArgs e)
         {
         }
