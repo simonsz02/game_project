@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
 
 namespace TowerDefenseGame
 {
@@ -35,6 +36,7 @@ namespace TowerDefenseGame
             SetPath(model.Path);
             model.Fields = new bool[width, height];
             model.TileSize = Math.Min(Math.Min((model.GameWidth*0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
+
             for (int i = 0; i < height; i++)
             {
                 if (model.Path[0, i])
@@ -74,6 +76,12 @@ namespace TowerDefenseGame
 
             }
         }
+
+        public void AddTower()
+        {
+            model.Towers.Add(new Tower(0,0,model.TileSize, model.TileSize));
+        }
+
 
         private void SetPath(bool[,] path)
         {

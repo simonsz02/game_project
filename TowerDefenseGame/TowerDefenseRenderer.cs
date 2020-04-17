@@ -15,6 +15,7 @@ namespace TowerDefenseGame
         Drawing oldBackground;
         Drawing oldFields;
         Drawing oldPath;
+        Drawing oldTowers;
 
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
@@ -26,6 +27,7 @@ namespace TowerDefenseGame
             dg.Children.Add(GetBackground());
             dg.Children.Add(GetFields());
             dg.Children.Add(GetPath());
+            dg.Children.Add(GetTowers());
             return dg;
         }
 
@@ -69,6 +71,24 @@ namespace TowerDefenseGame
         private Drawing GetPath()
         {
             return oldPath;
+        }
+
+        private Drawing GetTowers()
+        {
+            if (oldTowers==null)
+            {
+                GeometryGroup g = new GeometryGroup();
+
+                foreach (Tower tower in model.Towers)
+                {
+                    Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
+                    g.Children.Add(towerGeo);
+                }
+
+                oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
+            }
+
+            return oldTowers;
         }
     }
 }

@@ -61,6 +61,8 @@
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
     <Compile Include="Interface\IProjectile.cs" />
+    <Compile Include="MovingGameItem.cs" />
+    <Compile Include="Projectile.cs" />
     <Compile Include="Tower.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Compile Include="TowerDefenseLogic.cs" />

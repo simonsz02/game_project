@@ -9,12 +9,12 @@ namespace TowerDefenseGame
 {
     class TowerDefenseModel
     {
-        private readonly List<IEnemy> enemies = new List<IEnemy>();
-        private readonly List<ITower> towers = new List<ITower>(); 
-        private readonly List<IProjectile> projectiles = new List<IProjectile>(); 
-        public List<IEnemy> Enemies { get { return this.enemies; } }
-        public List<ITower> Towers { get { return this.towers; } }
-        public List<IProjectile> Projectiles { get { return this.projectiles; } }
+        private readonly List<Enemy> enemies = new List<Enemy>();
+        private readonly List<Tower> towers = new List<Tower>(); 
+        private readonly List<Projectile> projectiles = new List<Projectile>(); 
+        public List<Enemy> Enemies { get { return this.enemies; } }
+        public List<Tower> Towers { get { return this.towers; } }
+        public List<Projectile> Projectiles { get { return this.projectiles; } }
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
         public bool[,] Towerplaces { get; set; }
