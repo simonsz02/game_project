@@ -8,22 +8,16 @@ namespace TowerDefenseGame
 {
     class MovingGameItem : GameItem
     {
-        public int Dx { get; set; }
-        public int Dy { get; set; }
 
         public MovingGameItem(double x, double y, double w, double h) : base(x, y, w, h)
         {
             
         }
 
-        public void ChangeX(double diff)
+        public void SetXY(double x, double y)
         {
-            area.X += diff;
-        }
-
-        public void ChangeY(double diff)
-        {
-            area.Y += diff;
+            area.X = x;
+            area.Y = y;
         }
     }
 }
