@@ -43,13 +43,12 @@ namespace TowerDefenseGame
                 tickTimer.Start();
                 //win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
-
                 spawnEnemyTimer = new DispatcherTimer
                 {
                     Interval = TimeSpan.FromMilliseconds(5000)
                 };
                 spawnEnemyTimer.Tick += SpawnEnemyTimer_Tick;
-                spawnEnemyTimer.Start();                
+                spawnEnemyTimer.Start();
             }
             InvalidateVisual();
             stw.Start();
@@ -58,13 +57,16 @@ namespace TowerDefenseGame
         private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
         {
             ///TODO create logic of spawning different enemies
-            model.Enemies.Add(new Enemy(model.EntryPoint.X, 
-                                        model.EntryPoint.Y+model.TileSize/4, 
-                                        model.TileSize/2, 
-                                        model.TileSize/2, 
-                                        5,
-                                        model.EntryPoint));
-            InvalidateVisual();
+            if (!model.debug)
+            {
+                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                            model.EntryPoint.Y + model.TileSize / 4,
+                                            model.TileSize / 2,
+                                            model.TileSize / 2,
+                                            5,
+                                            logic.GetTilePos(model.EntryPoint)));
+                InvalidateVisual();
+            }
         }
 
         private void TickTimer_Tick(object sender, EventArgs e)
@@ -84,6 +86,16 @@ namespace TowerDefenseGame
             else if (e.ChangedButton == MouseButton.Right)
             {
                 MessageBox.Show(mousePos.ToString());
+            }
+            if (model.debug)
+            {
+                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                            model.EntryPoint.Y + model.TileSize / 4,
+                                            model.TileSize / 2,
+                                            model.TileSize / 2,
+                                            5,
+                                            logic.GetTilePos(model.EntryPoint)));
+                InvalidateVisual();
             }
         }
 

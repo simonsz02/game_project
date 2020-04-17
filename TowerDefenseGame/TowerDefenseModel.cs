@@ -9,6 +9,7 @@ namespace TowerDefenseGame
 {
     class TowerDefenseModel
     {
+        public bool debug = false;
         private readonly List<IEnemy> enemies = new List<IEnemy>();
         private readonly List<ITower> towers = new List<ITower>(); 
         private readonly List<IProjectile> projectiles = new List<IProjectile>(); 

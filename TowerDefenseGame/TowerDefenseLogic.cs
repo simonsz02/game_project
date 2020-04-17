@@ -73,48 +73,63 @@ namespace TowerDefenseGame
             {
                 if (enemy.Destination != null)
                 {
-                    double x = enemy.Area.X + Math.Sign(enemy.Destination.X - enemy.Area.X) * 
-                                 Math.Min(Math.Abs(enemy.Destination.X - enemy.Area.X), 
+                    Point destCoords = GetPosTile(enemy.Destination);
+                    double x = enemy.Area.X + Math.Sign(destCoords.X - enemy.Area.X) * 
+                                 Math.Min(Math.Abs(destCoords.X - enemy.Area.X), 
                                           (double)enemy.Movement);
-                    double y = enemy.Area.Y + Math.Sign(enemy.Destination.Y - enemy.Area.Y) *
-                                 Math.Min(Math.Abs(enemy.Destination.Y - enemy.Area.Y),
+                    double y = enemy.Area.Y + Math.Sign(destCoords.Y - enemy.Area.Y) *
+                                 Math.Min(Math.Abs(destCoords.Y - enemy.Area.Y),
                                           (double)enemy.Movement);
-                    if ( enemy.Destination.X == x && 
-                         enemy.Destination.Y == y )
+                    if ( destCoords.X == x &&
+                         destCoords.Y == y )
                     {
-                        SetNewDestionation(enemy);
+                        destCoords = GetTilePos(SetNewDestionation(enemy));                                 
                     }
                     enemy.SetXY(x, y);
                 }
                 else
                 {
-                    enemy.Destination = model.EntryPoint;
+                    enemy.Destination = GetTilePos(model.EntryPoint);
                 }
             }
         }
 
-        private void SetNewDestionation(GameItem enemy)
+        private Point SetNewDestionation(GameItem enemy)
         {
             Point pos = GetTilePos(new Point(enemy.Area.X, enemy.Area.Y));
             int x = (int)pos.X;
             int y = (int)pos.Y;
+            bool found = false;
 
             for (int i = -1; i < 2; i++)
             {
                 for (int j = -1; j < 2; j++)
                 {
-                    if (x + i >= 0 && y + j >= 0 &&
-                        x + i < model.Path.GetLength(0) && y + j < model.Path.GetLength(1) &&
-                        (i != 0 || j != 0) && (x + i != enemy.Origin.X || y + j != enemy.Origin.Y))
+                    if (!found)
                     {
-                        if (model.Path[x + i, y + j])
+                        if (x + i >= 0 && y + j >= 0 && x + i < model.Path.GetLength(0) && y + j < model.Path.GetLength(1) &&
+                            Math.Abs(i + j) == 1 && (i != 0 || j != 0) &&
+                            (x + i != enemy.Origin.X || y + j != enemy.Origin.Y))
                         {
-                            MessageBox.Show(x + i+":"+y + j);
-                            enemy.Destination = GetPosTile(new Point(x + i - 1, y + j));
+                            if (model.Path[x + i, y + j])
+                            {
+                                found = true;
+                                //MessageBox.Show("New Destionation: " + (x + i) + "-" + (y + j));
+                                enemy.Origin = enemy.Destination;
+                                if (x==1)
+                                {
+                                    enemy.Destination = new Point(x + i -1, y + j);
+                                }
+                                else
+                                {
+                                    enemy.Destination = new Point(x + i, y + j);
+                                }                                
+                            }
                         }
                     }
                 }
             }
+            return enemy.Destination;
         }
 
         private void SetPath(bool[,] path)
@@ -197,7 +212,7 @@ namespace TowerDefenseGame
         public Point GetPosTile(Point tile)
         {
             return new Point(tile.X * model.TileSize + model.TileSize / 4,
-                              tile.X * model.TileSize + model.TileSize / 4);
+                              tile.Y * model.TileSize + model.TileSize / 4);
         }
     }
 }
