@@ -132,6 +132,29 @@ namespace TowerDefenseGame
             return enemy.Destination;
         }
 
+        internal string GetDistances()
+        {
+            Point p = GetPosTile(new Point(7, 0));
+            GameItem target = null;
+            double minDis = double.MaxValue;
+            foreach (GameItem tar in model.Enemies)
+            {
+                double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
+                if (minDis > distanceSquared)
+                {
+                    minDis = distanceSquared;
+                    target = tar;
+                }
+            }
+            if (target!=null)
+            {
+                Point res = GetTilePos(new Point(target.Area.X, target.Area.Y));
+                return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
+            }
+            return $"No enemy on the field";
+
+        }
+
         private void SetPath(bool[,] path)
         {
             path[0, 4] = true;

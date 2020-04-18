@@ -41,7 +41,7 @@ namespace TowerDefenseGame
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
-                //win.KeyDown += Win_KeyDown;
+                win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
                 spawnEnemyTimer = new DispatcherTimer
                 {
@@ -99,6 +99,13 @@ namespace TowerDefenseGame
             }
         }
 
+        private void Win_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.Enter: MessageBox.Show(logic.GetDistances()); break;                    
+            }
+        }
         /*
         private void Win_KeyDown(object sender, KeyEventArgs e)
         {
