@@ -84,7 +84,7 @@ namespace TowerDefenseGame
                 g.Children.Add(towerGeo);
             }
 
-            oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
+            oldTowers = new GeometryDrawing(Brushes.DarkGray, new Pen(Brushes.Black, 1), g);
 
             return oldTowers;
         }
