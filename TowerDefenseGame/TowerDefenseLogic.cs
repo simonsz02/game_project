@@ -1,4 +1,10 @@
-﻿using System;
+﻿
+
+
+
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,7 +75,7 @@ namespace TowerDefenseGame
         /// <param name="enemyList"></param>
         public void MoveEnemies(List<IEnemy> enemyList)
         {
-            foreach (GameItem enemy in enemyList)
+            foreach (MovingGameItem enemy in enemyList)
             {
                 if (enemy.Destination != null)
                 {
@@ -83,7 +89,7 @@ namespace TowerDefenseGame
                     if ( destCoords.X == x &&
                          destCoords.Y == y )
                     {
-                        destCoords = GetTilePos(SetNewDestionation(enemy));                                 
+                        SetNewDestionation(enemy);                                 
                     }
                     enemy.SetXY(x, y);
                 }
@@ -94,7 +100,7 @@ namespace TowerDefenseGame
             }
         }
 
-        private Point SetNewDestionation(GameItem enemy)
+        private Point SetNewDestionation(MovingGameItem enemy)
         {
             Point pos = GetTilePos(new Point(enemy.Area.X, enemy.Area.Y));
             int x = (int)pos.X;
@@ -152,7 +158,6 @@ namespace TowerDefenseGame
                 return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
             }
             return $"No enemy on the field";
-
         }
 
         private void SetPath(bool[,] path)
@@ -237,5 +242,18 @@ namespace TowerDefenseGame
             return new Point(tile.X * model.TileSize + model.TileSize / 4,
                               tile.Y * model.TileSize + model.TileSize / 4);
         }
+        public void AddTower(Point mousePos)
+        {
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
+            {
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
+                                    model.TileSize, model.TileSize));
+            }
+            else
+            {
+                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+            }
+
+        }
     }
-}
+}        

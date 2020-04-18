@@ -63,8 +63,10 @@ namespace TowerDefenseGame
                                             model.EntryPoint.Y + model.TileSize / 4,
                                             model.TileSize / 2,
                                             model.TileSize / 2,
-                                            5,
-                                            logic.GetTilePos(model.EntryPoint)));
+                                            1,
+                                            1,
+                                            logic.GetTilePos(model.EntryPoint),
+                                            5));
                 InvalidateVisual();
             }
         }
@@ -74,58 +76,42 @@ namespace TowerDefenseGame
             logic.MoveEnemies(model.Enemies);
             InvalidateVisual();
         }
-
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Point mousePos = e.GetPosition(this);
             if (e.ChangedButton == MouseButton.Left)
             {
-                Point tilePos = logic.GetTilePos(mousePos);
-                MessageBox.Show(tilePos.ToString());
+                //Point tilePos = logic.GetTilePos(mousePos);
+                //MessageBox.Show(tilePos.ToString());
+                logic.AddTower(mousePos);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
                 MessageBox.Show(mousePos.ToString());
             }
-            if (model.debug)
-            {
-                model.Enemies.Add(new Enemy(model.EntryPoint.X,
-                                            model.EntryPoint.Y + model.TileSize / 4,
-                                            model.TileSize / 2,
-                                            model.TileSize / 2,
-                                            5,
-                                            logic.GetTilePos(model.EntryPoint)));
-                InvalidateVisual();
-            }
-        }
-
-        private void Win_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter: MessageBox.Show(logic.GetDistances()); break;                    
-            }
-        }
-        /*
-        private void Win_KeyDown(object sender, KeyEventArgs e)
-        {
-            bool finished = false;
-            switch (e.Key)
-            {
-                case Key.W: finished = logic.Move(0, -1); break;
-                case Key.S: finished = logic.Move(0, 1); break;
-                case Key.A: finished = logic.Move(-1, 0); break;
-                case Key.D: finished = logic.Move(1, 0); break;
-            }
             InvalidateVisual();
-            if (finished)
+        }        
+        private void Win_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
             {
-                stw.Stop();
-                MessageBox.Show("YAY! " + stw.Elapsed.ToString(@"hh\:mm\:ss\.fff"));
-                // Not elegant: should use an event!
+                case Key.Enter: 
+                    MessageBox.Show(logic.GetDistances()); 
+                    if (!model.debug)
+                    {
+                        model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                                    model.EntryPoint.Y + model.TileSize / 4,
+                                                    model.TileSize / 2,
+                                                    model.TileSize / 2,
+                                                    1,
+                                                    1,
+                                                    logic.GetTilePos(model.EntryPoint),
+                                                    5));
+                        InvalidateVisual();
+                    }
+                    break;
             }
         }
-        */
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());

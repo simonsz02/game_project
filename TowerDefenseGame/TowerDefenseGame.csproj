@@ -55,12 +55,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Bullet.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="GameItem.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
     <Compile Include="Interface\IProjectile.cs" />
+    <Compile Include="MovingGameItem.cs" />
+    <Compile Include="Projectile.cs" />
     <Compile Include="Tower.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Compile Include="TowerDefenseLogic.cs" />
