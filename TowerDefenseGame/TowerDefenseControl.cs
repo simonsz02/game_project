@@ -72,7 +72,7 @@ namespace TowerDefenseGame
             {
                 Point tilePos = logic.GetTilePos(mousePos);
                 //MessageBox.Show(tilePos.ToString());
-                logic.AddTower(e.GetPosition(this).X, e.GetPosition(this).Y);
+                logic.AddTower(mousePos);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {

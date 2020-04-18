@@ -75,18 +75,16 @@ namespace TowerDefenseGame
 
         private Drawing GetTowers()
         {
-            if (oldTowers==null)
+
+            GeometryGroup g = new GeometryGroup();
+
+            foreach (Tower tower in model.Towers)
             {
-                GeometryGroup g = new GeometryGroup();
-
-                foreach (Tower tower in model.Towers)
-                {
-                    Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
-                    g.Children.Add(towerGeo);
-                }
-
-                oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
+                Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
+                g.Children.Add(towerGeo);
             }
+
+            oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
 
             return oldTowers;
         }

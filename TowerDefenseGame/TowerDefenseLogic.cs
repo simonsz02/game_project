@@ -77,10 +77,10 @@ namespace TowerDefenseGame
             }
         }
 
-        public void AddTower(double x, double y)
+        public void AddTower(Point mousePos)
         {
-
-            model.Towers.Add(new Tower(x,y,model.TileSize, model.TileSize));
+            model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
+                model.TileSize, model.TileSize));
         }
 
 
