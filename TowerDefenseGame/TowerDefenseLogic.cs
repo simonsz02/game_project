@@ -79,8 +79,16 @@ namespace TowerDefenseGame
 
         public void AddTower(Point mousePos)
         {
-            model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
-                model.TileSize, model.TileSize));
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
+            {
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
+                                    model.TileSize, model.TileSize));
+            }
+            else
+            {
+                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+            }
+
         }
 
 
