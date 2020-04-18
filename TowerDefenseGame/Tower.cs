@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace TowerDefenseGame
 {
-    class Tower : ITower
+    class Tower : GameItem
     {
+        public int Armour { get; set; }
+        public double SlowDown { get; set; }
+        public int SelfHealing { get; set; }
+        public double Range { get; set; }
+
+        public Tower(double x, double y, double w, double h) :base(x, y, w, h)
+        {
+
+        }
+
+
     }
 }

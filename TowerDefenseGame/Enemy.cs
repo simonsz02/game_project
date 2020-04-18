@@ -8,15 +8,21 @@ using TowerDefenseGame.Interface;
 
 namespace TowerDefenseGame
 {
-    class Enemy : GameItem, IGameItem, IEnemy
+    class Enemy : MovingGameItem, IEnemy
     {
-        public Enemy(double x, double y, double w, double h, int m, Point d) : base(x, y, w, h, m, d)
+        int health;
+        int armor;
+        
+
+        public int Health { get { return health; } set { health = value; } }
+        public int Armor { get { return armor; } set { armor = value; } }
+
+        public Enemy(double x, double y, double w, double h, int health, int armor, Point d, double s) : base(x, y, w, h, d, s)
         {
+            this.health = health;
+            this.armor = armor;
         }
-        public int Health { get; set; }
-        public int Armour { get; set; }
-        public int Range { get; set; }
-        public IGameItem Target { get; set; }
+
         public bool ReceiveDamage(double dam)
         {
             throw new NotImplementedException();
