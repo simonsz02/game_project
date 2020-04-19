@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
     class TowerDefenseModel
     {
         public bool debug = true;
-        private readonly List<IEnemy> enemies = new List<IEnemy>();
+        private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
-        private readonly List<IProjectile> projectiles = new List<IProjectile>(); 
-        public List<IEnemy> Enemies { get { return this.enemies; } }
+        private readonly List<Projectile> projectiles = new List<Projectile>(); 
+        public List<Enemy> Enemies { get { return this.enemies; } }
         public List<Tower> Towers { get { return this.towers; } }
-        public List<IProjectile> Projectiles { get { return this.projectiles; } }
+        public List<Projectile> Projectiles { get { return this.projectiles; } }
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
         public bool[,] Towerplaces { get; set; }

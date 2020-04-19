@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Abstracts
 {
     public abstract class MovingGameItem : GameItem
     {
@@ -21,11 +21,10 @@ namespace TowerDefenseGame
         /// Previous position TILE!
         /// </summary>
         public Point Origin { get; set; }
-        public double Speed { get; set; }
-        public MovingGameItem(double x, double y, double w, double h, Point d, double speed) : base(x, y, w, h)
+        public MovingGameItem(double x, double y, double w, double h, Point d, int m) : base(x, y, w, h)
         {
             Destination = d;
-            Speed = speed;
+            Movement = m;
         }
 
         public void SetXY(double x, double y)

@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
@@ -29,13 +31,17 @@ namespace TowerDefenseGame
             dg.Children.Add(GetPath());
             dg.Children.Add(GetTowers());
             AddEnemiesDrawing(dg);
+            AddProjectileDrawing(dg);
             return dg;
-        }        
-        
+        }
+        /// <summary>
+        /// Draw all enemies
+        /// </summary>
+        /// <param name="dg"></param>
         private void AddEnemiesDrawing(DrawingGroup dg)
         {
             Brush enemyBrush = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));
-            foreach (GameItem enemy in model.Enemies)
+            foreach (MovingGameItem enemy in model.Enemies)
             {
                 GeometryDrawing enemyGeo = new GeometryDrawing(enemyBrush,
                     new Pen(Brushes.Black, 1),
@@ -43,7 +49,21 @@ namespace TowerDefenseGame
                 dg.Children.Add(enemyGeo);
             }
         }
-
+        /// <summary>
+        /// Draw all projectiles
+        /// </summary>
+        /// <param name="dg"></param>
+        private void AddProjectileDrawing(DrawingGroup dg)
+        {
+            Brush projBrush = new SolidColorBrush(Color.FromArgb(50, 220, 60, 255));
+            foreach (Projectile p in model.Projectiles)
+            {
+                GeometryDrawing projGeo = new GeometryDrawing(projBrush,
+                    new Pen(Brushes.DarkMagenta, 1),
+                    new EllipseGeometry(p.Area));
+                dg.Children.Add(projGeo);
+            }
+        }
         private Drawing GetBackground()
         {
             if (oldBackground == null)

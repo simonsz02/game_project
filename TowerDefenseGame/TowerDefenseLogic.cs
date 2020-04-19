@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
@@ -73,7 +75,7 @@ namespace TowerDefenseGame
         /// This is only a demo version
         /// </summary>
         /// <param name="enemyList"></param>
-        public void MoveEnemies(List<IEnemy> enemyList)
+        public void MoveEnemies(List<Enemy> enemyList)
         {
             foreach (MovingGameItem enemy in enemyList)
             {
@@ -100,6 +102,40 @@ namespace TowerDefenseGame
             }
         }
 
+        public void MoveProjectiles(List<Projectile> projList)
+        {
+            Point destCoords = new Point();
+            List<Projectile> delete = new List<Projectile>();
+            foreach (Projectile p in projList)
+            {
+                if (p.Target != null)
+                {
+                    destCoords = p.Target.Area.TopLeft;
+                    Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
+                    p.Location = Point.Add(p.Area.TopLeft,Math.Min(v.Length, (double)p.Movement) * v / v.Length);
+                    if (destCoords==p.Area.TopLeft)
+                    {
+                        MessageBox.Show("Találat!");
+                        delete.Add(p);
+                        model.Enemies.Remove(p.Target);
+                    }
+                }
+                else
+                {
+                    p.GetTarget(model.Enemies);
+                }
+            }
+            /// Remove projectiles that hit their target
+            foreach (Projectile del in delete)
+            {
+                projList.Remove(del);
+            }
+        }
+        /// <summary>
+        /// Set and returns a new destionation for the enemy on a tile based coordinate
+        /// </summary>
+        /// <param name="enemy">Object thats destination has to be changed</param>
+        /// <returns>Tile type new destination of the enemy</returns>
         private Point SetNewDestionation(MovingGameItem enemy)
         {
             Point pos = GetTilePos(new Point(enemy.Area.X, enemy.Area.Y));
@@ -137,13 +173,16 @@ namespace TowerDefenseGame
             }
             return enemy.Destination;
         }
-
+        /// <summary>
+        /// performancia tesztelés céljából van itt
+        /// </summary>
+        /// <returns></returns>
         internal string GetDistances()
         {
             Point p = GetPosTile(new Point(7, 0));
-            GameItem target = null;
+            Enemy target = null;
             double minDis = double.MaxValue;
-            foreach (GameItem tar in model.Enemies)
+            foreach (Enemy tar in model.Enemies)
             {
                 double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
                 if (minDis > distanceSquared)
