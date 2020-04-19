@@ -104,8 +104,8 @@ namespace TowerDefenseGame
                                                     model.EntryPoint.Y + model.TileSize / 4,
                                                     model.TileSize / 2,
                                                     model.TileSize / 2,
-                                                    1,
-                                                    1,
+                                                    100,
+                                                    5,
                                                     logic.GetTilePos(model.EntryPoint),
                                                     5));
                         InvalidateVisual();
@@ -120,7 +120,7 @@ namespace TowerDefenseGame
                                                           model.TileSize / 4,
                                                           model.TileSize / 4,
                                                           8,
-                                                          1));
+                                                          10));
                         InvalidateVisual();
                     }
                     break;
@@ -128,12 +128,12 @@ namespace TowerDefenseGame
                 case Key.D:
                     if (model.debug)
                     {
-                        model.Projectiles.Add(new Bullet( model.EntryPoint.X,
+                        model.Projectiles.Add(new FrostBullet( model.EntryPoint.X,
                                                           model.EntryPoint.Y + model.TileSize / 8,
                                                           model.TileSize / 4,
                                                           model.TileSize / 4,
                                                           8,
-                                                          1));
+                                                          10));
                         InvalidateVisual();
                     }
                     break;

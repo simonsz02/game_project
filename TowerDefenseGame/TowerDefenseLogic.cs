@@ -115,9 +115,15 @@ namespace TowerDefenseGame
                     p.Location = Point.Add(p.Area.TopLeft,Math.Min(v.Length, (double)p.Movement) * v / v.Length);
                     if (destCoords==p.Area.TopLeft)
                     {
-                        MessageBox.Show("Találat!");
+                        if (model.debug)
+                        {
+                            MessageBox.Show("Találat!");
+                        }
                         delete.Add(p);
-                        model.Enemies.Remove(p.Target);
+                        if (!p.CauseDamage(p.Target))
+                        {
+                            model.Enemies.Remove(p.Target);
+                        }                        
                     }
                 }
                 else
@@ -198,7 +204,40 @@ namespace TowerDefenseGame
             }
             return $"No enemy on the field";
         }
+        public void AddTower(Point mousePos)
+        {
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
+            {
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
+                                    model.TileSize, model.TileSize));
+            }
+            else
+            {
+                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+            }
 
+        }
+
+        /// <summary>
+        /// Converts pixel to tile coordinates
+        /// </summary>
+        /// <param name="mousePos">Pixel coordinates</param>
+        /// <returns>Tile</returns>
+        public Point GetTilePos(Point mousePos)
+        {
+            return new Point((int)(mousePos.X / model.TileSize),
+                            (int)(mousePos.Y / model.TileSize));
+        }
+        /// <summary>
+        /// Gets top left quarter point of Tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns>Point</returns>
+        public Point GetPosTile(Point tile)
+        {
+            return new Point(tile.X * model.TileSize + model.TileSize / 4,
+                              tile.Y * model.TileSize + model.TileSize / 4);
+        }
         private void SetPath(bool[,] path)
         {
             path[0, 4] = true;
@@ -233,7 +272,6 @@ namespace TowerDefenseGame
             path[13, 4] = true;
             path[14, 4] = true;
         }
-
         private void InitModel(string fname)
         {
             /*
@@ -260,39 +298,6 @@ namespace TowerDefenseGame
 
                     }  
             */
-        }
-        /// <summary>
-        /// Converts pixel to tile coordinates
-        /// </summary>
-        /// <param name="mousePos">Pixel coordinates</param>
-        /// <returns>Tile</returns>
-        public Point GetTilePos(Point mousePos)
-        {
-            return new Point((int)(mousePos.X / model.TileSize),
-                            (int)(mousePos.Y / model.TileSize));
-        }
-        /// <summary>
-        /// Gets top left quarter point of Tile
-        /// </summary>
-        /// <param name="tile"></param>
-        /// <returns>Point</returns>
-        public Point GetPosTile(Point tile)
-        {
-            return new Point(tile.X * model.TileSize + model.TileSize / 4,
-                              tile.Y * model.TileSize + model.TileSize / 4);
-        }
-        public void AddTower(Point mousePos)
-        {
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
-            {
-                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
-                                    model.TileSize, model.TileSize));
-            }
-            else
-            {
-                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
-            }
-
         }
     }
 }        

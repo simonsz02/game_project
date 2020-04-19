@@ -8,15 +8,15 @@ using TowerDefenseGame.Abstracts;
 
 namespace TowerDefenseGame.GameItems
 {
-    public class Bullet : Projectile
+    public class FrostBullet : Projectile
     {
-        public Bullet(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, t)
+        public FrostBullet(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, t)
         {
         }
 
         public override bool CauseDamage(Enemy enemy)
         {
-            return enemy.ReceiveDamage(this.Damage, DamageType.physical);
+            return enemy.ReceiveDamage(this.Damage, DamageType.poison);
         }
     }
 }

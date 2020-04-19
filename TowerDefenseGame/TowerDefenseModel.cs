@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 using System.Windows;
 using TowerDefenseGame.Abstracts;
 using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Interface;
 
 namespace TowerDefenseGame
 {
+    public enum DamageType
+    {
+        physical, frost, fire, earth, air, magic, poison
+    }
     class TowerDefenseModel
     {
         public bool debug = true;

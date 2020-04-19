@@ -12,7 +12,7 @@ namespace TowerDefenseGame.Abstracts
         /// <summary>
         /// Change of distance TILE!
         /// </summary>
-        public int Movement { get; set; }
+        public double Movement { get; set; }
         /// <summary>
         /// A point to be reached in a straight line TILE!
         /// </summary>
@@ -21,7 +21,7 @@ namespace TowerDefenseGame.Abstracts
         /// Previous position TILE!
         /// </summary>
         public Point Origin { get; set; }
-        public MovingGameItem(double x, double y, double w, double h, Point d, int m) : base(x, y, w, h)
+        public MovingGameItem(double x, double y, double w, double h, Point d, double m) : base(x, y, w, h)
         {
             Destination = d;
             Movement = m;
