@@ -14,7 +14,7 @@ namespace TowerDefenseGame
     {
         physical, frost, fire, earth, air, magic, poison
     }
-    class TowerDefenseModel
+    public class TowerDefenseModel
     {
         public bool debug = true;
         private readonly List<Enemy> enemies = new List<Enemy>();
