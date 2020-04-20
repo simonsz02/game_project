@@ -14,9 +14,9 @@ namespace TowerDefenseGame.GameItems
         {
         }
 
-        public override bool CauseDamage(Enemy enemy)
+        public override bool CauseDamage(Enemy enemy, Action<Enemy> die)
         {
-            return enemy.ReceiveDamage(this.Damage, DamageType.physical);
+            return enemy.ReceiveDamage(this.Damage, DamageType.physical, die);
         }
     }
 }

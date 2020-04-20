@@ -13,10 +13,9 @@ namespace TowerDefenseGame.GameItems
         public FrostBullet(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, t)
         {
         }
-
-        public override bool CauseDamage(Enemy enemy)
+        public override bool CauseDamage(Enemy enemy, Action<Enemy> die)
         {
-            return enemy.ReceiveDamage(this.Damage, DamageType.poison);
+            return enemy.ReceiveDamage(this.Damage, DamageType.poison, die);
         }
     }
 }

@@ -37,6 +37,6 @@ namespace TowerDefenseGame.Abstracts
             Target = res;
         }
 
-        public abstract bool CauseDamage(Enemy enemy);
+        public abstract bool CauseDamage(Enemy enemy, Action<Enemy> die);
     }
 }

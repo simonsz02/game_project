@@ -104,7 +104,7 @@ namespace TowerDefenseGame
                                                     model.EntryPoint.Y + model.TileSize / 4,
                                                     model.TileSize / 2,
                                                     model.TileSize / 2,
-                                                    100,
+                                                    20,
                                                     5,
                                                     logic.GetTilePos(model.EntryPoint),
                                                     5));

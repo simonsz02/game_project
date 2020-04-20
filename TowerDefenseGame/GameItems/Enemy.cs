@@ -24,7 +24,7 @@ namespace TowerDefenseGame.GameItems
             this.armor = armor;
         }
 
-        public bool ReceiveDamage(double damage, DamageType type)
+        public bool ReceiveDamage(double damage, DamageType type, Action<Enemy> die)
         {
             switch (type)
             {
@@ -50,12 +50,15 @@ namespace TowerDefenseGame.GameItems
                     break;  
                 case DamageType.poison:
                     MessageBox.Show($"Health: {Health}\nDamage: {damage}");
-                    Health -= damage;
-                    if (damage > 2)
+                    if (damage > 2 && Health > 0)
                     {
+                        Health -= damage;
                         new Thread(() => {
                             Thread.Sleep(1000);
-                            ReceiveDamage(damage / 2, DamageType.poison);
+                            if (!ReceiveDamage(damage / 2, DamageType.poison, die))
+                            {
+                                die(this);
+                            }                            
                         }).Start();
                     };
                     break;
