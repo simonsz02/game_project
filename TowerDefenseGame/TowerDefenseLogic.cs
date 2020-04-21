@@ -110,6 +110,10 @@ namespace TowerDefenseGame
             {
                 if (p.Target != null)
                 {
+                    if (p.Target.Health < 0)
+                    {
+                        delete.Add(p);
+                    }
                     destCoords = p.Target.Area.TopLeft;
                     Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
                     p.Location = Point.Add(p.Area.TopLeft,Math.Min(v.Length, (double)p.Movement) * v / v.Length);
