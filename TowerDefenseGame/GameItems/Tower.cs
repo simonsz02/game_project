@@ -7,6 +7,7 @@ using TowerDefenseGame.Abstracts;
 
 namespace TowerDefenseGame.GameItems
 {
+    [Serializable]
     public class Tower : GameItem
     {
         public int Armour { get; set; }

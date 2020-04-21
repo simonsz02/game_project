@@ -22,6 +22,8 @@ namespace TowerDefenseGame
         DispatcherTimer tickTimer;
         DispatcherTimer spawnEnemyTimer;
 
+        public TowerDefenseModel Model { get => model; set => model = value; }
+
         public TowerDefenseControl()
         {
             Loaded += TowerDefenseControl_Loaded;
@@ -29,7 +31,7 @@ namespace TowerDefenseGame
         private void TowerDefenseControl_Loaded(object sender, RoutedEventArgs e)
         {
             stw = new Stopwatch();
-            model = new TowerDefenseModel(ActualWidth, ActualHeight);
+            model = model ?? new TowerDefenseModel(ActualWidth, ActualHeight);
             logic = new TowerDefenseLogic(model);
             renderer = new TowerDefenseRenderer(model);
 
@@ -83,8 +85,6 @@ namespace TowerDefenseGame
             Point mousePos = e.GetPosition(this);
             if (e.ChangedButton == MouseButton.Left)
             {
-                //Point tilePos = logic.GetTilePos(mousePos);
-                //MessageBox.Show(tilePos.ToString());
                 logic.AddTower(mousePos);
             }
             else if (e.ChangedButton == MouseButton.Right)

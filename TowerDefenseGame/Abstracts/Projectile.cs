@@ -8,6 +8,7 @@ using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame.Abstracts
 {
+    [Serializable]
     public abstract class Projectile : MovingGameItem
     {
         public Enemy Target { get; set; }

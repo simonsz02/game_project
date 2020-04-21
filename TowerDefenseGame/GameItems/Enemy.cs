@@ -10,6 +10,7 @@ using TowerDefenseGame.Interface;
 
 namespace TowerDefenseGame.GameItems
 {
+    [Serializable]
     public class Enemy : MovingGameItem, IEnemy
     {
         double health;
