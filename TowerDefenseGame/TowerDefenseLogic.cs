@@ -15,6 +15,7 @@ using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
+    [Serializable]
     class TowerDefenseLogic
     {
         TowerDefenseModel model;
@@ -101,7 +102,10 @@ namespace TowerDefenseGame
                 }
             }
         }
-
+        /// <summary>
+        /// Move all existing projectiles
+        /// </summary>
+        /// <param name="projList"></param>
         public void MoveProjectiles(List<Projectile> projList)
         {
             Point destCoords = new Point();
@@ -121,7 +125,7 @@ namespace TowerDefenseGame
                     {
                         if (model.debug)
                         {
-                            MessageBox.Show("Találat!");
+                            //MessageBox.Show("Találat!");
                         }
                         delete.Add(p);
                         if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }))
@@ -183,6 +187,38 @@ namespace TowerDefenseGame
             }
             return enemy.Destination;
         }
+        internal void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
+        {
+            foreach (Tower tow in towerList)
+            {
+                if (tow.Target == null)
+                {
+                    double minDis = double.MaxValue;
+                    foreach (Enemy tar in model.Enemies)
+                    {
+                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        if (minDis > distanceSquared)
+                        {
+                            minDis = distanceSquared;
+                            tow.Target = tar;
+                        }
+                    }
+                }
+                else if (tow.Target.Health <= 0 | (tow.Location - tow.Target.Location).Length > tow.Range)
+                {
+                    double minDis = double.MaxValue;
+                    foreach (Enemy tar in model.Enemies)
+                    {
+                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        if (minDis > distanceSquared)
+                        {
+                            minDis = distanceSquared;
+                            tow.Target = tar;
+                        }
+                    }
+                }
+            }
+        }
         /// <summary>
         /// performancia tesztelés céljából van itt
         /// </summary>
@@ -208,12 +244,18 @@ namespace TowerDefenseGame
             }
             return $"No enemy on the field";
         }
-        public void AddTower(Point mousePos)
+        public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
             if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
             {
-                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
-                                    model.TileSize, model.TileSize));
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, 
+                                           GetTilePos(mousePos).Y * model.TileSize,
+                                           model.TileSize, 
+                                           model.TileSize, 
+                                           model.baseTickSpeed,
+                                           (x,y,w,h,m,d,t) =>  model.Projectiles.Add( new Missile(x, y, w/4, h/4, m, d, t) ),
+                                           timer
+                                           ));
             }
             else
             {
@@ -221,7 +263,6 @@ namespace TowerDefenseGame
             }
 
         }
-
         /// <summary>
         /// Converts pixel to tile coordinates
         /// </summary>

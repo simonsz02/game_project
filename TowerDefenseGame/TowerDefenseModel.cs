@@ -18,6 +18,7 @@ namespace TowerDefenseGame
     class TowerDefenseModel
     {
         public bool debug = true;
+        public int baseTickSpeed = 40;
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
         private readonly List<Projectile> projectiles = new List<Projectile>(); 

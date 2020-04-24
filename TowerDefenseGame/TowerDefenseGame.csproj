@@ -59,6 +59,7 @@
     <Compile Include="GameItems\Bullet.cs" />
     <Compile Include="GameItems\Enemy.cs" />
     <Compile Include="Abstracts\GameItem.cs" />
+    <Compile Include="GameItems\Missile.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
