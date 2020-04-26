@@ -1,10 +1,4 @@
-﻿
-
-
-
-
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,14 +37,14 @@ namespace TowerDefenseGame
             model.Path = new bool[width, height];
             SetPath(model.Path);
             model.Fields = new bool[width, height];
-            model.TileSize = Math.Min(Math.Min((model.GameWidth*0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
+            model.TileSize = Math.Min(Math.Min((model.GameWidth * 0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
             for (int i = 0; i < height; i++)
             {
                 if (model.Path[0, i])
                 {
                     model.ExitPoint = new Point(0, i * model.TileSize);
                 }
-                if (model.Path[width-1, i])
+                if (model.Path[width - 1, i])
                 {
                     model.EntryPoint = new Point(width * model.TileSize, i * model.TileSize);
                 }
@@ -59,7 +53,7 @@ namespace TowerDefenseGame
             {
                 for (int y = 0; y < height; y++)
                 {
-                    if (model.Path[x,y])
+                    if (model.Path[x, y])
                     {
                         model.Fields[x, y] = false;
 
@@ -72,8 +66,7 @@ namespace TowerDefenseGame
             }
         }
         /// <summary>
-        /// TODO fileLoad
-        /// This is only a demo version
+        /// Move all enemies on the path 
         /// </summary>
         /// <param name="enemyList"></param>
         public void MoveEnemies(List<Enemy> enemyList)
@@ -83,16 +76,16 @@ namespace TowerDefenseGame
                 if (enemy.Destination != null)
                 {
                     Point destCoords = GetPosTile(enemy.Destination);
-                    double x = enemy.Area.X + Math.Sign(destCoords.X - enemy.Area.X) * 
-                                 Math.Min(Math.Abs(destCoords.X - enemy.Area.X), 
+                    double x = enemy.Area.X + Math.Sign(destCoords.X - enemy.Area.X) *
+                                 Math.Min(Math.Abs(destCoords.X - enemy.Area.X),
                                           (double)enemy.Movement);
                     double y = enemy.Area.Y + Math.Sign(destCoords.Y - enemy.Area.Y) *
                                  Math.Min(Math.Abs(destCoords.Y - enemy.Area.Y),
                                           (double)enemy.Movement);
-                    if ( destCoords.X == x &&
-                         destCoords.Y == y )
+                    if (destCoords.X == x &&
+                         destCoords.Y == y)
                     {
-                        SetNewDestionation(enemy);                                 
+                        SetNewDestionation(enemy);
                     }
                     enemy.SetXY(x, y);
                 }
@@ -120,8 +113,8 @@ namespace TowerDefenseGame
                     }
                     destCoords = p.Target.Area.TopLeft;
                     Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
-                    p.Location = Point.Add(p.Area.TopLeft,Math.Min(v.Length, (double)p.Movement) * v / v.Length);
-                    if (destCoords==p.Area.TopLeft)
+                    p.Location = Point.Add(p.Area.TopLeft, Math.Min(v.Length, (double)p.Movement) * v / v.Length);
+                    if (destCoords == p.Area.TopLeft)
                     {
                         if (model.debug)
                         {
@@ -131,7 +124,7 @@ namespace TowerDefenseGame
                         if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }))
                         {
                             model.Enemies.Remove(p.Target);
-                        }                        
+                        }
                     }
                 }
                 else
@@ -172,14 +165,14 @@ namespace TowerDefenseGame
                                 found = true;
                                 //MessageBox.Show("New Destionation: " + (x + i) + "-" + (y + j));
                                 enemy.Origin = enemy.Destination;
-                                if (x==1)
+                                if (x == 1)
                                 {
-                                    enemy.Destination = new Point(x + i -1, y + j);
+                                    enemy.Destination = new Point(x + i - 1, y + j);
                                 }
                                 else
                                 {
                                     enemy.Destination = new Point(x + i, y + j);
-                                }                                
+                                }
                             }
                         }
                     }
@@ -237,7 +230,7 @@ namespace TowerDefenseGame
                     target = tar;
                 }
             }
-            if (target!=null)
+            if (target != null)
             {
                 Point res = GetTilePos(new Point(target.Area.X, target.Area.Y));
                 return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
@@ -248,13 +241,14 @@ namespace TowerDefenseGame
         {
             if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
             {
-                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, 
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize,
                                            GetTilePos(mousePos).Y * model.TileSize,
-                                           model.TileSize, 
-                                           model.TileSize, 
+                                           model.TileSize,
+                                           model.TileSize,
                                            model.baseTickSpeed,
-                                           (x,y,w,h,m,d,t) =>  model.Projectiles.Add( new Missile(x, y, w/4, h/4, m, d, t) ),
-                                           timer
+                                           (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
+                                           timer,
+                                           damageType
                                            ));
             }
             else
@@ -345,4 +339,4 @@ namespace TowerDefenseGame
             */
         }
     }
-}        
+}

@@ -106,7 +106,7 @@ namespace TowerDefenseGame
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                MessageBox.Show(mousePos.ToString());
+                logic.AddTower(mousePos, towerShotTimer, DamageType.poison);
             }
             InvalidateVisual();
         }        
