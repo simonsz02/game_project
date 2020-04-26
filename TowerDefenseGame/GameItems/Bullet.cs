@@ -11,7 +11,7 @@ namespace TowerDefenseGame.GameItems
     [Serializable]
     public class Bullet : Projectile
     {
-        public Bullet(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, t)
+        public Bullet(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, DamageType.physical, t)
         {
         }
 
