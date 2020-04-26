@@ -82,8 +82,8 @@ namespace TowerDefenseGame
                                             model.EntryPoint.Y + model.TileSize / 4,
                                             model.TileSize / 2,
                                             model.TileSize / 2,
-                                            1,
-                                            1,
+                                            50,
+                                            5,
                                             logic.GetTilePos(model.EntryPoint),
                                             5));
                 InvalidateVisual();

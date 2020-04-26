@@ -55,10 +55,28 @@ namespace TowerDefenseGame
         /// <param name="dg"></param>
         private void AddProjectileDrawing(DrawingGroup dg)
         {
-            Brush projBrush = new SolidColorBrush(Color.FromArgb(50, 220, 60, 255));
+            Brush projPhysBrush = new SolidColorBrush(Color.FromArgb(80, 170, 180, 185));
+            Brush projFrosBrush = new SolidColorBrush(Color.FromArgb(80, 135, 195, 235));
+            Brush projPoisBrush = new SolidColorBrush(Color.FromArgb(80, 40, 175, 95));
+            Brush usedBrush;
             foreach (Projectile p in model.Projectiles)
             {
-                GeometryDrawing projGeo = new GeometryDrawing(projBrush,
+                switch (p.TypeOfDamage)
+                {
+                    case DamageType.physical:
+                        usedBrush = projPhysBrush;
+                        break;
+                    case DamageType.frost:
+                        usedBrush = projFrosBrush;
+                        break;
+                    case DamageType.poison:
+                        usedBrush = projPoisBrush;
+                        break;
+                    default:
+                        usedBrush = projPhysBrush;
+                        break;
+                }
+                GeometryDrawing projGeo = new GeometryDrawing(usedBrush,
                     new Pen(Brushes.DarkMagenta, 1),
                     new EllipseGeometry(p.Area));
                 dg.Children.Add(projGeo);
