@@ -67,6 +67,9 @@
     <Compile Include="Abstracts\MovingGameItem.cs" />
     <Compile Include="Abstracts\Projectile.cs" />
     <Compile Include="GameItems\Tower.cs" />
+    <Compile Include="MenuControl.cs" />
+    <Compile Include="Menu\MenuModel.cs" />
+    <Compile Include="Menu\MenuRenderer.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Compile Include="TowerDefenseLogic.cs" />
     <Compile Include="TowerDefenseModel.cs" />
