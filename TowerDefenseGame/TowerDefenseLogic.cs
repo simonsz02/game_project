@@ -187,7 +187,7 @@ namespace TowerDefenseGame
                 if (tow.Target == null)
                 {
                     double minDis = double.MaxValue;
-                    foreach (Enemy tar in model.Enemies)
+                    foreach (Enemy tar in enemyList)
                     {
                         double distanceSquared = (tar.Location - tow.Location).LengthSquared;
                         if (minDis > distanceSquared)
