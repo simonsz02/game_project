@@ -29,22 +29,21 @@ namespace TowerDefenseGame
             Loaded += MainWindow_Loaded;
             Closing += MainWindow_Closing;
         }
-
-        //TODO! create and load mainmenu that is loaded here
+        //Not used anymore
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (File.Exists("TowerDefenseLastState.bin"))
-            {
-                if (MessageBox.Show("Press YES to load last state or NO to start new game?", "Load last game", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
-                {
-                    ((TowerDefenseControl)Content).Model = SerializationAsBinary.Import<TowerDefenseModel>("TowerDefenseLastState.bin");
-                }
-            }
-        }            
-
+        }
+        /// <summary>
+        /// If the window is closed during a game, its state will be saved
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SerializationAsBinary.Export<TowerDefenseModel>("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
+            if (Content.GetType().Name== "TowerDefenseControl")
+            {
+                SerializationAsBinary.Export<TowerDefenseModel>("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
+            }
         }
     }
 }
