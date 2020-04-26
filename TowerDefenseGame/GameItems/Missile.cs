@@ -6,7 +6,7 @@ namespace TowerDefenseGame.GameItems
     [Serializable]
     public class Missile : Projectile
     {
-        public Missile(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, m, d, t)
+        public Missile(double x, double y, double w, double h, int m, int d, DamageType dt, Enemy t = null) : base(x, y, w, h, m, d, dt, t)
         {
         }
 

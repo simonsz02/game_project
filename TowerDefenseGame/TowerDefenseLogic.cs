@@ -237,7 +237,7 @@ namespace TowerDefenseGame
             }
             return $"No enemy on the field";
         }
-        public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
+        public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
             if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
             {
@@ -245,7 +245,6 @@ namespace TowerDefenseGame
                                            GetTilePos(mousePos).Y * model.TileSize,
                                            model.TileSize,
                                            model.TileSize,
-                                           model.baseTickSpeed,
                                            (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
                                            timer,
                                            damageType
