@@ -33,5 +33,10 @@ namespace TowerDefenseGame.Abstracts
             area.X = x;
             area.Y = y;
         }
+        public void SetXY(Point p)
+        {
+            area.X = p.X;
+            area.Y = p.Y;
+        }
     }
 }

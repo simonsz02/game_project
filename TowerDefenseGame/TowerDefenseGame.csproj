@@ -55,7 +55,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameItems\FrostBullet.cs" />
     <Compile Include="GameItems\Bullet.cs" />
     <Compile Include="GameItems\Enemy.cs" />
     <Compile Include="Abstracts\GameItem.cs" />
