@@ -5,14 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Abstracts
 {
     public abstract class MovingGameItem : GameItem
     {
         /// <summary>
         /// Change of distance TILE!
         /// </summary>
-        public int Movement { get; set; }
+        public double Movement { get; set; }
         /// <summary>
         /// A point to be reached in a straight line TILE!
         /// </summary>
@@ -21,11 +21,10 @@ namespace TowerDefenseGame
         /// Previous position TILE!
         /// </summary>
         public Point Origin { get; set; }
-        public double Speed { get; set; }
-        public MovingGameItem(double x, double y, double w, double h, Point d, double speed) : base(x, y, w, h)
+        public MovingGameItem(double x, double y, double w, double h, Point d, double m) : base(x, y, w, h)
         {
             Destination = d;
-            Speed = speed;
+            Movement = m;
         }
 
         public void SetXY(double x, double y)

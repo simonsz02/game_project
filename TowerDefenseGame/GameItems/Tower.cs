@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TowerDefenseGame.Abstracts;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.GameItems
 {
-    class Tower : GameItem
+    public class Tower : GameItem
     {
         public int Armour { get; set; }
         public double SlowDown { get; set; }
@@ -17,7 +18,5 @@ namespace TowerDefenseGame
         {
 
         }
-
-
     }
 }

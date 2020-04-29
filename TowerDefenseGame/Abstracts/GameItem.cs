@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Abstracts
 {
     public abstract class GameItem
     {
@@ -13,6 +13,17 @@ namespace TowerDefenseGame
         public Rect Area
         {
             get { return area; }
+        }
+        public Point Location
+        {
+            get
+            {
+                return area.Location;
+            }
+            set
+            {
+                area.Location = value;
+            }
         }
         public GameItem(double x, double y, double w, double h)
         {

@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
@@ -74,6 +75,7 @@ namespace TowerDefenseGame
         private void TickTimer_Tick(object sender, EventArgs e)
         {
             logic.MoveEnemies(model.Enemies);
+            logic.MoveProjectiles(model.Projectiles);
             InvalidateVisual();
         }
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
@@ -96,17 +98,42 @@ namespace TowerDefenseGame
             switch (e.Key)
             {
                 case Key.Enter: 
-                    MessageBox.Show(logic.GetDistances()); 
-                    if (!model.debug)
+                    if (model.debug)
                     {
                         model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                                     model.EntryPoint.Y + model.TileSize / 4,
                                                     model.TileSize / 2,
                                                     model.TileSize / 2,
-                                                    1,
-                                                    1,
+                                                    20,
+                                                    5,
                                                     logic.GetTilePos(model.EntryPoint),
                                                     5));
+                        InvalidateVisual();
+                    }
+                    break;
+
+                case Key.A:
+                    if (model.debug)
+                    {
+                        model.Projectiles.Add(new Bullet( 0 - (model.TileSize / 4),
+                                                          0 - (model.TileSize / 4),
+                                                          model.TileSize / 4,
+                                                          model.TileSize / 4,
+                                                          8,
+                                                          10));
+                        InvalidateVisual();
+                    }
+                    break;
+
+                case Key.D:
+                    if (model.debug)
+                    {
+                        model.Projectiles.Add(new FrostBullet( model.EntryPoint.X,
+                                                          model.EntryPoint.Y + model.TileSize / 8,
+                                                          model.TileSize / 4,
+                                                          model.TileSize / 4,
+                                                          8,
+                                                          10));
                         InvalidateVisual();
                     }
                     break;

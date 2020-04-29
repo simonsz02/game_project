@@ -10,6 +10,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
@@ -73,7 +75,7 @@ namespace TowerDefenseGame
         /// This is only a demo version
         /// </summary>
         /// <param name="enemyList"></param>
-        public void MoveEnemies(List<IEnemy> enemyList)
+        public void MoveEnemies(List<Enemy> enemyList)
         {
             foreach (MovingGameItem enemy in enemyList)
             {
@@ -100,6 +102,46 @@ namespace TowerDefenseGame
             }
         }
 
+        public void MoveProjectiles(List<Projectile> projList)
+        {
+            Point destCoords = new Point();
+            List<Projectile> delete = new List<Projectile>();
+            foreach (Projectile p in projList)
+            {
+                if (p.Target != null)
+                {
+                    destCoords = p.Target.Area.TopLeft;
+                    Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
+                    p.Location = Point.Add(p.Area.TopLeft,Math.Min(v.Length, (double)p.Movement) * v / v.Length);
+                    if (destCoords==p.Area.TopLeft)
+                    {
+                        if (model.debug)
+                        {
+                            MessageBox.Show("Találat!");
+                        }
+                        delete.Add(p);
+                        if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }))
+                        {
+                            model.Enemies.Remove(p.Target);
+                        }                        
+                    }
+                }
+                else
+                {
+                    p.GetTarget(model.Enemies);
+                }
+            }
+            /// Remove projectiles that hit their target
+            foreach (Projectile del in delete)
+            {
+                projList.Remove(del);
+            }
+        }
+        /// <summary>
+        /// Set and returns a new destionation for the enemy on a tile based coordinate
+        /// </summary>
+        /// <param name="enemy">Object thats destination has to be changed</param>
+        /// <returns>Tile type new destination of the enemy</returns>
         private Point SetNewDestionation(MovingGameItem enemy)
         {
             Point pos = GetTilePos(new Point(enemy.Area.X, enemy.Area.Y));
@@ -137,13 +179,16 @@ namespace TowerDefenseGame
             }
             return enemy.Destination;
         }
-
+        /// <summary>
+        /// performancia tesztelés céljából van itt
+        /// </summary>
+        /// <returns></returns>
         internal string GetDistances()
         {
             Point p = GetPosTile(new Point(7, 0));
-            GameItem target = null;
+            Enemy target = null;
             double minDis = double.MaxValue;
-            foreach (GameItem tar in model.Enemies)
+            foreach (Enemy tar in model.Enemies)
             {
                 double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
                 if (minDis > distanceSquared)
@@ -159,7 +204,40 @@ namespace TowerDefenseGame
             }
             return $"No enemy on the field";
         }
+        public void AddTower(Point mousePos)
+        {
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
+            {
+                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
+                                    model.TileSize, model.TileSize));
+            }
+            else
+            {
+                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+            }
 
+        }
+
+        /// <summary>
+        /// Converts pixel to tile coordinates
+        /// </summary>
+        /// <param name="mousePos">Pixel coordinates</param>
+        /// <returns>Tile</returns>
+        public Point GetTilePos(Point mousePos)
+        {
+            return new Point((int)(mousePos.X / model.TileSize),
+                            (int)(mousePos.Y / model.TileSize));
+        }
+        /// <summary>
+        /// Gets top left quarter point of Tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns>Point</returns>
+        public Point GetPosTile(Point tile)
+        {
+            return new Point(tile.X * model.TileSize + model.TileSize / 4,
+                              tile.Y * model.TileSize + model.TileSize / 4);
+        }
         private void SetPath(bool[,] path)
         {
             path[0, 4] = true;
@@ -194,7 +272,6 @@ namespace TowerDefenseGame
             path[13, 4] = true;
             path[14, 4] = true;
         }
-
         private void InitModel(string fname)
         {
             /*
@@ -221,39 +298,6 @@ namespace TowerDefenseGame
 
                     }  
             */
-        }
-        /// <summary>
-        /// Converts pixel to tile coordinates
-        /// </summary>
-        /// <param name="mousePos">Pixel coordinates</param>
-        /// <returns>Tile</returns>
-        public Point GetTilePos(Point mousePos)
-        {
-            return new Point((int)(mousePos.X / model.TileSize),
-                            (int)(mousePos.Y / model.TileSize));
-        }
-        /// <summary>
-        /// Gets top left quarter point of Tile
-        /// </summary>
-        /// <param name="tile"></param>
-        /// <returns>Point</returns>
-        public Point GetPosTile(Point tile)
-        {
-            return new Point(tile.X * model.TileSize + model.TileSize / 4,
-                              tile.Y * model.TileSize + model.TileSize / 4);
-        }
-        public void AddTower(Point mousePos)
-        {
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
-            {
-                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize, GetTilePos(mousePos).Y * model.TileSize,
-                                    model.TileSize, model.TileSize));
-            }
-            else
-            {
-                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
-            }
-
         }
     }
 }        
