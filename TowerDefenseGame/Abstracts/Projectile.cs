@@ -8,14 +8,17 @@ using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame.Abstracts
 {
+    [Serializable]
     public abstract class Projectile : MovingGameItem
     {
         public Enemy Target { get; set; }
         public int Damage { get; set; }
-        public Projectile(double x, double y, double w, double h, int m, int d, Enemy t = null) : base(x, y, w, h, new Point(), m)
+        public DamageType TypeOfDamage { get; set; }
+        public Projectile(double x, double y, double w, double h, int m, int d, DamageType dt, Enemy t = null) : base(x, y, w, h, new Point(), m)
         {
             Damage = d;
             Target = t;
+            TypeOfDamage = dt;
         }
         /// <summary>
         /// Get nearest target
@@ -37,6 +40,6 @@ namespace TowerDefenseGame.Abstracts
             Target = res;
         }
 
-        public abstract bool CauseDamage(Enemy enemy, Action<Enemy> die);
+        public abstract bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dt);
     }
 }

@@ -55,10 +55,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameItems\FrostBullet.cs" />
     <Compile Include="GameItems\Bullet.cs" />
     <Compile Include="GameItems\Enemy.cs" />
     <Compile Include="Abstracts\GameItem.cs" />
+    <Compile Include="GameItems\Missile.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
@@ -66,6 +66,9 @@
     <Compile Include="Abstracts\MovingGameItem.cs" />
     <Compile Include="Abstracts\Projectile.cs" />
     <Compile Include="GameItems\Tower.cs" />
+    <Compile Include="MenuControl.cs" />
+    <Compile Include="Menu\MenuModel.cs" />
+    <Compile Include="Menu\MenuRenderer.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Compile Include="TowerDefenseLogic.cs" />
     <Compile Include="TowerDefenseModel.cs" />
@@ -109,6 +112,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\TowerDefenseGame.Repository\TowerDefenseGame.Repository.csproj">
+      <Project>{b7be39e3-239a-4532-98e6-5f7e1b45416e}</Project>
+      <Name>TowerDefenseGame.Repository</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
