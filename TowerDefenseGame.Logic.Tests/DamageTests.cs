@@ -20,10 +20,10 @@ namespace TowerDefenseGame.Logic.Tests
             Enemy enemy = new Enemy(0, 0, 5, 5, 20, 2, new Point(0, 0), 5);
 
             //Act
-            enemy.ReceiveDamage(3, DamageType.fire, (Enemy e) => { model.Enemies.Remove(e); });
+            enemy.ReceiveDamage(4, DamageType.fire, (Enemy e) => { model.Enemies.Remove(e); });
 
             //Assert
-            Assert.AreEqual(enemy.Health, 17);
+            Assert.AreEqual(enemy.Health, 16);
         }
     }
 }
