@@ -18,7 +18,7 @@ namespace TowerDefenseGame.GameItems
         /// <returns>Returns true if the health of the target is above 0, false if not</returns>
         public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dmgtype)
         {
-            return enemy.ReceiveDamage(this.Damage, dmgtype, die);
+            return enemy.ReceiveDamage(Damage, dmgtype, die);
         }
     }
 }

@@ -9,6 +9,6 @@
         Height="{Binding SystemParameters.PrimaryScreenHeight}" 
         Width="{Binding SystemParameters.PrimaryScreenWidth}"
         WindowState="Maximized">
-    <!--<local:TowerDefenseControl/>-->
+    <!--<local:TowerDefenseControl/> -->
     <local:MenuControl/>
 </Window>

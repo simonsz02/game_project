@@ -118,5 +118,20 @@
       <Name>TowerDefenseGame.Repository</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Field\grass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Path\s200m800.bmp" />
+    <EmbeddedResource Include="Image\Path\s200m801.bmp" />
+    <EmbeddedResource Include="Image\Path\s200m802.bmp" />
+    <EmbeddedResource Include="Image\Path\s200n801.bmp" />
+    <EmbeddedResource Include="Image\Path\s200n802.bmp" />
+    <EmbeddedResource Include="Image\Path\s200n803.bmp" />
+    <EmbeddedResource Include="Image\Path\s200n804.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Field\dryground.bmp" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

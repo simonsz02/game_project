@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using TowerDefenseGame.Abstracts;
 using TowerDefenseGame.GameItems;
 
@@ -98,6 +102,18 @@ namespace TowerDefenseGame
             {
                 GeometryGroup g = new GeometryGroup();
                 GeometryGroup p = new GeometryGroup();
+                DrawingGroup rndPath = new DrawingGroup();
+                #region pathGraphic
+                string[] resources = GetEmbendedResourceInFolder("Image.Path.");
+                BitmapImage[] pics = new BitmapImage[resources.Length];
+                for (int i = 0; i < resources.Length; i++)
+                {
+                    pics[i] = new BitmapImage();
+                    pics[i].BeginInit();
+                    pics[i].StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(resources[i]);
+                    pics[i].EndInit();
+                }
+                #endregion                
                 for (int x = 0; x < model.Fields.GetLength(0); x++)
                 {
                     for (int y = 0; y < model.Fields.GetLength(1); y++)
@@ -111,11 +127,36 @@ namespace TowerDefenseGame
                         {
                             Geometry box = new RectangleGeometry(new Rect(x * model.TileSize, y * model.TileSize, model.TileSize, model.TileSize));
                             p.Children.Add(box);
+                            ImageBrush pathBrush = new ImageBrush(pics[TowerDefenseModel.rnd.Next(0, pics.Length)])
+                            {
+                                TileMode = TileMode.Tile,
+                                Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
+                                ViewportUnits = BrushMappingMode.Absolute
+                            };
+                            rndPath.Children.Add(new GeometryDrawing(pathBrush, null, box));
                         }
                     }
                 }
-                oldFields = new GeometryDrawing(Brushes.LightGreen, new Pen(Brushes.DarkGray, 1), g);
-                oldPath = new GeometryDrawing(Brushes.BurlyWood, null, p);
+                // Field
+                #region FieldGraphic
+                resources = GetEmbendedResourceInFolder("Image.Field.");
+                BitmapImage[] fieldPics = new BitmapImage[resources.Length];
+                for (int i = 0; i < resources.Length; i++)
+                {
+                    fieldPics[i] = new BitmapImage();
+                    fieldPics[i].BeginInit();
+                    fieldPics[i].StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(resources[i]);
+                    fieldPics[i].EndInit();
+                }
+                #endregion
+                ImageBrush fieldBrush = new ImageBrush(fieldPics[1])
+                {
+                    TileMode = TileMode.Tile,
+                    Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
+                    ViewportUnits = BrushMappingMode.Absolute
+                };
+                oldFields = new GeometryDrawing(fieldBrush, new Pen(Brushes.DimGray, 1), g);
+                oldPath = rndPath;
             }
             return oldFields;
         }
@@ -138,6 +179,26 @@ namespace TowerDefenseGame
             oldTowers = new GeometryDrawing(Brushes.DarkGray, new Pen(Brushes.Black, 1), g);
 
             return oldTowers;
+        }
+
+        private string[] GetResourceInFolder(string folder)
+        {
+            var assembly = Assembly.GetCallingAssembly();
+            var resourcesName = assembly.GetName().Name + ".g.resources";
+            var stream = assembly.GetManifestResourceStream(resourcesName);
+            var resourceReader = new ResourceReader(stream);
+            var resources =
+                from valval in resourceReader.OfType<DictionaryEntry>()
+                let theme = (string)valval.Key
+                where theme.StartsWith(folder)
+                select theme.Substring(folder.Length);
+            return resources.ToArray();            
+        }
+        private string[] GetEmbendedResourceInFolder(string folder)
+        {
+            var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
+            string[] res = assembly.Where(x => x.Contains(folder)).Select(x => x).ToArray();
+            return res;
         }
     }
 }

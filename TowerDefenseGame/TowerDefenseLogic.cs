@@ -121,7 +121,7 @@ namespace TowerDefenseGame
                             //MessageBox.Show("Találat!");
                         }
                         delete.Add(p);
-                        if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }))
+                        if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }, p.TypeOfDamage))
                         {
                             model.Enemies.Remove(p.Target);
                         }

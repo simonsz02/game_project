@@ -132,26 +132,12 @@ namespace TowerDefenseGame
                 case Key.A:
                     if (model.debug)
                     {
-                        model.Projectiles.Add(new Bullet( 0 - (model.TileSize / 4),
-                                                          0 - (model.TileSize / 4),
-                                                          model.TileSize / 4,
-                                                          model.TileSize / 4,
-                                                          8,
-                                                          10));
-                        InvalidateVisual();
                     }
                     break;
 
                 case Key.D:
                     if (model.debug)
                     {
-                        model.Projectiles.Add(new FrostBullet( model.EntryPoint.X,
-                                                          model.EntryPoint.Y + model.TileSize / 8,
-                                                          model.TileSize / 4,
-                                                          model.TileSize / 4,
-                                                          8,
-                                                          10));
-                        InvalidateVisual();
                     }
                     break;
             }
