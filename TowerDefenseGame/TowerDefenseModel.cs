@@ -17,14 +17,10 @@ namespace TowerDefenseGame
     [Serializable]
     class TowerDefenseModel
     {
-<<<<<<< HEAD
-        public bool debug = false;
-=======
         public static Random rnd = new Random();
 
         public bool debug = false;
         public int baseTickSpeed = 40;
->>>>>>> c389aab510d9760bcf8548d13870719166101fd1
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
         private readonly List<Projectile> projectiles = new List<Projectile>(); 
