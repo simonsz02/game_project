@@ -21,6 +21,7 @@ namespace TowerDefenseGame
         Drawing oldBackground;
         Drawing oldFields;
         Drawing oldPath;
+        Drawing oldCastle;
         Drawing oldTowers;
 
         public TowerDefenseRenderer(TowerDefenseModel model)
@@ -33,10 +34,31 @@ namespace TowerDefenseGame
             dg.Children.Add(GetBackground());
             dg.Children.Add(GetFields());
             dg.Children.Add(GetPath());
+            dg.Children.Add(GetCastle());
             dg.Children.Add(GetTowers());
             AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
             return dg;
+        }
+
+        private Drawing GetCastle()
+        {
+            if (oldCastle==null)
+            {
+                DrawingGroup castle = new DrawingGroup();
+                Geometry upperCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - (2 * model.TileSize), model.TileSize, model.TileSize));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0E800.BMP"), null, upperCorner));
+                Geometry upperWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - model.TileSize, model.TileSize, model.TileSize));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B800.BMP"), null, upperWall));
+                Geometry gate = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y, model.TileSize, model.TileSize));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B801.BMP"), null, gate));
+                Geometry lowerWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + model.TileSize, model.TileSize, model.TileSize));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B800.BMP"), null, lowerWall));
+                Geometry lowerCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + (2 * model.TileSize), model.TileSize, model.TileSize));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0E810.BMP"), null, lowerCorner));
+                oldCastle = castle;
+            }
+            return oldCastle;
         }
         /// <summary>
         /// Draw all enemies
@@ -181,6 +203,21 @@ namespace TowerDefenseGame
             return oldTowers;
         }
 
+        private ImageBrush GetImageBrush(string image)
+        {
+            BitmapImage img = new BitmapImage();
+            img.BeginInit();
+            img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(image);
+            img.EndInit();
+
+            ImageBrush imgBrush = new ImageBrush(img)
+            {
+                TileMode = TileMode.Tile,
+                Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
+                ViewportUnits = BrushMappingMode.Absolute
+            };
+            return imgBrush;
+        }
         private string[] GetResourceInFolder(string folder)
         {
             var assembly = Assembly.GetCallingAssembly();

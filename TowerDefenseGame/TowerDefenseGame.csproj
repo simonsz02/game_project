@@ -133,5 +133,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Image\Field\dryground.bmp" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Castle\S2D0B800.BMP" />
+    <EmbeddedResource Include="Image\Castle\S2D0B801.BMP" />
+    <EmbeddedResource Include="Image\Castle\S2D0E800.BMP" />
+    <EmbeddedResource Include="Image\Castle\S2D0E810.BMP" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
