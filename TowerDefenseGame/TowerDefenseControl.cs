@@ -9,6 +9,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
+using TowerDefenseGame.Abstracts;
 using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
@@ -21,6 +22,9 @@ namespace TowerDefenseGame
         Stopwatch stw;
         DispatcherTimer tickTimer;
         DispatcherTimer spawnEnemyTimer;
+        DispatcherTimer towerShotTimer;
+
+        public TowerDefenseModel Model { get => model; set => model = value; }
 
         public TowerDefenseControl()
         {
@@ -29,27 +33,41 @@ namespace TowerDefenseGame
         private void TowerDefenseControl_Loaded(object sender, RoutedEventArgs e)
         {
             stw = new Stopwatch();
-            model = new TowerDefenseModel(ActualWidth, ActualHeight);
+            model = model ?? new TowerDefenseModel(ActualWidth, ActualHeight);
             logic = new TowerDefenseLogic(model);
             renderer = new TowerDefenseRenderer(model);
 
             Window win = Window.GetWindow(this);
             if (win != null)
             {
+                //Drive the game
                 tickTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(40)
+                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed)
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
                 win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
+                //Spawn enemy
                 spawnEnemyTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(5000)
+                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed*125)
                 };
                 spawnEnemyTimer.Tick += SpawnEnemyTimer_Tick;
                 spawnEnemyTimer.Start();
+                //Tower Shot
+                towerShotTimer = new DispatcherTimer
+                {
+                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed * 25)
+                };
+                //If there are any towers while initialization, their Timer_Tick method will be signed up
+                foreach (Tower t in model.Towers)
+                {
+                    towerShotTimer.Tick += t.Timer_Tick;
+                }
+                towerShotTimer.Start();
+
             }
             InvalidateVisual();
             stw.Start();
@@ -64,8 +82,8 @@ namespace TowerDefenseGame
                                             model.EntryPoint.Y + model.TileSize / 4,
                                             model.TileSize / 2,
                                             model.TileSize / 2,
-                                            1,
-                                            1,
+                                            50,
+                                            5,
                                             logic.GetTilePos(model.EntryPoint),
                                             5));
                 InvalidateVisual();
@@ -75,6 +93,7 @@ namespace TowerDefenseGame
         private void TickTimer_Tick(object sender, EventArgs e)
         {
             logic.MoveEnemies(model.Enemies);
+            logic.SetTowerTargets(model.Enemies, model.Towers);
             logic.MoveProjectiles(model.Projectiles);
             InvalidateVisual();
         }
@@ -83,13 +102,11 @@ namespace TowerDefenseGame
             Point mousePos = e.GetPosition(this);
             if (e.ChangedButton == MouseButton.Left)
             {
-                //Point tilePos = logic.GetTilePos(mousePos);
-                //MessageBox.Show(tilePos.ToString());
-                logic.AddTower(mousePos);
+                logic.AddTower(mousePos, towerShotTimer);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                MessageBox.Show(mousePos.ToString());
+                logic.AddTower(mousePos, towerShotTimer, DamageType.poison);
             }
             InvalidateVisual();
         }        
@@ -115,26 +132,12 @@ namespace TowerDefenseGame
                 case Key.A:
                     if (model.debug)
                     {
-                        model.Projectiles.Add(new Bullet( 0 - (model.TileSize / 4),
-                                                          0 - (model.TileSize / 4),
-                                                          model.TileSize / 4,
-                                                          model.TileSize / 4,
-                                                          8,
-                                                          10));
-                        InvalidateVisual();
                     }
                     break;
 
                 case Key.D:
                     if (model.debug)
                     {
-                        model.Projectiles.Add(new FrostBullet( model.EntryPoint.X,
-                                                          model.EntryPoint.Y + model.TileSize / 8,
-                                                          model.TileSize / 4,
-                                                          model.TileSize / 4,
-                                                          8,
-                                                          10));
-                        InvalidateVisual();
                     }
                     break;
             }
