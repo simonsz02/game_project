@@ -16,7 +16,7 @@ namespace TowerDefenseGame
     }
     public class TowerDefenseModel
     {
-        public bool debug = true;
+        public bool debug = false;
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
         private readonly List<Projectile> projectiles = new List<Projectile>(); 
