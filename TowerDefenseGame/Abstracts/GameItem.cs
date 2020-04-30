@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace TowerDefenseGame.Abstracts
 {
+    [Serializable]
     public abstract class GameItem
     {
         protected Rect area;

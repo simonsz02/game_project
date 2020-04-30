@@ -10,12 +10,14 @@ using TowerDefenseGame.Interface;
 
 namespace TowerDefenseGame.GameItems
 {
+    [Serializable]
     public class Enemy : MovingGameItem, IEnemy
     {
         double health;
         double armor;
-        
+        //Represents the survival abiltiy of the unit
         public double Health { get { return health; } set { health = value; } }
+        //Represents the damage mitigation ability of of the unit
         public double Armor { get { return armor; } set { armor = value; } }
 
         public Enemy(double x, double y, double w, double h, double health, double armor, Point d, double m) : base(x, y, w, h, d, m)
@@ -23,7 +25,13 @@ namespace TowerDefenseGame.GameItems
             this.health = health;
             this.armor = armor;
         }
-
+        /// <summary>
+        /// Every unit handles its received damage on its own
+        /// </summary>
+        /// <param name="damage">received damage value</param>
+        /// <param name="type">received damage type</param>
+        /// <param name="die">death handler</param>
+        /// <returns>Boolean value true if the units health is over 0, false if not</returns>
         public bool ReceiveDamage(double damage, DamageType type, Action<Enemy> die)
         {
             switch (type)
@@ -49,7 +57,9 @@ namespace TowerDefenseGame.GameItems
                 case DamageType.magic:
                     break;  
                 case DamageType.poison:
-                    MessageBox.Show($"Health: {Health}\nDamage: {damage}");
+                    //MessageBox.Show($"Health: {Health}\nDamage: {damage}");
+                    //Poison típusú sebzésnél a sebzés másodpercenként feleződik,
+                    //ameddig többet sebezne, mint 2
                     if (damage > 2 && Health > 0)
                     {
                         Health -= damage;

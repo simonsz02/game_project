@@ -14,15 +14,23 @@ namespace TowerDefenseGame
     {
         physical, frost, fire, earth, air, magic, poison
     }
-    public class TowerDefenseModel
+    [Serializable]
+    class TowerDefenseModel
     {
+<<<<<<< HEAD
         public bool debug = false;
+=======
+        public static Random rnd = new Random();
+
+        public bool debug = false;
+        public int baseTickSpeed = 40;
+>>>>>>> c389aab510d9760bcf8548d13870719166101fd1
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
         private readonly List<Projectile> projectiles = new List<Projectile>(); 
-        public List<Enemy> Enemies { get { return this.enemies; } }
-        public List<Tower> Towers { get { return this.towers; } }
-        public List<Projectile> Projectiles { get { return this.projectiles; } }
+        public List<Enemy> Enemies { get { return enemies; } }
+        public List<Tower> Towers { get { return towers; } }
+        public List<Projectile> Projectiles { get { return projectiles; } }
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
         public bool[,] Towerplaces { get; set; }

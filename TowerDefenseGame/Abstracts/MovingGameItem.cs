@@ -7,6 +7,7 @@ using System.Windows;
 
 namespace TowerDefenseGame.Abstracts
 {
+    [Serializable]
     public abstract class MovingGameItem : GameItem
     {
         /// <summary>
@@ -31,6 +32,11 @@ namespace TowerDefenseGame.Abstracts
         {
             area.X = x;
             area.Y = y;
+        }
+        public void SetXY(Point p)
+        {
+            area.X = p.X;
+            area.Y = p.Y;
         }
     }
 }
