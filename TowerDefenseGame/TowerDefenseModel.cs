@@ -15,7 +15,7 @@ namespace TowerDefenseGame
         physical, frost, fire, earth, air, magic, poison
     }
     [Serializable]
-    class TowerDefenseModel
+    public class TowerDefenseModel
     {
         public static Random rnd = new Random();
 

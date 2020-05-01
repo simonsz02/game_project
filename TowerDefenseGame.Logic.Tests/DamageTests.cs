@@ -10,7 +10,7 @@ using TowerDefenseGame.GameItems;
 namespace TowerDefenseGame.Logic.Tests
 {
     [TestFixture]
-    class DamageTests
+    public class DamageTests
     {
         [Test]
         public void DamageEnemyTest()
