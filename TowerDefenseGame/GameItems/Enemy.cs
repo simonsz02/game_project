@@ -52,7 +52,7 @@ namespace TowerDefenseGame.GameItems
                     break;
                 case DamageType.air:
                     Health -= Math.Max(damage - Armor, 0) * 0.2;
-                    this.area.X += Movement * 3;
+                    area.X += Movement * 3;
                     break;
                 case DamageType.magic:
                     break;  

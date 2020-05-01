@@ -48,9 +48,9 @@ namespace TowerDefenseGame.GameItems
         {
             if (target != null & canShot)
             {
-                if (target.Health > 0 & (target.Location - Location).Length < Range)
+                if (target.Health > 0 & (target.Centre - Centre).Length < Range)
                 {
-                    LoadGun(Area.X, Area.Y, Area.Width, Area.Height, 8, 10, TypeOfDamage, Target);
+                    LoadGun(Centre.X, Centre.Y, Area.Width, Area.Height, 8, 10, TypeOfDamage, Target);
                     canShot = false;
                 }
             }

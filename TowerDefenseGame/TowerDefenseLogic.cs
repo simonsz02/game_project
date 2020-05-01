@@ -74,19 +74,19 @@ namespace TowerDefenseGame
             {
                 if (enemy.Destination != null)
                 {
-                    Point destCoords = GetPosTile(enemy.Destination);
-                    double x = enemy.Area.X + Math.Sign(destCoords.X - enemy.Area.X) *
-                                 Math.Min(Math.Abs(destCoords.X - enemy.Area.X),
+                    Point destCoords = GetPosTileCentre(enemy.Destination);
+                    double x = enemy.Centre.X + Math.Sign(destCoords.X - enemy.Centre.X) *
+                                 Math.Min(Math.Abs(destCoords.X - enemy.Centre.X),
                                           (double)enemy.Movement);
-                    double y = enemy.Area.Y + Math.Sign(destCoords.Y - enemy.Area.Y) *
-                                 Math.Min(Math.Abs(destCoords.Y - enemy.Area.Y),
+                    double y = enemy.Centre.Y + Math.Sign(destCoords.Y - enemy.Centre.Y) *
+                                 Math.Min(Math.Abs(destCoords.Y - enemy.Centre.Y),
                                           (double)enemy.Movement);
                     if (destCoords.X == x &&
                          destCoords.Y == y)
                     {
                         SetNewDestionation(enemy);
                     }
-                    enemy.SetXY(x, y);
+                    enemy.Centre = new Point(x, y);
                 }
                 else
                 {
@@ -110,10 +110,10 @@ namespace TowerDefenseGame
                     {
                         delete.Add(p);
                     }
-                    destCoords = p.Target.Area.TopLeft;
-                    Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
-                    p.Location = Point.Add(p.Area.TopLeft, Math.Min(v.Length, (double)p.Movement) * v / v.Length);
-                    if (destCoords == p.Area.TopLeft)
+                    destCoords = p.Target.Centre;
+                    Vector v = Point.Subtract(destCoords, p.Centre);
+                    p.Centre = Point.Add(p.Centre, Math.Min(v.Length, p.Movement) * v / v.Length);
+                    if (destCoords == p.Centre)
                     {
                         if (model.debug)
                         {
@@ -187,7 +187,7 @@ namespace TowerDefenseGame
                     double minDis = double.MaxValue;
                     foreach (Enemy tar in enemyList)
                     {
-                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        double distanceSquared = (tar.Centre - tow.Centre).LengthSquared;
                         if (minDis > distanceSquared)
                         {
                             minDis = distanceSquared;
@@ -195,12 +195,12 @@ namespace TowerDefenseGame
                         }
                     }
                 }
-                else if (tow.Target.Health <= 0 | (tow.Location - tow.Target.Location).Length > tow.Range)
+                else if (tow.Target.Health <= 0 | (tow.Centre - tow.Target.Centre).Length > tow.Range)
                 {
                     double minDis = double.MaxValue;
                     foreach (Enemy tar in model.Enemies)
                     {
-                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        double distanceSquared = (tar.Centre - tow.Centre).LengthSquared;
                         if (minDis > distanceSquared)
                         {
                             minDis = distanceSquared;
@@ -209,31 +209,6 @@ namespace TowerDefenseGame
                     }
                 }
             }
-        }
-        /// <summary>
-        /// performancia tesztelés céljából van itt
-        /// </summary>
-        /// <returns></returns>
-        internal string GetDistances()
-        {
-            Point p = GetPosTile(new Point(7, 0));
-            Enemy target = null;
-            double minDis = double.MaxValue;
-            foreach (Enemy tar in model.Enemies)
-            {
-                double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
-                if (minDis > distanceSquared)
-                {
-                    minDis = distanceSquared;
-                    target = tar;
-                }
-            }
-            if (target != null)
-            {
-                Point res = GetTilePos(new Point(target.Area.X, target.Area.Y));
-                return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
-            }
-            return $"No enemy on the field";
         }
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
@@ -265,7 +240,7 @@ namespace TowerDefenseGame
                             (int)(mousePos.Y / model.TileSize));
         }
         /// <summary>
-        /// Gets top left quarter point of Tile
+        /// Gets top left quarter point of tile
         /// </summary>
         /// <param name="tile"></param>
         /// <returns>Point</returns>
@@ -273,6 +248,16 @@ namespace TowerDefenseGame
         {
             return new Point(tile.X * model.TileSize + model.TileSize / 4,
                               tile.Y * model.TileSize + model.TileSize / 4);
+        }
+        /// <summary>
+        /// Gets center coordinates of tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns>Point</returns>
+        public Point GetPosTileCentre(Point tile)
+        {
+            return new Point(tile.X * model.TileSize + model.TileSize / 2,
+                              tile.Y * model.TileSize + model.TileSize / 2);
         }
         private void SetPath(bool[,] path)
         {

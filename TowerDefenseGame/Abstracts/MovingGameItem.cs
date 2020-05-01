@@ -33,10 +33,6 @@ namespace TowerDefenseGame.Abstracts
             Destination = d;
             Movement = m;
         }
-        public Point Centre()
-        {
-            return Point.Add(Area.Location, new Vector(Area.Width / 2, Area.Height / 2));
-        }
         public void SetXY(double x, double y)
         {
             area.X = x;
