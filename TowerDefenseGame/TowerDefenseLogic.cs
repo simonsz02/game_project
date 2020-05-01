@@ -25,7 +25,7 @@ namespace TowerDefenseGame
             InitModel(fname);
         }
         /// <summary>
-        /// A -100-as paraméter ara szolgál, hogy lefoglaljunk 
+        /// A -100-as paraméter arra szolgál, hogy lefoglaljunk 
         /// egy minimum 100, maximum a szélesség 5%-a pixel 
         /// széles sávot oldalt a menünek!
         /// Nilván szebb lenne paraméterbe tenni

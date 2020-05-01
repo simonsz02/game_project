@@ -39,8 +39,8 @@ namespace TowerDefenseGame
             AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
 
-            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()}/6",System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 24, Brushes.Black);
-            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Black, 3), formattedText.BuildGeometry(new Point(model.GameWidth-5, 5)));
+            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()} / 6",System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
+            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Black, 2), formattedText.BuildGeometry(new Point(model.GameWidth*0.75, 10)));
 
             dg.Children.Add(text);
 
