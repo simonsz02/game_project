@@ -38,6 +38,12 @@ namespace TowerDefenseGame
             dg.Children.Add(GetTowers());
             AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
+
+            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()}/6",System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 24, Brushes.Black);
+            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Black, 3), formattedText.BuildGeometry(new Point(model.GameWidth-5, 5)));
+
+            dg.Children.Add(text);
+
             return dg;
         }
 
@@ -202,6 +208,8 @@ namespace TowerDefenseGame
 
             return oldTowers;
         }
+
+
 
         private ImageBrush GetImageBrush(string image)
         {

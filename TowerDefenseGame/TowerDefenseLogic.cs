@@ -239,9 +239,18 @@ namespace TowerDefenseGame
         }
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
-            
+            bool TowerExistsThere = false;
 
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count<6)
+            if (model.Towers.Count!=0)
+            {
+                foreach (Tower t in model.Towers)
+                {
+                    if (t.Area.X == GetTilePos(mousePos).X * model.TileSize &&
+                        t.Area.Y == GetTilePos(mousePos).Y * model.TileSize) TowerExistsThere = true;
+                }
+            }
+
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count<6 && !TowerExistsThere)
             {
                 model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize,
                                            GetTilePos(mousePos).Y * model.TileSize,
@@ -255,11 +264,15 @@ namespace TowerDefenseGame
             }
             else if(model.Towers.Count == 6)
             {
-                MessageBox.Show("Maximum 6 tornyot lehet lehelyezni");
+                MessageBox.Show("Number of the towers has already reached its maximum");
             }
-            else if(model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == true)
+            else if(model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == true) 
             {
-                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+                MessageBox.Show("Tower can't be placed on the road");
+            }
+            else if (TowerExistsThere)
+            {
+                MessageBox.Show("There is already a tower in the selected field");
             }
 
         }
