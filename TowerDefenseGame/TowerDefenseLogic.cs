@@ -56,7 +56,6 @@ namespace TowerDefenseGame
                     if (model.Path[x, y])
                     {
                         model.Fields[x, y] = false;
-
                     }
                     else
                     {
@@ -163,7 +162,6 @@ namespace TowerDefenseGame
                             if (model.Path[x + i, y + j])
                             {
                                 found = true;
-                                //MessageBox.Show("New Destionation: " + (x + i) + "-" + (y + j));
                                 enemy.Origin = enemy.Destination;
                                 if (x == 1)
                                 {

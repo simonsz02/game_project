@@ -10,6 +10,7 @@ using TowerDefenseGame.Interface;
 
 namespace TowerDefenseGame
 {
+    [Serializable]
     public enum DamageType
     {
         physical, frost, fire, earth, air, magic, poison
@@ -29,7 +30,6 @@ namespace TowerDefenseGame
         public List<Projectile> Projectiles { get { return projectiles; } }
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
-        public bool[,] Towerplaces { get; set; }
         public double GameWidth { get; set; }
         public double GameHeight { get; set; }
         public double TileSize { get; set; }

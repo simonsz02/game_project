@@ -14,6 +14,7 @@ using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
+    [Serializable]
     class TowerDefenseControl : FrameworkElement
     {
         TowerDefenseLogic logic;
@@ -79,7 +80,7 @@ namespace TowerDefenseGame
             if (!model.debug)
             {
                 model.Enemies.Add(new Enemy(model.EntryPoint.X,
-                                            model.EntryPoint.Y + model.TileSize / 4,
+                                            model.EntryPoint.Y,
                                             model.TileSize / 2,
                                             model.TileSize / 2,
                                             50,
@@ -138,7 +139,12 @@ namespace TowerDefenseGame
                 case Key.D:
                     if (model.debug)
                     {
-                    }
+                    }                
+                    break;
+                case Key.P:
+                    tickTimer.IsEnabled = !tickTimer.IsEnabled;
+                    spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
+                    towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
                     break;
             }
         }

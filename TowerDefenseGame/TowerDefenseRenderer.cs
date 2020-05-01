@@ -7,6 +7,7 @@ using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TowerDefenseGame.Abstracts;
@@ -14,16 +15,19 @@ using TowerDefenseGame.GameItems;
 
 namespace TowerDefenseGame
 {
+    [Serializable]
     class TowerDefenseRenderer
     {
         TowerDefenseModel model;
+
+        Dictionary<string, ImageBrush> imageBrushCache = new Dictionary<string, ImageBrush>();
+        Dictionary<int, BitmapImage> imageCache = new Dictionary<int, BitmapImage>();
 
         Drawing oldBackground;
         Drawing oldFields;
         Drawing oldPath;
         Drawing oldCastle;
         Drawing oldTowers;
-
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
             this.model = model;
@@ -40,7 +44,7 @@ namespace TowerDefenseGame
             AddProjectileDrawing(dg);
             return dg;
         }
-
+        
         private Drawing GetCastle()
         {
             if (oldCastle==null)
@@ -65,14 +69,25 @@ namespace TowerDefenseGame
         /// </summary>
         /// <param name="dg"></param>
         private void AddEnemiesDrawing(DrawingGroup dg)
-        {
-            Brush enemyBrush = new SolidColorBrush(Color.FromArgb(100, 255, 0, 0));
+        {            
             foreach (MovingGameItem enemy in model.Enemies)
             {
-                GeometryDrawing enemyGeo = new GeometryDrawing(enemyBrush,
-                    new Pen(Brushes.Black, 1),
-                    new EllipseGeometry(enemy.Area));
-                dg.Children.Add(enemyGeo);
+                int key = enemy.GetHashCode();
+                if (!imageCache.ContainsKey(key))
+                {
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("TowerDefenseGame.Image.Path.s200n802.bmp")[0]);
+                    bi.Rotation = Rotation.Rotate270;
+                    bi.EndInit();
+                    imageCache.Add(key, bi);
+                }
+                ImageDrawing img = new ImageDrawing
+                {
+                    Rect = enemy.Area,
+                    ImageSource = imageCache[key]
+                };
+                dg.Children.Add(img);     
             }
         }
         /// <summary>
@@ -202,23 +217,30 @@ namespace TowerDefenseGame
 
             return oldTowers;
         }
-
         private ImageBrush GetImageBrush(string image)
         {
-            BitmapImage img = new BitmapImage();
-            img.BeginInit();
-            img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(image);
-            img.EndInit();
-
-            ImageBrush imgBrush = new ImageBrush(img)
+            if (imageBrushCache.ContainsKey(image))
             {
-                TileMode = TileMode.Tile,
-                Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
-                ViewportUnits = BrushMappingMode.Absolute
-            };
-            return imgBrush;
+                return imageBrushCache[image];
+            }
+            else
+            {
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(image);
+                img.EndInit();
+
+                ImageBrush imgBrush = new ImageBrush(img)
+                {
+                    TileMode = TileMode.Tile,
+                    Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
+                    ViewportUnits = BrushMappingMode.Absolute
+                };
+                imageBrushCache.Add(image, imgBrush);
+                return imgBrush;
+            }
         }
-        private string[] GetResourceInFolder(string folder)
+        private string[] GetResourceInFolder(string file)
         {
             var assembly = Assembly.GetCallingAssembly();
             var resourcesName = assembly.GetName().Name + ".g.resources";
@@ -227,10 +249,11 @@ namespace TowerDefenseGame
             var resources =
                 from valval in resourceReader.OfType<DictionaryEntry>()
                 let theme = (string)valval.Key
-                where theme.StartsWith(folder)
-                select theme.Substring(folder.Length);
+                where theme.StartsWith(file)
+                select theme.Substring(file.Length);
             return resources.ToArray();            
         }
+
         private string[] GetEmbendedResourceInFolder(string folder)
         {
             var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
