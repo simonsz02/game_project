@@ -239,7 +239,9 @@ namespace TowerDefenseGame
         }
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false)
+            
+
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count<6)
             {
                 model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize,
                                            GetTilePos(mousePos).Y * model.TileSize,
@@ -249,8 +251,13 @@ namespace TowerDefenseGame
                                            timer,
                                            damageType
                                            ));
+
             }
-            else
+            else if(model.Towers.Count == 6)
+            {
+                MessageBox.Show("Maximum 6 tornyot lehet lehelyezni");
+            }
+            else if(model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == true)
             {
                 MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
             }
