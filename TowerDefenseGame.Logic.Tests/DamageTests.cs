@@ -12,18 +12,18 @@ namespace TowerDefenseGame.Logic.Tests
     [TestFixture]
     class DamageTests
     {
-        [Test]
-        public void DamageEnemyTest()
+        [TestCase(4, DamageType.physical, 18)]
+        [TestCase(4, DamageType.fire, 16)]
+        public void DamageEnemyTest(int dmg, DamageType dmgt, int expect)
         {
             //Arrange
-            TowerDefenseModel model = new TowerDefenseModel(100, 100);
             Enemy enemy = new Enemy(0, 0, 5, 5, 20, 2, new Point(0, 0), 5);
 
             //Act
-            enemy.ReceiveDamage(4, DamageType.fire, (Enemy e) => { model.Enemies.Remove(e); });
+            enemy.ReceiveDamage(dmg, dmgt, (e) => { });
 
             //Assert
-            Assert.AreEqual(enemy.Health, 16);
+            Assert.AreEqual(enemy.Health, expect);
         }
     }
 }

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefenseGame", "TowerDe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefenseGame.Repository", "TowerDefenseGame.Repository\TowerDefenseGame.Repository.csproj", "{B7BE39E3-239A-4532-98E6-5F7E1B45416E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TowerDefenseGame.Logic.Tests", "TowerDefenseGame.Logic.Tests\TowerDefenseGame.Logic.Tests.csproj", "{13111472-F8ED-4071-A4A5-AB1B1EA67AE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B7BE39E3-239A-4532-98E6-5F7E1B45416E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7BE39E3-239A-4532-98E6-5F7E1B45416E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7BE39E3-239A-4532-98E6-5F7E1B45416E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13111472-F8ED-4071-A4A5-AB1B1EA67AE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13111472-F8ED-4071-A4A5-AB1B1EA67AE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13111472-F8ED-4071-A4A5-AB1B1EA67AE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13111472-F8ED-4071-A4A5-AB1B1EA67AE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
