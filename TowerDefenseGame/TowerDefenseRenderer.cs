@@ -36,15 +36,38 @@ namespace TowerDefenseGame
             dg.Children.Add(GetPath());
             dg.Children.Add(GetCastle());
             dg.Children.Add(GetTowers());
+            dg.Children.Add(NumberOfTowers());
+            dg.Children.Add(NumberOfCoins());
+
             AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
 
-            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()} / 6",System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
-            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Black, 2), formattedText.BuildGeometry(new Point(model.GameWidth*0.75, 10)));
-
-            dg.Children.Add(text);
-
             return dg;
+        }
+
+        private Drawing NumberOfTowers()
+        {
+            GeometryDrawing text;
+
+            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()} / 6", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
+            if(model.Towers.Count < 6)
+            {
+                text = new GeometryDrawing(null, new Pen(Brushes.Black, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 10)));
+            }
+            else
+            {
+                text = new GeometryDrawing(null, new Pen(Brushes.Red, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 10)));
+            }
+            
+            return text;
+        }
+
+        private Drawing NumberOfCoins()
+        {
+            FormattedText formattedText = new FormattedText(model.Coins.ToString(), System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
+            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Gold, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 50)));
+
+            return text;
         }
 
         private Drawing GetCastle()

@@ -33,7 +33,7 @@ namespace TowerDefenseGame
         private void TowerDefenseControl_Loaded(object sender, RoutedEventArgs e)
         {
             stw = new Stopwatch();
-            model = model ?? new TowerDefenseModel(ActualWidth, ActualHeight);
+            model = model ?? new TowerDefenseModel(ActualWidth, ActualHeight, 1500);
             logic = new TowerDefenseLogic(model);
             renderer = new TowerDefenseRenderer(model);
 

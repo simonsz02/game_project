@@ -16,7 +16,7 @@ namespace TowerDefenseGame.Logic.Tests
         public void DamageEnemyTest()
         {
             //Arrange
-            TowerDefenseModel model = new TowerDefenseModel(100, 100);
+            TowerDefenseModel model = new TowerDefenseModel(100, 100, 1500);
             Enemy enemy = new Enemy(0, 0, 5, 5, 20, 2, new Point(0, 0), 5);
 
             //Act
