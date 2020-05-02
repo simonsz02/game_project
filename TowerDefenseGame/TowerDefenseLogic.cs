@@ -12,6 +12,11 @@ namespace TowerDefenseGame
     [Serializable]
     class TowerDefenseLogic
     {
+        public static Random rnd = new Random();
+
+        public bool debug = false;
+        public int baseTickSpeed = 40;
+
         TowerDefenseModel model;
 
         public TowerDefenseLogic(TowerDefenseModel model)
@@ -115,7 +120,7 @@ namespace TowerDefenseGame
                     p.Centre = Point.Add(p.Centre, Math.Min(v.Length, p.Movement) * v / v.Length);
                     if (destCoords == p.Centre)
                     {
-                        if (model.debug)
+                        if (debug)
                         {
                             //MessageBox.Show("Találat!");
                         }

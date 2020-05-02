@@ -164,7 +164,7 @@ namespace TowerDefenseGame
                         {
                             Geometry box = new RectangleGeometry(new Rect(x * model.TileSize, y * model.TileSize, model.TileSize, model.TileSize));
                             p.Children.Add(box);
-                            ImageBrush pathBrush = new ImageBrush(pics[TowerDefenseModel.rnd.Next(0, pics.Length)])
+                            ImageBrush pathBrush = new ImageBrush(pics[TowerDefenseLogic.rnd.Next(0, pics.Length)])
                             {
                                 TileMode = TileMode.Tile,
                                 Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
@@ -240,20 +240,6 @@ namespace TowerDefenseGame
                 return imgBrush;
             }
         }
-        private string[] GetResourceInFolder(string file)
-        {
-            var assembly = Assembly.GetCallingAssembly();
-            var resourcesName = assembly.GetName().Name + ".g.resources";
-            var stream = assembly.GetManifestResourceStream(resourcesName);
-            var resourceReader = new ResourceReader(stream);
-            var resources =
-                from valval in resourceReader.OfType<DictionaryEntry>()
-                let theme = (string)valval.Key
-                where theme.StartsWith(file)
-                select theme.Substring(file.Length);
-            return resources.ToArray();            
-        }
-
         private string[] GetEmbendedResourceInFolder(string folder)
         {
             var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();

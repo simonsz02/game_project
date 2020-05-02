@@ -44,7 +44,7 @@ namespace TowerDefenseGame
                 //Drive the game
                 tickTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed)
+                    Interval = TimeSpan.FromMilliseconds(logic.baseTickSpeed)
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
@@ -53,14 +53,14 @@ namespace TowerDefenseGame
                 //Spawn enemy
                 spawnEnemyTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed*125)
+                    Interval = TimeSpan.FromMilliseconds(logic.baseTickSpeed*125)
                 };
                 spawnEnemyTimer.Tick += SpawnEnemyTimer_Tick;
                 spawnEnemyTimer.Start();
                 //Tower Shot
                 towerShotTimer = new DispatcherTimer
                 {
-                    Interval = TimeSpan.FromMilliseconds(model.baseTickSpeed * 25)
+                    Interval = TimeSpan.FromMilliseconds(logic.baseTickSpeed * 25)
                 };
                 //If there are any towers while initialization, their Timer_Tick method will be signed up
                 foreach (Tower t in model.Towers)
@@ -77,7 +77,7 @@ namespace TowerDefenseGame
         private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
         {
             ///TODO create logic of spawning different enemies
-            if (!model.debug)
+            if (!logic.debug)
             {
                 model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                             model.EntryPoint.Y,
@@ -116,7 +116,7 @@ namespace TowerDefenseGame
             switch (e.Key)
             {
                 case Key.Enter: 
-                    if (model.debug)
+                    if (logic.debug)
                     {
                         model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                                     model.EntryPoint.Y + model.TileSize / 4,
@@ -131,14 +131,14 @@ namespace TowerDefenseGame
                     break;
 
                 case Key.A:
-                    if (model.debug)
+                    if (logic.debug)
                     {
                         model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.magic, model.Enemies.First()));
                     }
                     break;
 
                 case Key.D:
-                    if (model.debug)
+                    if (logic.debug)
                     {
                     }                
                     break;
