@@ -37,11 +37,44 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(GetPath());
             dg.Children.Add(GetCastle());
             dg.Children.Add(GetTowers());
+            dg.Children.Add(NumberOfTowers());
+            dg.Children.Add(NumberOfCoins());
+
             AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
+
             return dg;
         }
+<<<<<<< HEAD:TowerDefenseGame/TowerDefenseRenderer.cs
+
+        private Drawing NumberOfTowers()
+        {
+            GeometryDrawing text;
+
+            FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()} / 6", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
+            if(model.Towers.Count < 6)
+            {
+                text = new GeometryDrawing(null, new Pen(Brushes.Black, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 10)));
+            }
+            else
+            {
+                text = new GeometryDrawing(null, new Pen(Brushes.Red, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 10)));
+            }
+            
+            return text;
+        }
+
+        private Drawing NumberOfCoins()
+        {
+            FormattedText formattedText = new FormattedText(model.Coins.ToString(), System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
+            GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Gold, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 50)));
+
+            return text;
+        }
+
+=======
         
+>>>>>>> remotes/origin/master:TowerDefenseGame.Renderer/TowerDefenseRenderer.cs
         private Drawing GetCastle()
         {
             if (oldCastle==null)
@@ -214,6 +247,12 @@ namespace TowerDefenseGame.Renderer
 
             return oldTowers;
         }
+<<<<<<< HEAD:TowerDefenseGame/TowerDefenseRenderer.cs
+
+
+
+=======
+>>>>>>> remotes/origin/master:TowerDefenseGame.Renderer/TowerDefenseRenderer.cs
         private ImageBrush GetImageBrush(string image)
         {
             if (imageBrushCache.ContainsKey(image))

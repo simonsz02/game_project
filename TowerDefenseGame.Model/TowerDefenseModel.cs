@@ -27,11 +27,13 @@ namespace TowerDefenseGame.Model
         public double TileSize { get; set; }
         public Point EntryPoint { get; set; }
         public Point ExitPoint { get; set; }
+        public int Coins { get; set; }
 
-        public TowerDefenseModel(double w, double h)
+        public TowerDefenseModel(double w, double h, int c)
         {
             GameWidth = w;
             GameHeight = h;
+            Coins = c;
         }
     }
 }
