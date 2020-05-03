@@ -102,7 +102,35 @@ namespace TowerDefenseGame
             Point mousePos = e.GetPosition(this);
             if (e.ChangedButton == MouseButton.Left)
             {
-                logic.AddTower(mousePos, towerShotTimer);
+                bool TowerExistsThere = false;
+
+                if (model.Towers.Count != 0)
+                {
+                    foreach (Tower t in model.Towers)
+                    {
+                        if (t.Area.X == logic.GetTilePos(mousePos).X * model.TileSize &&
+                            t.Area.Y == logic.GetTilePos(mousePos).Y * model.TileSize) TowerExistsThere = true;
+                    }
+                }
+
+                if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && !TowerExistsThere)
+                {
+                    logic.AddTower(mousePos, towerShotTimer);
+                }
+                else if (model.Towers.Count == 6)
+                {
+                    MessageBox.Show("Number of the towers has already reached its maximum");
+                }
+                else if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == true)
+                {
+                    MessageBox.Show("Tower can't be placed on the road");
+                }
+                else if (TowerExistsThere)
+                {
+                    MessageBox.Show("There is already a tower in the selected field");
+                }
+
+
             }
             else if (e.ChangedButton == MouseButton.Right)
             {

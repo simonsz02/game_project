@@ -58,7 +58,9 @@
     <Compile Include="GameItems\Bullet.cs" />
     <Compile Include="GameItems\Enemy.cs" />
     <Compile Include="Abstracts\GameItem.cs" />
+    <Compile Include="GameItems\GunTower.cs" />
     <Compile Include="GameItems\Missile.cs" />
+    <Compile Include="GameItems\RocketTower.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\ITower.cs" />
@@ -133,7 +135,10 @@
   <ItemGroup>
     <EmbeddedResource Include="Image\Field\dryground.bmp" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Image\Towers\gunTower.jpg" />
+    <Resource Include="Image\Towers\rocketTower.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Image\Castle\S2D0B800.BMP" />
     <EmbeddedResource Include="Image\Castle\S2D0B801.BMP" />

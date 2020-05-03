@@ -237,43 +237,23 @@ namespace TowerDefenseGame
             }
             return $"No enemy on the field";
         }
+
+
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
-            bool TowerExistsThere = false;
 
-            if (model.Towers.Count!=0)
-            {
-                foreach (Tower t in model.Towers)
-                {
-                    if (t.Area.X == GetTilePos(mousePos).X * model.TileSize &&
-                        t.Area.Y == GetTilePos(mousePos).Y * model.TileSize) TowerExistsThere = true;
-                }
-            }
-
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count<6 && !TowerExistsThere)
-            {
-                model.Towers.Add(new Tower(GetTilePos(mousePos).X * model.TileSize,
+                GunTower tempTower = new GunTower(GetTilePos(mousePos).X * model.TileSize,
                                            GetTilePos(mousePos).Y * model.TileSize,
                                            model.TileSize,
                                            model.TileSize,
                                            (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
                                            timer,
                                            damageType
-                                           ));
+                                           );
 
-            }
-            else if(model.Towers.Count == 6)
-            {
-                MessageBox.Show("Number of the towers has already reached its maximum");
-            }
-            else if(model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == true) 
-            {
-                MessageBox.Show("Tower can't be placed on the road");
-            }
-            else if (TowerExistsThere)
-            {
-                MessageBox.Show("There is already a tower in the selected field");
-            }
+                model.Towers.Add(tempTower);
+
+                model.Coins -= tempTower.Price;
 
         }
         /// <summary>
