@@ -5,25 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.GameItems;
 
 namespace TowerDefenseGame.Logic.Tests
 {
     [TestFixture]
     public class DamageTests
     {
-        [Test]
-        public void DamageEnemyTest()
+        [TestCase(4, DamageType.physical, 18)]
+        [TestCase(4, DamageType.fire, 16)]
+        public void DamageEnemyTest(int dmg, DamageType dmgt, int expect)
         {
             //Arrange
+<<<<<<< HEAD
             TowerDefenseModel model = new TowerDefenseModel(100, 100, 1500);
+=======
+>>>>>>> remotes/origin/master
             Enemy enemy = new Enemy(0, 0, 5, 5, 20, 2, new Point(0, 0), 5);
 
             //Act
-            enemy.ReceiveDamage(4, DamageType.fire, (Enemy e) => { model.Enemies.Remove(e); });
+            enemy.ReceiveDamage(dmg, dmgt, (e) => { });
 
             //Assert
-            Assert.AreEqual(enemy.Health, 16);
+            Assert.AreEqual(enemy.Health, expect);
         }
     }
 }

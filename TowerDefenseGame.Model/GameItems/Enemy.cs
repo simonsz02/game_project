@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.Interface;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.Interface;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Enemy : MovingGameItem, IEnemy
@@ -52,7 +52,7 @@ namespace TowerDefenseGame.GameItems
                     break;
                 case DamageType.air:
                     Health -= Math.Max(damage - Armor, 0) * 0.2;
-                    this.area.X += Movement * 3;
+                    area.X += Movement * 3;
                     break;
                 case DamageType.magic:
                     break;  

@@ -1,14 +1,20 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using TowerDefenseGame.Model;
 
-namespace TowerDefenseGame.Menu
+
+namespace TowerDefenseGame.Renderer
 {
-    class MenuRenderer
+    public class MenuRenderer
     {
         MenuModel model;
         DrawingGroup dg;
@@ -30,7 +36,17 @@ namespace TowerDefenseGame.Menu
         private void GetBackground()
         {
             Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
-            dg.Children.Add(new GeometryDrawing(Brushes.Black, null, backgroundGeometry));
+            BitmapImage img = new BitmapImage();
+            img.BeginInit();
+            img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Menu").First());
+            img.EndInit();
+            ImageBrush bgBrush = new ImageBrush(img)
+            {
+                TileMode = TileMode.Tile,
+                Viewport = new Rect(0, 0, model.GameWidth, model.GameHeight),
+                ViewportUnits = BrushMappingMode.Absolute
+            };
+            dg.Children.Add(new GeometryDrawing(bgBrush, null, backgroundGeometry));
         }
         private Drawing CreateButton(string text, double verticalShift)
         {
@@ -70,6 +86,24 @@ namespace TowerDefenseGame.Menu
 
             return streamGeometry;
         }
+        private string[] GetResourceInFolder(string file)
+        {
+            var assembly = Assembly.GetCallingAssembly();
+            var resourcesName = assembly.GetName().Name + ".g.resources";
+            var stream = assembly.GetManifestResourceStream(resourcesName);
+            var resourceReader = new ResourceReader(stream);
+            var resources =
+                from valval in resourceReader.OfType<DictionaryEntry>()
+                let theme = (string)valval.Key
+                where theme.StartsWith(file)
+                select theme.Substring(file.Length);
+            return resources.ToArray();
+        }
+        private string[] GetEmbendedResourceInFolder(string folder)
+        {
+            var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
+            string[] res = assembly.Where(x => x.Contains(folder)).Select(x => x).ToArray();
+            return res;
+        }
     }
-
 }

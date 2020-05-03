@@ -1,7 +1,7 @@
 ﻿using System;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Model
 {
     public interface IEnemy
     {

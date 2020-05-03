@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.Remoting.Contexts;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.IO;
 using System.Windows;
 using System.Windows.Media;
-using TowerDefenseGame.Menu;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Renderer;
 using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame

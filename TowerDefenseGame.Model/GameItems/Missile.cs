@@ -1,7 +1,7 @@
 ﻿using System;
-using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.Model.Abstracts;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Missile : Projectile
@@ -16,9 +16,9 @@ namespace TowerDefenseGame.GameItems
         /// <param name="die"></param>
         /// <param name="dmgtype">Type of damage</param>
         /// <returns>Returns true if the health of the target is above 0, false if not</returns>
-        public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dmgtype)
+        public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dt)
         {
-            return enemy.ReceiveDamage(Damage, dmgtype, die);
+            return enemy.ReceiveDamage(Damage, dt, die);
         }
     }
 }
