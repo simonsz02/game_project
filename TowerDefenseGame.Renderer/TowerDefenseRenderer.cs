@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Resources;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
+using TowerDefenseGame.Logic;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Renderer
 {
     [Serializable]
-    class TowerDefenseRenderer
+    public class TowerDefenseRenderer
     {
         TowerDefenseModel model;
 
@@ -51,15 +48,15 @@ namespace TowerDefenseGame
             {
                 DrawingGroup castle = new DrawingGroup();
                 Geometry upperCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0E800.BMP"), null, upperCorner));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e800.bmp").First()), null, upperCorner));
                 Geometry upperWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B800.BMP"), null, upperWall));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, upperWall));
                 Geometry gate = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B801.BMP"), null, gate));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b801.bmp").First()), null, gate));
                 Geometry lowerWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0B800.BMP"), null, lowerWall));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, lowerWall));
                 Geometry lowerCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush("TowerDefenseGame.Image.Castle.S2D0E810.BMP"), null, lowerCorner));
+                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e810.bmp").First()), null, lowerCorner));
                 oldCastle = castle;
             }
             return oldCastle;
@@ -77,7 +74,7 @@ namespace TowerDefenseGame
                 {
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
-                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("TowerDefenseGame.Image.Path.s200n802.bmp")[0]);
+                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Path.s200n802.bmp")[0]);
                     bi.Rotation = Rotation.Rotate270;
                     bi.EndInit();
                     imageCache.Add(key, bi);

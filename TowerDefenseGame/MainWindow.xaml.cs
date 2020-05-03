@@ -13,7 +13,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.GameItems;
 using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame

@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.Interface;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.Interface;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Enemy : MovingGameItem, IEnemy

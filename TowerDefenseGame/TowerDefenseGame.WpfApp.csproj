@@ -59,25 +59,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GameItems\Bullet.cs" />
-    <Compile Include="GameItems\Enemy.cs" />
-    <Compile Include="Abstracts\GameItem.cs" />
-    <Compile Include="GameItems\Missile.cs" />
-    <Compile Include="Interface\IEnemy.cs" />
-    <Compile Include="Interface\IGameItem.cs" />
-    <Compile Include="Interface\ITower.cs" />
-    <Compile Include="Interface\IProjectile.cs" />
-    <Compile Include="Abstracts\MovingGameItem.cs" />
-    <Compile Include="Abstracts\Projectile.cs" />
-    <Compile Include="GameItems\Tower.cs" />
     <Compile Include="MenuControl.cs" />
-    <Compile Include="Menu\MenuModel.cs" />
-    <Compile Include="Menu\MenuRenderer.cs" />
     <Compile Include="TowerDefenseControl.cs" />
-    <Compile Include="TowerDefenseLogic.cs" />
-    <Compile Include="TowerDefenseModel.cs" />
-    <Compile Include="TowerDefenseRenderer.cs" />
-    <Compile Include="TransformBitmap.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -119,34 +102,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TowerDefenseGame.Logic\TowerDefenseGame.Logic.csproj">
+      <Project>{727197c6-35bd-48f2-bfff-c854a22c28fc}</Project>
+      <Name>TowerDefenseGame.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame.Model\TowerDefenseGame.Model.csproj">
+      <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
+      <Name>TowerDefenseGame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame.Renderer\TowerDefenseGame.Renderer.csproj">
+      <Project>{6666f8fb-214e-499f-9880-14f0307c919d}</Project>
+      <Name>TowerDefenseGame.Renderer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TowerDefenseGame.Repository\TowerDefenseGame.Repository.csproj">
       <Project>{b7be39e3-239a-4532-98e6-5f7e1b45416e}</Project>
       <Name>TowerDefenseGame.Repository</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Field\grass.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Path\s200m800.bmp" />
-    <EmbeddedResource Include="Image\Path\s200m801.bmp" />
-    <EmbeddedResource Include="Image\Path\s200m802.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n801.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n802.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n803.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n804.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Field\dryground.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Castle\S2D0B800.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0B801.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0E800.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0E810.BMP" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Menu\menubg2.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

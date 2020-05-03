@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Threading;
-using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.Model.Abstracts;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Tower : GameItem, ITower

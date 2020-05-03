@@ -59,9 +59,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TowerDefenseGame\TowerDefenseGame.csproj">
+    <ProjectReference Include="..\TowerDefenseGame.Model\TowerDefenseGame.Model.csproj">
+      <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
+      <Name>TowerDefenseGame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame\TowerDefenseGame.WpfApp.csproj">
       <Project>{B53A7D2D-E6D1-4AC0-A2DE-0E5E30741BC4}</Project>
-      <Name>TowerDefenseGame</Name>
+      <Name>TowerDefenseGame.WpfApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TowerDefenseGame.Abstracts
+namespace TowerDefenseGame.Model.Abstracts
 {
     [Serializable]
     public abstract class GameItem

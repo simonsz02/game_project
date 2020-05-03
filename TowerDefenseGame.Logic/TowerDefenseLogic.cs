@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Logic
 {
     [Serializable]
-    class TowerDefenseLogic
+    public class TowerDefenseLogic
     {
         public static Random rnd = new Random();
 
@@ -183,7 +184,7 @@ namespace TowerDefenseGame
             }
             return enemy.Destination;
         }
-        internal void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
+        public void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
         {
             foreach (Tower tow in towerList)
             {
@@ -230,7 +231,8 @@ namespace TowerDefenseGame
             }
             else
             {
-                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+                //Ez a warning nem lehet ilyen itt
+                //MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
             }
 
         }
@@ -300,30 +302,7 @@ namespace TowerDefenseGame
         }
         private void InitModel(string fname)
         {
-            /*
-                     private void InitModel(string fname)
-                    {
-                        Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fname);
-                        StreamReader sr = new StreamReader(stream);
-                        string[] lines = sr.ReadToEnd().Replace("\r", "").Split('\n');
-
-                        int width = int.Parse(lines[0]);
-                        int height = int.Parse(lines[1]);
-                        model.Walls = new bool[width, height];
-                        model.TileSize = Math.Min(model.GameWidth/width, model.GameHeight/height);
-                        for (int x=0; x<width; x++)
-                        {
-                            for (int y = 0; y < height; y++)
-                            {
-                                char current = lines[y+2][x];
-                                model.Walls[x, y] = (current == 'e');
-                                if (current == 'S') model.Player = new Point(x, y);
-                                if (current == 'F') model.Exit = new Point(x, y);
-                            }
-                        }
-
-                    }  
-            */
+            throw new NotImplementedException();
         }
     }
 }

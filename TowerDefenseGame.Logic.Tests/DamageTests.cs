@@ -5,7 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.GameItems;
 
 namespace TowerDefenseGame.Logic.Tests
 {

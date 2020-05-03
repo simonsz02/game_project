@@ -7,7 +7,7 @@ using System.Drawing.Drawing2D;
 using System.IO;
 using System.Windows.Interop;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Renderer
 {
     public class TransformBitmap
     {

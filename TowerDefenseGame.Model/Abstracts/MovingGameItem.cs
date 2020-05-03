@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
-namespace TowerDefenseGame.Abstracts
+namespace TowerDefenseGame.Model.Abstracts
 {
     [Serializable]
     public abstract class MovingGameItem : GameItem

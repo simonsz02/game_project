@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
-using TowerDefenseGame.Interface;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Model
 {
     [Serializable]
     public enum DamageType
@@ -16,7 +12,7 @@ namespace TowerDefenseGame
         physical, frost, fire, earth, air, magic, poison
     }
     [Serializable]
-    class TowerDefenseModel
+    public class TowerDefenseModel
     {
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 

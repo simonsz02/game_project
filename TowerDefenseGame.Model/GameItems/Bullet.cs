@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.Model.Abstracts;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Bullet : Projectile
@@ -21,9 +21,9 @@ namespace TowerDefenseGame.GameItems
         /// <param name="die">Death handler</param>
         /// <param name="dmgType">Type of damage</param>
         /// <returns>Returns true if the health of the target is above 0, false if not</returns>
-        public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dmgType)
+        public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dt)
         {
-            return enemy.ReceiveDamage(this.Damage, dmgType, die);
-        }
+            return enemy.ReceiveDamage(Damage, dt, die);
+        }        
     }
 }

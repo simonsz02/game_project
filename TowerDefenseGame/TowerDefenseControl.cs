@@ -9,13 +9,16 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Logic;
+using TowerDefenseGame.Renderer;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
 
 namespace TowerDefenseGame
 {
     [Serializable]
-    class TowerDefenseControl : FrameworkElement
+    public class TowerDefenseControl : FrameworkElement
     {
         TowerDefenseLogic logic;
         TowerDefenseRenderer renderer;
