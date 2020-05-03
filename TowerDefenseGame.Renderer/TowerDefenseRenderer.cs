@@ -45,7 +45,6 @@ namespace TowerDefenseGame.Renderer
 
             return dg;
         }
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseRenderer.cs
 
         private Drawing NumberOfTowers()
         {
@@ -72,9 +71,6 @@ namespace TowerDefenseGame.Renderer
             return text;
         }
 
-=======
-        
->>>>>>> remotes/origin/master:TowerDefenseGame.Renderer/TowerDefenseRenderer.cs
         private Drawing GetCastle()
         {
             if (oldCastle==null)
@@ -247,12 +243,6 @@ namespace TowerDefenseGame.Renderer
 
             return oldTowers;
         }
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseRenderer.cs
-
-
-
-=======
->>>>>>> remotes/origin/master:TowerDefenseGame.Renderer/TowerDefenseRenderer.cs
         private ImageBrush GetImageBrush(string image)
         {
             if (imageBrushCache.ContainsKey(image))

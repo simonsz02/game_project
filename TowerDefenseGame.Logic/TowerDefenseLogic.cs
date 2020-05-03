@@ -216,61 +216,21 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseLogic.cs
-        /// <summary>
-        /// performancia tesztelés céljából van itt
-        /// </summary>
-        /// <returns></returns>
-        internal string GetDistances()
-        {
-            Point p = GetPosTile(new Point(7, 0));
-            Enemy target = null;
-            double minDis = double.MaxValue;
-            foreach (Enemy tar in model.Enemies)
-            {
-                double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
-                if (minDis > distanceSquared)
-                {
-                    minDis = distanceSquared;
-                    target = tar;
-                }
-            }
-            if (target != null)
-            {
-                Point res = GetTilePos(new Point(target.Area.X, target.Area.Y));
-                return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
-            }
-            return $"No enemy on the field";
-        }
-
-
-=======
->>>>>>> remotes/origin/master:TowerDefenseGame.Logic/TowerDefenseLogic.cs
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
 
-                GunTower tempTower = new GunTower(GetTilePos(mousePos).X * model.TileSize,
+                RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
                                            GetTilePos(mousePos).Y * model.TileSize,
                                            model.TileSize,
                                            model.TileSize,
                                            (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
                                            timer,
                                            damageType
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseLogic.cs
                                            );
 
                 model.Towers.Add(tempTower);
 
                 model.Coins -= tempTower.Price;
-=======
-                                           ));
-            }
-            else
-            {
-                //Ez a warning nem lehet ilyen itt
-                //MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
-            }
->>>>>>> remotes/origin/master:TowerDefenseGame.Logic/TowerDefenseLogic.cs
 
         }
         /// <summary>

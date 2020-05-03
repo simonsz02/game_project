@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Threading;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     public class GunTower : Tower
     {
