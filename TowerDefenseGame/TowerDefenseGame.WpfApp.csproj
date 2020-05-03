@@ -59,22 +59,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseGame.csproj
-    <Compile Include="GameItems\Bullet.cs" />
-    <Compile Include="GameItems\Enemy.cs" />
-    <Compile Include="Abstracts\GameItem.cs" />
-    <Compile Include="GameItems\GunTower.cs" />
-    <Compile Include="GameItems\Missile.cs" />
-    <Compile Include="GameItems\RocketTower.cs" />
-    <Compile Include="Interface\IEnemy.cs" />
-    <Compile Include="Interface\IGameItem.cs" />
-    <Compile Include="Interface\ITower.cs" />
-    <Compile Include="Interface\IProjectile.cs" />
-    <Compile Include="Abstracts\MovingGameItem.cs" />
-    <Compile Include="Abstracts\Projectile.cs" />
-    <Compile Include="GameItems\Tower.cs" />
-=======
->>>>>>> remotes/origin/master:TowerDefenseGame/TowerDefenseGame.WpfApp.csproj
     <Compile Include="MenuControl.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Page Include="MainWindow.xaml">
@@ -135,33 +119,5 @@
       <Name>TowerDefenseGame.Repository</Name>
     </ProjectReference>
   </ItemGroup>
-<<<<<<< HEAD:TowerDefenseGame/TowerDefenseGame.csproj
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Field\grass.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Path\s200m800.bmp" />
-    <EmbeddedResource Include="Image\Path\s200m801.bmp" />
-    <EmbeddedResource Include="Image\Path\s200m802.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n801.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n802.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n803.bmp" />
-    <EmbeddedResource Include="Image\Path\s200n804.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Field\dryground.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\Towers\gunTower.jpg" />
-    <Resource Include="Image\Towers\rocketTower.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Castle\S2D0B800.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0B801.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0E800.BMP" />
-    <EmbeddedResource Include="Image\Castle\S2D0E810.BMP" />
-  </ItemGroup>
-=======
->>>>>>> remotes/origin/master:TowerDefenseGame/TowerDefenseGame.WpfApp.csproj
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
