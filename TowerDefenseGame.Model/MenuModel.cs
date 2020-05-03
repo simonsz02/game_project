@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TowerDefenseGame.Menu
+namespace TowerDefenseGame.Model
 {
-    class MenuModel
+    public class MenuModel
     {
         public double GameWidth { get; set; }
         public double GameHeight { get; set; }

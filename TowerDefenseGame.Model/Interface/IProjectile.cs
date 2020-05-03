@@ -1,4 +1,4 @@
-﻿namespace TowerDefenseGame
+﻿namespace TowerDefenseGame.Model
 {
     public interface IProjectile
     {

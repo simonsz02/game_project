@@ -38,6 +38,9 @@
     <Reference Include="nunit.framework, Version=3.12.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.12.0\lib\net45\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="StyleCop, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
+      <HintPath>..\packages\StyleCop.6.1.0\lib\net40\StyleCop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -56,9 +59,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TowerDefenseGame\TowerDefenseGame.csproj">
+    <ProjectReference Include="..\TowerDefenseGame.Model\TowerDefenseGame.Model.csproj">
+      <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
+      <Name>TowerDefenseGame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame\TowerDefenseGame.WpfApp.csproj">
       <Project>{B53A7D2D-E6D1-4AC0-A2DE-0E5E30741BC4}</Project>
-      <Name>TowerDefenseGame</Name>
+      <Name>TowerDefenseGame.WpfApp</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

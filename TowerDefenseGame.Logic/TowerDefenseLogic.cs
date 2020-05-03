@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Logic
 {
     [Serializable]
-    class TowerDefenseLogic
+    public class TowerDefenseLogic
     {
+        public static Random rnd = new Random();
+
+        public bool debug = false;
+        public int baseTickSpeed = 40;
+
         TowerDefenseModel model;
 
         public TowerDefenseLogic(TowerDefenseModel model)
@@ -56,7 +62,6 @@ namespace TowerDefenseGame
                     if (model.Path[x, y])
                     {
                         model.Fields[x, y] = false;
-
                     }
                     else
                     {
@@ -75,19 +80,19 @@ namespace TowerDefenseGame
             {
                 if (enemy.Destination != null)
                 {
-                    Point destCoords = GetPosTile(enemy.Destination);
-                    double x = enemy.Area.X + Math.Sign(destCoords.X - enemy.Area.X) *
-                                 Math.Min(Math.Abs(destCoords.X - enemy.Area.X),
+                    Point destCoords = GetPosTileCentre(enemy.Destination);
+                    double x = enemy.Centre.X + Math.Sign(destCoords.X - enemy.Centre.X) *
+                                 Math.Min(Math.Abs(destCoords.X - enemy.Centre.X),
                                           (double)enemy.Movement);
-                    double y = enemy.Area.Y + Math.Sign(destCoords.Y - enemy.Area.Y) *
-                                 Math.Min(Math.Abs(destCoords.Y - enemy.Area.Y),
+                    double y = enemy.Centre.Y + Math.Sign(destCoords.Y - enemy.Centre.Y) *
+                                 Math.Min(Math.Abs(destCoords.Y - enemy.Centre.Y),
                                           (double)enemy.Movement);
                     if (destCoords.X == x &&
                          destCoords.Y == y)
                     {
                         SetNewDestionation(enemy);
                     }
-                    enemy.SetXY(x, y);
+                    enemy.Centre = new Point(x, y);
                 }
                 else
                 {
@@ -111,12 +116,12 @@ namespace TowerDefenseGame
                     {
                         delete.Add(p);
                     }
-                    destCoords = p.Target.Area.TopLeft;
-                    Vector v = Point.Subtract(destCoords, p.Area.TopLeft);
-                    p.Location = Point.Add(p.Area.TopLeft, Math.Min(v.Length, (double)p.Movement) * v / v.Length);
-                    if (destCoords == p.Area.TopLeft)
+                    destCoords = p.Target.Centre;
+                    Vector v = Point.Subtract(destCoords, p.Centre);
+                    p.Centre = Point.Add(p.Centre, Math.Min(v.Length, p.Movement) * v / v.Length);
+                    if (destCoords == p.Centre)
                     {
-                        if (model.debug)
+                        if (debug)
                         {
                             //MessageBox.Show("Találat!");
                         }
@@ -163,7 +168,6 @@ namespace TowerDefenseGame
                             if (model.Path[x + i, y + j])
                             {
                                 found = true;
-                                //MessageBox.Show("New Destionation: " + (x + i) + "-" + (y + j));
                                 enemy.Origin = enemy.Destination;
                                 if (x == 1)
                                 {
@@ -180,7 +184,7 @@ namespace TowerDefenseGame
             }
             return enemy.Destination;
         }
-        internal void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
+        public void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
         {
             foreach (Tower tow in towerList)
             {
@@ -189,7 +193,7 @@ namespace TowerDefenseGame
                     double minDis = double.MaxValue;
                     foreach (Enemy tar in enemyList)
                     {
-                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        double distanceSquared = (tar.Centre - tow.Centre).LengthSquared;
                         if (minDis > distanceSquared)
                         {
                             minDis = distanceSquared;
@@ -197,12 +201,12 @@ namespace TowerDefenseGame
                         }
                     }
                 }
-                else if (tow.Target.Health <= 0 | (tow.Location - tow.Target.Location).Length > tow.Range)
+                else if (tow.Target.Health <= 0 | (tow.Centre - tow.Target.Centre).Length > tow.Range)
                 {
                     double minDis = double.MaxValue;
                     foreach (Enemy tar in model.Enemies)
                     {
-                        double distanceSquared = (tar.Location - tow.Location).LengthSquared;
+                        double distanceSquared = (tar.Centre - tow.Centre).LengthSquared;
                         if (minDis > distanceSquared)
                         {
                             minDis = distanceSquared;
@@ -211,31 +215,6 @@ namespace TowerDefenseGame
                     }
                 }
             }
-        }
-        /// <summary>
-        /// performancia tesztelés céljából van itt
-        /// </summary>
-        /// <returns></returns>
-        internal string GetDistances()
-        {
-            Point p = GetPosTile(new Point(7, 0));
-            Enemy target = null;
-            double minDis = double.MaxValue;
-            foreach (Enemy tar in model.Enemies)
-            {
-                double distanceSquared = (new Point(tar.Area.X, tar.Area.Y) - p).LengthSquared;
-                if (minDis > distanceSquared)
-                {
-                    minDis = distanceSquared;
-                    target = tar;
-                }
-            }
-            if (target != null)
-            {
-                Point res = GetTilePos(new Point(target.Area.X, target.Area.Y));
-                return $"Nearest enemy to tile [7:0] is on tile: [{res.X}:{res.Y}]";
-            }
-            return $"No enemy on the field";
         }
         public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
@@ -252,7 +231,8 @@ namespace TowerDefenseGame
             }
             else
             {
-                MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
+                //Ez a warning nem lehet ilyen itt
+                //MessageBox.Show("Az útra nem lehet tornyot elhelyezni");
             }
 
         }
@@ -267,7 +247,7 @@ namespace TowerDefenseGame
                             (int)(mousePos.Y / model.TileSize));
         }
         /// <summary>
-        /// Gets top left quarter point of Tile
+        /// Gets top left quarter point of tile
         /// </summary>
         /// <param name="tile"></param>
         /// <returns>Point</returns>
@@ -275,6 +255,16 @@ namespace TowerDefenseGame
         {
             return new Point(tile.X * model.TileSize + model.TileSize / 4,
                               tile.Y * model.TileSize + model.TileSize / 4);
+        }
+        /// <summary>
+        /// Gets center coordinates of tile
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns>Point</returns>
+        public Point GetPosTileCentre(Point tile)
+        {
+            return new Point(tile.X * model.TileSize + model.TileSize / 2,
+                              tile.Y * model.TileSize + model.TileSize / 2);
         }
         private void SetPath(bool[,] path)
         {
@@ -312,30 +302,7 @@ namespace TowerDefenseGame
         }
         private void InitModel(string fname)
         {
-            /*
-                     private void InitModel(string fname)
-                    {
-                        Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(fname);
-                        StreamReader sr = new StreamReader(stream);
-                        string[] lines = sr.ReadToEnd().Replace("\r", "").Split('\n');
-
-                        int width = int.Parse(lines[0]);
-                        int height = int.Parse(lines[1]);
-                        model.Walls = new bool[width, height];
-                        model.TileSize = Math.Min(model.GameWidth/width, model.GameHeight/height);
-                        for (int x=0; x<width; x++)
-                        {
-                            for (int y = 0; y < height; y++)
-                            {
-                                char current = lines[y+2][x];
-                                model.Walls[x, y] = (current == 'e');
-                                if (current == 'S') model.Player = new Point(x, y);
-                                if (current == 'F') model.Exit = new Point(x, y);
-                            }
-                        }
-
-                    }  
-            */
+            throw new NotImplementedException();
         }
     }
 }

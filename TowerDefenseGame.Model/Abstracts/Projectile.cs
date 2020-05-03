@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.GameItems;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame.Abstracts
+namespace TowerDefenseGame.Model.Abstracts
 {
     [Serializable]
     public abstract class Projectile : MovingGameItem

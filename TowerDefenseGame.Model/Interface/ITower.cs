@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Model
 {
     public interface ITower
     {

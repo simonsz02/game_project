@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace TowerDefenseGame.Abstracts
+namespace TowerDefenseGame.Model.Abstracts
 {
     [Serializable]
     public abstract class GameItem
@@ -15,6 +15,20 @@ namespace TowerDefenseGame.Abstracts
         {
             get { return area; }
         }
+        public Point Centre
+        {
+            get
+            {
+                return Point.Add( Area.Location, 
+                         new Vector(Area.Width / 2, Area.Height / 2));
+            }
+            set
+            {
+                area.Location = Point.Subtract(value,
+                         new Vector(Area.Width / 2, Area.Height / 2));
+            }
+        }
+
         public Point Location
         {
             get

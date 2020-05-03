@@ -1,26 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using TowerDefenseGame.Abstracts;
-using TowerDefenseGame.GameItems;
-using TowerDefenseGame.Interface;
+using TowerDefenseGame.Model.Abstracts;
+using TowerDefenseGame.Model.GameItems;
 
-namespace TowerDefenseGame
+namespace TowerDefenseGame.Model
 {
+    [Serializable]
     public enum DamageType
     {
         physical, frost, fire, earth, air, magic, poison
     }
     [Serializable]
-    class TowerDefenseModel
+    public class TowerDefenseModel
     {
-        public static Random rnd = new Random();
-
-        public bool debug = false;
-        public int baseTickSpeed = 40;
         private readonly List<Enemy> enemies = new List<Enemy>();
         private readonly List<Tower> towers = new List<Tower>(); 
         private readonly List<Projectile> projectiles = new List<Projectile>(); 
@@ -29,7 +22,6 @@ namespace TowerDefenseGame
         public List<Projectile> Projectiles { get { return projectiles; } }
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
-        public bool[,] Towerplaces { get; set; }
         public double GameWidth { get; set; }
         public double GameHeight { get; set; }
         public double TileSize { get; set; }

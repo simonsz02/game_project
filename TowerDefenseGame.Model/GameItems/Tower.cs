@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Windows.Threading;
-using TowerDefenseGame.Abstracts;
+using TowerDefenseGame.Model.Abstracts;
 
-namespace TowerDefenseGame.GameItems
+namespace TowerDefenseGame.Model.GameItems
 {
     [Serializable]
     public class Tower : GameItem, ITower
     {
+        // Ez a flag jelzi, hogy eltelt-e elég idő egy újabb lövés leadásához
+        bool canShot;
         public int Armour { get; set; }
         public double SlowDown { get; set; }
         public int SelfHealing { get; set; }
@@ -24,34 +26,32 @@ namespace TowerDefenseGame.GameItems
         // Ez a metódus hozza létre a Projectile típusú objektumot, 
         // aminek a sebzéstípusa a torony sebzéstípusa lesz
         Action<double, double, double, double, int, int, DamageType, Enemy> LoadGun;
-        // Ez a flag jelzi, hogy eltelt-e elég idő egy újabb lövés leadásához
-        bool CanShoot { get; set; }
 
         public Tower(double x, double y, double w, double h, Action<double, double, double, double, int, int, DamageType, Enemy> L, DispatcherTimer timer, DamageType dt = DamageType.physical) : base(x, y, w, h)
         {
             target = null;
-            CanShoot = false;
+            canShot = false;
             LoadGun = L;
             timer.Tick += Timer_Tick;
             //Ennek lehet hogy nem itt kéne lennie
-            Range = 300;
+            Range = 2*w;
             TypeOfDamage = dt;
         }
 
         public void Timer_Tick(object sender, EventArgs e)
         {
-            CanShoot = true;
+            canShot = true;
             Boom();
         }
 
         private void Boom()
         {
-            if (target != null & CanShoot)
+            if (target != null & canShot)
             {
-                if (target.Health > 0 & (target.Location - Location).Length < Range)
+                if (target.Health > 0 & (target.Centre - Centre).Length < Range)
                 {
-                    LoadGun(Area.X, Area.Y, Area.Width, Area.Height, 8, 10, TypeOfDamage, Target);
-                    CanShoot = false;
+                    LoadGun(Centre.X, Centre.Y, Area.Width, Area.Height, 8, 10, TypeOfDamage, Target);
+                    canShot = false;
                 }
             }
         }
