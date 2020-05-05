@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.Serialization;
 using System.Windows.Threading;
 using TowerDefenseGame.Model.Abstracts;
 
@@ -26,7 +27,7 @@ namespace TowerDefenseGame.Model.GameItems
         // aminek a sebzéstípusa a torony sebzéstípusa lesz
         Action<double, double, double, double, int, int, DamageType, Enemy> LoadGun;
 
-        public Tower(double x, double y, double w, double h, Action<double, double, double, double, int, int, DamageType, Enemy> L, DispatcherTimer timer, DamageType dt = DamageType.physical) : base(x, y, w, h)
+        public Tower(double x, double y, double w, double h, Action<double, double, double, double, int, int, DamageType, Enemy>L, DispatcherTimer timer, DamageType dt = DamageType.physical) : base(x, y, w, h)
         {
             target = null;
             canShot = false;
@@ -36,13 +37,11 @@ namespace TowerDefenseGame.Model.GameItems
             Range = 2*w;
             TypeOfDamage = dt;
         }
-
         public void Timer_Tick(object sender, EventArgs e)
         {
             canShot = true;
             Boom();
         }
-
         private void Boom()
         {
             if (target != null & canShot)

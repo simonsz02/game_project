@@ -14,6 +14,7 @@ using TowerDefenseGame.Logic;
 using TowerDefenseGame.Renderer;
 using TowerDefenseGame.Model.Abstracts;
 using TowerDefenseGame.Model.GameItems;
+using System.Media;
 
 namespace TowerDefenseGame
 {
@@ -27,6 +28,8 @@ namespace TowerDefenseGame
         DispatcherTimer tickTimer;
         DispatcherTimer spawnEnemyTimer;
         DispatcherTimer towerShotTimer;
+        private DamageType choosenDamageType = DamageType.physical;
+        SoundPlayer pl = new SoundPlayer();
 
         public TowerDefenseModel Model { get => model; set => model = value; }
 
@@ -79,17 +82,13 @@ namespace TowerDefenseGame
 
         private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
         {
-            ///TODO create logic of spawning different enemies
             if (!logic.debug)
             {
-                model.Enemies.Add(new Enemy(model.EntryPoint.X,
-                                            model.EntryPoint.Y,
-                                            model.TileSize / 2,
-                                            model.TileSize / 2,
-                                            50,
-                                            5,
-                                            logic.GetTilePos(model.EntryPoint),
-                                            5));
+                if (logic.SpawnNewEnemy() == 1)
+                {
+                    pl.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Media\\BigArrival.wav";
+                    pl.Play();
+                }
                 InvalidateVisual();
             }
         }
@@ -119,7 +118,7 @@ namespace TowerDefenseGame
 
                 if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && !TowerExistsThere)
                 {
-                    logic.AddTower(mousePos, towerShotTimer);
+                    logic.AddTower(mousePos, towerShotTimer, choosenDamageType);
                 }
                 else if (model.Towers.Count == 6)
                 {
@@ -138,7 +137,7 @@ namespace TowerDefenseGame
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                logic.AddTower(mousePos, towerShotTimer, DamageType.poison);
+                //Ide jön a toronyrombolás
             }
             InvalidateVisual();
         }        
@@ -160,14 +159,12 @@ namespace TowerDefenseGame
                         InvalidateVisual();
                     }
                     break;
-
                 case Key.A:
                     if (logic.debug)
                     {
                         model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.magic, model.Enemies.First()));
                     }
                     break;
-
                 case Key.D:
                     if (logic.debug)
                     {
@@ -178,6 +175,25 @@ namespace TowerDefenseGame
                     spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
                     towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
                     break;
+                case Key.D0:
+                    choosenDamageType = DamageType.physical;
+                    break;
+                case Key.D1:
+                    choosenDamageType = DamageType.poison;
+                    break;
+                case Key.D2:
+                    choosenDamageType = DamageType.fire;
+                    break;
+                case Key.D3:
+                    choosenDamageType = DamageType.frost;
+                    break;
+                case Key.D4:
+                    choosenDamageType = DamageType.air;
+                    break;
+                case Key.D5:
+                    choosenDamageType = DamageType.earth;
+                    break;
+
             }
         }
         protected override void OnRender(DrawingContext drawingContext)

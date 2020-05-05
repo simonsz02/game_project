@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TowerDefenseGame.Model;
@@ -17,6 +18,7 @@ namespace TowerDefenseGame.Logic
 
         public bool debug = false;
         public int baseTickSpeed = 40;
+        int enemyCounter = 0;
 
         TowerDefenseModel model;
 
@@ -100,6 +102,41 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
+
+        public int SpawnNewEnemy()
+        {
+            int res = 0;
+            double hp = rnd.Next(50, 100);
+            model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                        model.EntryPoint.Y,
+                                        model.TileSize / 2,
+                                        model.TileSize / 2,
+                                        hp,
+                                        rnd.Next(2,10),
+                                        GetTilePos(model.EntryPoint),
+                                        rnd.Next(3, 7)));
+            enemyCounter++;
+            if ((hp%19)==0)
+            {
+                Thread.Sleep(baseTickSpeed*20);
+                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                            model.EntryPoint.Y,
+                                            model.TileSize / 2,
+                                            model.TileSize / 2,
+                                            hp*3,
+                                            rnd.Next(10, 25),
+                                            GetTilePos(model.EntryPoint),
+                                            rnd.Next(3, 4)));
+                enemyCounter++;
+                res = 1;
+            }
+            if (enemyCounter%10==0)
+            {
+                baseTickSpeed--;
+            }
+            return res;
+        }
+
         /// <summary>
         /// Move all existing projectiles
         /// </summary>
@@ -112,7 +149,7 @@ namespace TowerDefenseGame.Logic
             {
                 if (p.Target != null)
                 {
-                    if (p.Target.Health < 0)
+                    if (p.Target.Health <= 0)
                     {
                         delete.Add(p);
                     }
