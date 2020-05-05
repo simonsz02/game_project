@@ -173,12 +173,12 @@ namespace TowerDefenseGame.Logic
                         if (!p.CauseDamage(p.Target, 
                                            (Enemy e) => {
                                                deleteEnemies.Add(e);
-                                               //TODO Coins növelés az enemy coin értékével
+                                               model.Coins += p.Target.Reward;
                                            }, 
                                            p.TypeOfDamage))
                         {
                             model.Enemies.Remove(p.Target);
-                            //TODO
+                            model.Coins += p.Target.Reward;
                         }
                     }
                 }
