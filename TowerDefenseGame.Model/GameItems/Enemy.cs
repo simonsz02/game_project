@@ -15,10 +15,14 @@ namespace TowerDefenseGame.Model.GameItems
     {
         double health;
         double armor;
+        int reward;
         //Represents the survival abiltiy of the unit
         public double Health { get { return health; } set { health = value; } }
-        //Represents the damage mitigation ability of of the unit
+        //Represents the damage mitigation ability of the unit
         public double Armor { get { return armor; } set { armor = value; } }
+        ////Represents the reward the player gets after killing the given enemy. 
+        ///The reward depends on how fast and healthy the killed enemy was
+        public int Reward { get { return reward; } }
         /// <summary>
         /// This class represents an enemy
         /// </summary>
@@ -34,6 +38,7 @@ namespace TowerDefenseGame.Model.GameItems
         {
             this.health = health;
             this.armor = armor;
+            this.reward = (int)health * (int)m/2;
         }
         /// <summary>
         /// Every unit handles its received damage on its own
