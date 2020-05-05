@@ -20,6 +20,8 @@ namespace TowerDefenseGame.Logic
         public int baseTickSpeed = 40;
         int enemyCounter = 0;
 
+        List<Enemy> deleteEnemies = new List<Enemy>();
+
         TowerDefenseModel model;
 
         public TowerDefenseLogic(TowerDefenseModel model)
@@ -101,9 +103,14 @@ namespace TowerDefenseGame.Logic
                     enemy.Destination = GetTilePos(model.EntryPoint);
                 }
             }
+            foreach (Enemy e in deleteEnemies)
+            {
+                model.Enemies.Remove(e);
+            }
+            deleteEnemies = new List<Enemy>();
         }
 
-        public int SpawnNewEnemy()
+        public int SpawnNewEnemy(Action raiseSpawnSpeed)
         {
             int res = 0;
             double hp = rnd.Next(50, 100);
@@ -121,8 +128,8 @@ namespace TowerDefenseGame.Logic
                 Thread.Sleep(baseTickSpeed*20);
                 model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                             model.EntryPoint.Y,
-                                            model.TileSize / 2,
-                                            model.TileSize / 2,
+                                            model.TileSize / 3 * 2,
+                                            model.TileSize / 3 * 2,
                                             hp*3,
                                             rnd.Next(10, 25),
                                             GetTilePos(model.EntryPoint),
@@ -132,7 +139,7 @@ namespace TowerDefenseGame.Logic
             }
             if (enemyCounter%10==0)
             {
-                baseTickSpeed--;
+                raiseSpawnSpeed();
             }
             return res;
         }
@@ -163,9 +170,15 @@ namespace TowerDefenseGame.Logic
                             //MessageBox.Show("Találat!");
                         }
                         delete.Add(p);
-                        if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }, p.TypeOfDamage))
+                        if (!p.CauseDamage(p.Target, 
+                                           (Enemy e) => {
+                                               deleteEnemies.Add(e);
+                                               //TODO Coins növelés az enemy coin értékével
+                                           }, 
+                                           p.TypeOfDamage))
                         {
                             model.Enemies.Remove(p.Target);
+                            //TODO Coins növelés az enemy coin értékével
                         }
                     }
                 }
@@ -191,7 +204,11 @@ namespace TowerDefenseGame.Logic
             int x = (int)pos.X;
             int y = (int)pos.Y;
             bool found = false;
-
+            if (enemy.Area.Right < 0)
+            {
+                deleteEnemies.Add((Enemy)enemy);
+                //TODO sebződik a CASTLE
+            }
             for (int i = -1; i < 2; i++)
             {
                 for (int j = -1; j < 2; j++)
@@ -208,6 +225,7 @@ namespace TowerDefenseGame.Logic
                                 enemy.Origin = enemy.Destination;
                                 if (x == 1)
                                 {
+                                    // az utolsó csempéről lesétál az ellen a pályáról
                                     enemy.Destination = new Point(x + i - 1, y + j);
                                 }
                                 else

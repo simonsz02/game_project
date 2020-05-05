@@ -32,6 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="StyleCop, Version=6.1.0.0, Culture=neutral, PublicKeyToken=f904653c63bc2738, processorArchitecture=MSIL">
+      <HintPath>..\packages\StyleCop.6.1.0\lib\net40\StyleCop.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -95,6 +98,9 @@
     <EmbeddedResource Include="Image\Castle\s2d0b801.bmp" />
     <EmbeddedResource Include="Image\Castle\s2d0e800.bmp" />
     <EmbeddedResource Include="Image\Castle\s2d0e810.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

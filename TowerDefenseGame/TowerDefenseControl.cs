@@ -84,7 +84,7 @@ namespace TowerDefenseGame
         {
             if (!logic.debug)
             {
-                if (logic.SpawnNewEnemy() == 1)
+                if (logic.SpawnNewEnemy(() => { spawnEnemyTimer.Interval = TimeSpan.FromMilliseconds((logic.baseTickSpeed * 125) - 50); } ) == 1)
                 {
                     pl.SoundLocation = AppDomain.CurrentDomain.BaseDirectory + "\\Media\\BigArrival.wav";
                     pl.Play();
@@ -132,8 +132,6 @@ namespace TowerDefenseGame
                 {
                     MessageBox.Show("There is already a tower in the selected field");
                 }
-
-
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
