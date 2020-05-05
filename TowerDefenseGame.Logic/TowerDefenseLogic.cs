@@ -178,7 +178,7 @@ namespace TowerDefenseGame.Logic
                                            p.TypeOfDamage))
                         {
                             model.Enemies.Remove(p.Target);
-                            //TODO Coins növelés az enemy coin értékével
+                            //TODO
                         }
                     }
                 }
