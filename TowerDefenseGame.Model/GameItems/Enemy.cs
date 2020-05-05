@@ -19,7 +19,17 @@ namespace TowerDefenseGame.Model.GameItems
         public double Health { get { return health; } set { health = value; } }
         //Represents the damage mitigation ability of of the unit
         public double Armor { get { return armor; } set { armor = value; } }
-
+        /// <summary>
+        /// This class represents an enemy
+        /// </summary>
+        /// <param name="x">position X coordinate</param>
+        /// <param name="y">position Y coordinate</param>
+        /// <param name="w">width of unit pixels</param>
+        /// <param name="h">height of unit in pixels</param>
+        /// <param name="health">Health</param>
+        /// <param name="armor">Armor</param>
+        /// <param name="d">Initial destination</param>
+        /// <param name="m">Movement pixels/tick</param>
         public Enemy(double x, double y, double w, double h, double health, double armor, Point d, double m) : base(x, y, w, h, d, m)
         {
             this.health = health;
@@ -52,12 +62,44 @@ namespace TowerDefenseGame.Model.GameItems
                     break;
                 case DamageType.air:
                     Health -= Math.Max(damage - Armor, 0) * 0.2;
-                    area.X += Movement * 3;
+                    switch (Math.Round(health)%8)
+                    {
+                        case 0:
+                            area.X += Movement * 20;
+                            break;
+                        case 1:
+                            area.X -= Movement * 20;
+                            break;
+                        case 2:
+                            area.Y += Movement * 20;
+                            break;
+                        case 3:
+                            area.Y -= Movement * 20;
+                            break;
+                        case 4:
+                            area.X += Movement * 20;
+                            area.Y -= Movement * 20;
+                            break;
+                        case 5:
+                            area.X -= Movement * 20;
+                            area.Y += Movement * 20;
+                            break;
+                        case 6:
+                            area.X += Movement * 20;
+                            area.Y += Movement * 20;
+                            break;
+                        case 7:
+                            area.X -= Movement * 20;
+                            area.Y -= Movement * 20;
+                            break;
+                        case 8:
+                            area.Y -= Movement * 20;
+                            break;
+                    }
                     break;
                 case DamageType.magic:
                     break;  
                 case DamageType.poison:
-                    //MessageBox.Show($"Health: {Health}\nDamage: {damage}");
                     //Poison típusú sebzésnél a sebzés másodpercenként feleződik,
                     //ameddig többet sebezne, mint 2
                     if (damage > 2 && Health > 0)

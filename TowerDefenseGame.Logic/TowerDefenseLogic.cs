@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using TowerDefenseGame.Model;
@@ -17,6 +18,9 @@ namespace TowerDefenseGame.Logic
 
         public bool debug = false;
         public int baseTickSpeed = 40;
+        int enemyCounter = 0;
+
+        List<Enemy> deleteEnemies = new List<Enemy>();
 
         TowerDefenseModel model;
 
@@ -99,7 +103,47 @@ namespace TowerDefenseGame.Logic
                     enemy.Destination = GetTilePos(model.EntryPoint);
                 }
             }
+            foreach (Enemy e in deleteEnemies)
+            {
+                model.Enemies.Remove(e);
+            }
+            deleteEnemies = new List<Enemy>();
         }
+
+        public int SpawnNewEnemy(Action raiseSpawnSpeed)
+        {
+            int res = 0;
+            double hp = rnd.Next(50, 100);
+            model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                        model.EntryPoint.Y,
+                                        model.TileSize / 2,
+                                        model.TileSize / 2,
+                                        hp,
+                                        rnd.Next(2,10),
+                                        GetTilePos(model.EntryPoint),
+                                        rnd.Next(3, 7)));
+            enemyCounter++;
+            if ((hp%19)==0)
+            {
+                Thread.Sleep(baseTickSpeed*20);
+                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+                                            model.EntryPoint.Y,
+                                            model.TileSize / 3 * 2,
+                                            model.TileSize / 3 * 2,
+                                            hp*3,
+                                            rnd.Next(10, 25),
+                                            GetTilePos(model.EntryPoint),
+                                            rnd.Next(3, 4)));
+                enemyCounter++;
+                res = 1;
+            }
+            if (enemyCounter%10==0)
+            {
+                raiseSpawnSpeed();
+            }
+            return res;
+        }
+
         /// <summary>
         /// Move all existing projectiles
         /// </summary>
@@ -112,7 +156,7 @@ namespace TowerDefenseGame.Logic
             {
                 if (p.Target != null)
                 {
-                    if (p.Target.Health < 0)
+                    if (p.Target.Health <= 0)
                     {
                         delete.Add(p);
                     }
@@ -126,9 +170,15 @@ namespace TowerDefenseGame.Logic
                             //MessageBox.Show("Találat!");
                         }
                         delete.Add(p);
-                        if (!p.CauseDamage(p.Target, (Enemy e) => { model.Enemies.Remove(e); }, p.TypeOfDamage))
+                        if (!p.CauseDamage(p.Target, 
+                                           (Enemy e) => {
+                                               deleteEnemies.Add(e);
+                                               //TODO Coins növelés az enemy coin értékével
+                                           }, 
+                                           p.TypeOfDamage))
                         {
                             model.Enemies.Remove(p.Target);
+                            //TODO Coins növelés az enemy coin értékével
                         }
                     }
                 }
@@ -154,7 +204,11 @@ namespace TowerDefenseGame.Logic
             int x = (int)pos.X;
             int y = (int)pos.Y;
             bool found = false;
-
+            if (enemy.Area.Right < 0)
+            {
+                deleteEnemies.Add((Enemy)enemy);
+                //TODO sebződik a CASTLE
+            }
             for (int i = -1; i < 2; i++)
             {
                 for (int j = -1; j < 2; j++)
@@ -171,6 +225,7 @@ namespace TowerDefenseGame.Logic
                                 enemy.Origin = enemy.Destination;
                                 if (x == 1)
                                 {
+                                    // az utolsó csempéről lesétál az ellen a pályáról
                                     enemy.Destination = new Point(x + i - 1, y + j);
                                 }
                                 else

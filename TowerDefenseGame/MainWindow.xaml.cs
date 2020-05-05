@@ -43,7 +43,7 @@ namespace TowerDefenseGame
         {
             if (Content.GetType().Name== "TowerDefenseControl")
             {
-                SerializationAsBinary.Export<TowerDefenseModel>("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
+                SerializationAsBinary.Export("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
             }
         }
     }

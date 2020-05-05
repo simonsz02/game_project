@@ -18,10 +18,6 @@ namespace TowerDefenseGame.Logic.Tests
         public void DamageEnemyTest(int dmg, DamageType dmgt, int expect)
         {
             //Arrange
-<<<<<<< HEAD
-            TowerDefenseModel model = new TowerDefenseModel(100, 100, 1500);
-=======
->>>>>>> remotes/origin/master
             Enemy enemy = new Enemy(0, 0, 5, 5, 20, 2, new Point(0, 0), 5);
 
             //Act

@@ -49,7 +49,7 @@ namespace TowerDefenseGame.Renderer
         private Drawing NumberOfTowers()
         {
             GeometryDrawing text;
-
+            
             FormattedText formattedText = new FormattedText($"{model.Towers.Count.ToString()} / 6", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
             if(model.Towers.Count < 6)
             {
