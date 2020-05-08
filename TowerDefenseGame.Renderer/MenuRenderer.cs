@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Resources;
@@ -19,10 +20,29 @@ namespace TowerDefenseGame.Renderer
         MenuModel model;
         DrawingGroup dg;
         public Drawing[] MenuItems { get; private set; }
+        public bool showHighScoreList { get; set; }
+        struct Row : IComparable
+        {
+            public Row(string name, int score)
+            {
+                Name = name;
+                Score = score;
+            }
+
+            public string Name { get; set; }
+            public int Score { get; set; }
+
+            public int CompareTo(Object obj)
+            {
+                return Score.CompareTo(((Row)obj).Score);
+            }
+        }
+
         public MenuRenderer(MenuModel model)
         {
             this.model = model;
             MenuItems = new GeometryDrawing[3];
+            showHighScoreList = false;
         }
         public Drawing BuildDrawing()
         {
@@ -31,8 +51,73 @@ namespace TowerDefenseGame.Renderer
             MenuItems[0] = CreateButton("New Game", 100);
             MenuItems[1] = CreateButton("Load Game", 160);
             MenuItems[2] = CreateButton("Highscore", 220);
+            if (showHighScoreList)
+            {
+                GetHighScore(new Point(model.GameWidth / 2, 280));
+            }
             return dg;
         }
+
+        private void GetHighScore(Point reference)
+        {
+            dg.Children.Add(new GeometryDrawing(Brushes.Black,
+                                                new Pen(Brushes.ForestGreen, 1),
+                                                GetFixTetragonal(new Vector(-200, -20),
+                                                                new Vector(200, -20),
+                                                                new Vector(200, 300),
+                                                                new Vector(-200, 300),
+                                                                reference
+                                                                )));
+            dg.Children.Add(new GeometryDrawing(Brushes.ForestGreen,
+                                                new Pen(Brushes.ForestGreen, 1),
+                                                new LineGeometry(new Point(reference.X, reference.Y),
+                                                                 new Point(reference.X, reference.Y += 280))
+                                                ));
+            List<Row> hsk = readHighScoreFile();
+            hsk.Sort((x, y) => y.CompareTo(x));
+            FormattedText formattedText;
+            for (int i = 0; i < Math.Min(hsk.Count,10); i++)
+            {
+                formattedText = new FormattedText(hsk[i].Name,
+                                                  System.Globalization.CultureInfo.CurrentCulture,
+                                                  FlowDirection.LeftToRight,
+                                                  new Typeface("Calibri"),
+                                                  16,
+                                                  Brushes.White);
+                GeometryDrawing nameText = new GeometryDrawing(null,
+                    new Pen(Brushes.White, 1),
+                    formattedText.BuildGeometry(Point.Add(new Point(model.GameWidth / 2, 280 + i * 20), new Vector(-150, -5))));
+                dg.Children.Add(nameText);
+
+                formattedText = new FormattedText(hsk[i].Score.ToString(),
+                                                  System.Globalization.CultureInfo.CurrentCulture,
+                                                  FlowDirection.LeftToRight,
+                                                  new Typeface("Calibri"),
+                                                  16,
+                                                  Brushes.White);
+                GeometryDrawing scoreText = new GeometryDrawing(null,
+                    new Pen(Brushes.White, 1),
+                    formattedText.BuildGeometry(Point.Add(new Point(model.GameWidth / 2, 280 + i * 20), new Vector(30, -5))));
+                dg.Children.Add(scoreText);
+            }
+        }
+
+        private List<Row> readHighScoreFile()
+        {
+            var list = new List<Row>();
+            var fileStream = new FileStream(@"highscore.txt", FileMode.Open, FileAccess.Read);
+            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
+            {
+                string line;
+                while ((line = streamReader.ReadLine()) != null)
+                {
+
+                    list.Add(new Row(line.Split(':')[0], int.Parse(line.Split(':')[1])));
+                }
+            }
+            return list;
+        }
+
         private void GetBackground()
         {
             Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
@@ -52,22 +137,23 @@ namespace TowerDefenseGame.Renderer
         {
             double vertical = verticalShift;
             Drawing button = new GeometryDrawing(Brushes.Lime,
-                                                          new Pen(Brushes.ForestGreen, 1),
-                                                          GetFixTetragonal(new Vector(-200, -20),
-                                                                           new Vector(200, -10),
-                                                                           new Vector(160, 30),
-                                                                           new Vector(-150, 20),
-                                                                           new Point(model.GameWidth / 2, vertical)
-                                                                           )
-                                                          );
+                                                 new Pen(Brushes.ForestGreen, 1),
+                                                 GetFixTetragonal(new Vector(-200, -20),
+                                                                  new Vector(200, -10),
+                                                                  new Vector(160, 30),
+                                                                  new Vector(-150, 20),
+                                                                  new Point(model.GameWidth / 2, vertical)
+                                                                  )
+                                                 );
             FormattedText formattedText = new FormattedText(text,
                 System.Globalization.CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
                 new Typeface("Calibri"),
                 16,
                 Brushes.Black);
-            GeometryDrawing buttonText = new GeometryDrawing(null, new Pen(Brushes.Black, 1),
-                formattedText.BuildGeometry(Point.Add(new Point(model.GameWidth / 2, vertical), new Vector(-30, -5))));
+            GeometryDrawing buttonText = new GeometryDrawing(null, new 
+                        Pen(Brushes.Black, 1),
+                        formattedText.BuildGeometry(Point.Add(new Point(model.GameWidth / 2, vertical), new Vector(-30, -5))));
 
             dg.Children.Add(button);
             dg.Children.Add(buttonText);
@@ -83,7 +169,6 @@ namespace TowerDefenseGame.Renderer
                 geometryContext.BeginFigure(points[0], true, true);
                 geometryContext.PolyLineTo(points, true, true);
             }
-
             return streamGeometry;
         }
         private string[] GetResourceInFolder(string file)

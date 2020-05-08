@@ -102,5 +102,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\Enemy\scythe.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Image\Enemy\scythe_small.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
