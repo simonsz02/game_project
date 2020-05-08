@@ -59,6 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="HighScoreWindow.cs" />
     <Compile Include="MenuControl.cs" />
     <Compile Include="TowerDefenseControl.cs" />
     <Page Include="MainWindow.xaml">

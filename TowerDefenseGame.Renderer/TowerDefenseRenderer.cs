@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -99,21 +100,28 @@ namespace TowerDefenseGame.Renderer
             foreach (MovingGameItem enemy in model.Enemies)
             {
                 int key = enemy.GetHashCode();
+
                 if (!imageCache.ContainsKey(key))
                 {
+                    /*
                     BitmapImage bi = new BitmapImage();
                     bi.BeginInit();
-                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Path.s200n802.bmp")[0]);
+                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Enemy.scythe.png")[0]);
                     bi.Rotation = Rotation.Rotate270;
                     bi.EndInit();
+                    */
+                    System.Drawing.Bitmap bim = new System.Drawing.Bitmap(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe_small.png");
+                    BitmapImage bi = ToBitmapImage(bim);
+                    //BitmapImage bi = new BitmapImage(new Uri(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe.png", UriKind.Absolute));
+
                     imageCache.Add(key, bi);
                 }
                 ImageDrawing img = new ImageDrawing
-                {
+                {                   
                     Rect = enemy.Area,
                     ImageSource = imageCache[key]
-                };
-                dg.Children.Add(img);     
+                };               
+                dg.Children.Add(img);
             }
         }
         /// <summary>
@@ -271,6 +279,24 @@ namespace TowerDefenseGame.Renderer
             var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
             string[] res = assembly.Where(x => x.Contains(folder)).Select(x => x).ToArray();
             return res;
+        }
+        private BitmapImage ToBitmapImage(System.Drawing.Bitmap bitmap)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                bitmap.Save(stream, System.Drawing.Imaging.ImageFormat.Png); // Was .Bmp, but this did not show a transparent background.
+
+                stream.Position = 0;
+                BitmapImage result = new BitmapImage();
+                result.BeginInit();
+                // According to MSDN, "The default OnDemand cache option retains access to the stream until the image is needed."
+                // Force the bitmap to load right now so we can dispose the stream.
+                result.CacheOption = BitmapCacheOption.OnLoad;
+                result.StreamSource = stream;
+                result.EndInit();
+                result.Freeze();
+                return result;
+            }
         }
     }
 }

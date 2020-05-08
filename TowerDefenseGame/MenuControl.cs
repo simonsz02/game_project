@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 using TowerDefenseGame.Model;
 using TowerDefenseGame.Renderer;
@@ -52,7 +53,8 @@ namespace TowerDefenseGame
                             }
                             break;
                         case 2:
-                            MessageBox.Show("Highscore nem megvalósított");
+                            renderer.showHighScoreList = !renderer.showHighScoreList;
+                            InvalidateVisual();
                             break;
                         default:
                             break;
