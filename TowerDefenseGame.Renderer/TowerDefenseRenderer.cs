@@ -41,7 +41,7 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(NumberOfTowers());
             dg.Children.Add(NumberOfCoins());
 
-            AddEnemiesDrawing(dg);
+            //AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
 
             return dg;

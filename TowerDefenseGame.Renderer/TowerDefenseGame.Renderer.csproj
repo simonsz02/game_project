@@ -67,9 +67,6 @@
     <EmbeddedResource Include="Image\Field\dryground.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Image\Field\grass.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Image\Menu\menubg2.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +104,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Image\Enemy\scythe_small.png" />
+    <EmbeddedResource Include="Image\Field\grass.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet1.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet2.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet3.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket1.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket2.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket3.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
