@@ -279,7 +279,11 @@ namespace TowerDefenseGame.Logic
             if (model.Towers.Count != 0)
                 choosenTower = ExistsTower(mousePos);
 
-            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && choosenTower == null)
+            //torony ára nem változóként megadva. Rossz és csúny megoldás! Javítani!
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false &&
+                model.Towers.Count < 6 &&
+                choosenTower == null &&
+                (model.Coins - 300) >= 0)
             {
                 RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
                            GetTilePos(mousePos).Y * model.TileSize,
@@ -294,9 +298,10 @@ namespace TowerDefenseGame.Logic
 
                 model.Coins -= tempTower.Price;
             }
-            // ide még jön, hogy a fejlesztés finanszírozható e a pénzünkből
-            else if (choosenTower != null && choosenTower.Grade<3)
+            else if (choosenTower != null && choosenTower.Grade < 3 &&
+                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price / 5))>=0)
             {
+                model.Coins -= (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price / 5);
                 choosenTower.Grade++;
             }
             else

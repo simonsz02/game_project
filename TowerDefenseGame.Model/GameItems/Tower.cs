@@ -10,6 +10,7 @@ namespace TowerDefenseGame.Model.GameItems
     {
         // Ez a flag jelzi, hogy eltelt-e elég idő egy újabb lövés leadásához
         bool canShot;
+        protected int price;
         public int Armour { get; set; }
         public int SelfHealing { get; set; }
         // Az a pixelben vett távolság, ameddig a torony lőni képes
@@ -31,6 +32,11 @@ namespace TowerDefenseGame.Model.GameItems
         {
             get { return grade; }
             set { grade = value; }
+        }
+
+        public int Price
+        {
+            get { return price; }
         }
 
         // Ez a metódus hozza létre a Projectile típusú objektumot, 
