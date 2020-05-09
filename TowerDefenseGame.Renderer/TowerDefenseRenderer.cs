@@ -78,15 +78,15 @@ namespace TowerDefenseGame.Renderer
             {
                 DrawingGroup castle = new DrawingGroup();
                 Geometry upperCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e800.bmp").First()), null, upperCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e800.bmp"), null, upperCorner));
                 Geometry upperWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, upperWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp"), null, upperWall));
                 Geometry gate = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b801.bmp").First()), null, gate));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b801.bmp"), null, gate));
                 Geometry lowerWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, lowerWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp"), null, lowerWall));
                 Geometry lowerCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e810.bmp").First()), null, lowerCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e810.bmp"), null, lowerCorner));
                 oldCastle = castle;
             }
             return oldCastle;
@@ -238,24 +238,30 @@ namespace TowerDefenseGame.Renderer
         
         private Drawing GetTowers()
         {
-
-            GeometryGroup g = new GeometryGroup();
+            DrawingGroup towers = new DrawingGroup();
 
             foreach (Tower tower in model.Towers)
             {
-                //Geometry towerGeo = new RectangleGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
-                //g.Children.Add(towerGeo);
+                Geometry towerGeo = new RectangleGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
 
-                Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
-                g.Children.Add(towerGeo);
-
+                switch (tower.Grade)
+                {
+                    case 1:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1.jpg"), null, towerGeo));
+                        break;
+                    case 2:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2.jpg"), null, towerGeo));
+                        break;
+                    case 3:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3.jpg"), null, towerGeo));
+                        break;
+                }
             }
-
-            oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
+            oldTowers = towers;
 
             return oldTowers;
         }
-        private ImageBrush GetImageBrush(string image)
+        private Brush GetBrush(string image)
         {
             if (imageBrushCache.ContainsKey(image))
             {
@@ -275,7 +281,7 @@ namespace TowerDefenseGame.Renderer
                     ViewportUnits = BrushMappingMode.Absolute
                 };
                 imageBrushCache.Add(image, imgBrush);
-                return imgBrush;
+                return imageBrushCache[image];
             }
         }
         private string[] GetEmbendedResourceInFolder(string folder)
