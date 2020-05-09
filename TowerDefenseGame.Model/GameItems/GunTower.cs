@@ -10,13 +10,15 @@ namespace TowerDefenseGame.Model.GameItems
     [Serializable]
     public class GunTower : Tower
     {
+
         public int Price
         {
             get { return 200; }
         }
+
         public GunTower(double x, double y, double w, double h, Action<double, double, double, double, int, int, DamageType, Enemy> L, DispatcherTimer timer, DamageType dt = DamageType.physical) : base(x, y, w, h, L, timer, dt)
         {
-
+            
         }
     }
 }

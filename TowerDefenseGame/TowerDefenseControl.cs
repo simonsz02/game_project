@@ -102,42 +102,22 @@ namespace TowerDefenseGame
         }
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            bool TowerActionIsFailed = false;
+
             Point mousePos = e.GetPosition(this);
             if (e.ChangedButton == MouseButton.Left)
             {
-                bool TowerExistsThere = false;
-
-                if (model.Towers.Count != 0)
-                {
-                    foreach (Tower t in model.Towers)
-                    {
-                        if (t.Area.X == logic.GetTilePos(mousePos).X * model.TileSize &&
-                            t.Area.Y == logic.GetTilePos(mousePos).Y * model.TileSize) TowerExistsThere = true;
-                    }
-                }
-
-                if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && !TowerExistsThere)
-                {
-                    logic.AddTower(mousePos, towerShotTimer, choosenDamageType);
-                }
-                else if (model.Towers.Count == 6)
-                {
-                    MessageBox.Show("Number of the towers has already reached its maximum");
-                }
-                else if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == true)
-                {
-                    MessageBox.Show("Tower can't be placed on the road");
-                }
-                else if (TowerExistsThere)
-                {
-                    MessageBox.Show("There is already a tower in the selected field");
-                }
+                TowerActionIsFailed = logic.AddOrUpgradeTower(mousePos, towerShotTimer, choosenDamageType);
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
-                //Ide jön a toronyrombolás
+                TowerActionIsFailed = logic.RemoveTower(mousePos);
             }
+
+            if (TowerActionIsFailed) MessageBox.Show("Tower operation is failed");
+
             InvalidateVisual();
+
         }        
         private void Win_KeyDown(object sender, KeyEventArgs e)
         {

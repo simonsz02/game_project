@@ -271,23 +271,71 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
-        public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
+        public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
         {
+            bool OperationIsFailed = false;
+            Tower choosenTower =null;
 
+            if (model.Towers.Count != 0)
+                choosenTower = ExistsTower(mousePos);
+
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && choosenTower == null)
+            {
                 RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
-                                           GetTilePos(mousePos).Y * model.TileSize,
-                                           model.TileSize,
-                                           model.TileSize,
-                                           (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
-                                           timer,
-                                           damageType
-                                           );
+                           GetTilePos(mousePos).Y * model.TileSize,
+                           model.TileSize,
+                           model.TileSize,
+                           (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
+                           timer,
+                           damageType
+                           );
 
                 model.Towers.Add(tempTower);
 
                 model.Coins -= tempTower.Price;
+            }
+            // ide még jön, hogy a fejlesztés finanszírozható e a pénzünkből
+            else if (choosenTower != null && choosenTower.Grade<3)
+            {
+                choosenTower.Grade++;
+            }
+            else
+                OperationIsFailed = true;
 
+            return OperationIsFailed;
         }
+
+        public bool RemoveTower(Point mousePos)
+        {
+            bool OperationIsFailed = false;
+            Tower choosenTower = null;
+
+            if (model.Towers.Count != 0)
+                choosenTower = ExistsTower(mousePos);
+
+            if (choosenTower != null)
+                model.Towers.Remove(choosenTower);
+            else
+                OperationIsFailed = true;
+
+            return OperationIsFailed;
+        }
+
+        private Tower ExistsTower(Point mousePos)
+        {
+            Tower founded = null;
+
+            foreach (Tower t in model.Towers)
+            {
+                if (t.Area.X == GetTilePos(mousePos).X * model.TileSize &&
+                    t.Area.Y == GetTilePos(mousePos).Y * model.TileSize)
+                {
+                    founded = t;
+                }
+            }
+            return founded;
+        }
+
         /// <summary>
         /// Converts pixel to tile coordinates
         /// </summary>

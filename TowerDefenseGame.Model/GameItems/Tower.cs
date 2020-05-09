@@ -16,6 +16,7 @@ namespace TowerDefenseGame.Model.GameItems
         public double Range { get; set; }
         // Ez határozza meg, hogy miylen típusú sebzést okoz a lőszere
         DamageType TypeOfDamage { get; set; }
+
         // Ez az az ellenség, amire lő a torony
         Enemy target;
         public Enemy Target
@@ -23,6 +24,15 @@ namespace TowerDefenseGame.Model.GameItems
             get { return target; }
             set { target = value; Boom(); }
         }
+
+        //torony létrehozásakor minden torony egyes szintű
+        private int grade;
+        public int Grade
+        {
+            get { return grade; }
+            set { grade = value; }
+        }
+
         // Ez a metódus hozza létre a Projectile típusú objektumot, 
         // aminek a sebzéstípusa a torony sebzéstípusa lesz
         Action<double, double, double, double, int, int, DamageType, Enemy> LoadGun;
@@ -36,6 +46,7 @@ namespace TowerDefenseGame.Model.GameItems
             //Ennek lehet hogy nem itt kéne lennie
             Range = 2*w;
             TypeOfDamage = dt;
+            this.grade = 1;
         }
         public void Timer_Tick(object sender, EventArgs e)
         {

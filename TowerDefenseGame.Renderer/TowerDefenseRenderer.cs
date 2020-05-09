@@ -243,11 +243,15 @@ namespace TowerDefenseGame.Renderer
 
             foreach (Tower tower in model.Towers)
             {
+                //Geometry towerGeo = new RectangleGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
+                //g.Children.Add(towerGeo);
+
                 Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
                 g.Children.Add(towerGeo);
+
             }
 
-            oldTowers = new GeometryDrawing(Brushes.DarkGray, new Pen(Brushes.Black, 1), g);
+            oldTowers = new GeometryDrawing(Brushes.Brown, new Pen(Brushes.Black, 1), g);
 
             return oldTowers;
         }
