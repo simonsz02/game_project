@@ -26,6 +26,8 @@ namespace TowerDefenseGame.Renderer
         Drawing oldPath;
         Drawing oldCastle;
         Drawing oldTowers;
+        Drawing oldEnemies;
+
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
             this.model = model;
@@ -38,8 +40,9 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(GetPath());
             dg.Children.Add(GetCastle());
             dg.Children.Add(GetTowers());
-            dg.Children.Add(NumberOfTowers());
-            dg.Children.Add(NumberOfCoins());
+            dg.Children.Add(GetNumberOfTowers());
+            dg.Children.Add(GetNumberOfCoins());
+            //dg.Children.Add(GetEnemies());
 
             //AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
@@ -47,7 +50,7 @@ namespace TowerDefenseGame.Renderer
             return dg;
         }
 
-        private Drawing NumberOfTowers()
+        private Drawing GetNumberOfTowers()
         {
             GeometryDrawing text;
             
@@ -64,7 +67,7 @@ namespace TowerDefenseGame.Renderer
             return text;
         }
 
-        private Drawing NumberOfCoins()
+        private Drawing GetNumberOfCoins()
         {
             FormattedText formattedText = new FormattedText(model.Coins.ToString(), System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
             GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Gold, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 50)));
@@ -95,34 +98,48 @@ namespace TowerDefenseGame.Renderer
         /// Draw all enemies
         /// </summary>
         /// <param name="dg"></param>
-        private void AddEnemiesDrawing(DrawingGroup dg)
-        {            
-            foreach (MovingGameItem enemy in model.Enemies)
+        private Drawing GetEnemies()
+        {
+
+            DrawingGroup enemies = new DrawingGroup();
+
+            foreach (Enemy enemy in model.Enemies)
             {
-                int key = enemy.GetHashCode();
+                Geometry enemyGeo = new RectangleGeometry(new Rect(enemy.Area.X, enemy.Area.Y, enemy.Area.Width, enemy.Area.Height));
 
-                if (!imageCache.ContainsKey(key))
-                {
-                    /*
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Enemy.scythe.png")[0]);
-                    bi.Rotation = Rotation.Rotate270;
-                    bi.EndInit();
-                    */
-                    System.Drawing.Bitmap bim = new System.Drawing.Bitmap(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe_small.png");
-                    BitmapImage bi = ToBitmapImage(bim);
-                    //BitmapImage bi = new BitmapImage(new Uri(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe.png", UriKind.Absolute));
-
-                    imageCache.Add(key, bi);
-                }
-                ImageDrawing img = new ImageDrawing
-                {                   
-                    Rect = enemy.Area,
-                    ImageSource = imageCache[key]
-                };               
-                dg.Children.Add(img);
+                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png"), null, enemyGeo));
             }
+
+            oldEnemies = enemies;
+
+            return oldEnemies;
+
+            //foreach (MovingGameItem enemy in model.Enemies)
+            //{
+            //    int key = enemy.GetHashCode();
+
+            //    if (!imageCache.ContainsKey(key))
+            //    {
+            //        /*
+            //        BitmapImage bi = new BitmapImage();
+            //        bi.BeginInit();
+            //        bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Enemy.scythe.png")[0]);
+            //        bi.Rotation = Rotation.Rotate270;
+            //        bi.EndInit();
+            //        */
+            //        System.Drawing.Bitmap bim = new System.Drawing.Bitmap(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe_small.png");
+            //        BitmapImage bi = ToBitmapImage(bim);
+            //        //BitmapImage bi = new BitmapImage(new Uri(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe.png", UriKind.Absolute));
+
+            //        imageCache.Add(key, bi);
+            //    }
+            //    ImageDrawing img = new ImageDrawing
+            //    {                   
+            //        Rect = enemy.Area,
+            //        ImageSource = imageCache[key]
+            //    };               
+            //    dg.Children.Add(img);
+            //}
         }
         /// <summary>
         /// Draw all projectiles
@@ -220,11 +237,11 @@ namespace TowerDefenseGame.Renderer
                     fieldPics[i].EndInit();
                 }
                 #endregion
-                ImageBrush fieldBrush = new ImageBrush(fieldPics[1])
+                ImageBrush fieldBrush = new ImageBrush(fieldPics[0])
                 {
                     TileMode = TileMode.Tile,
                     Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
-                    ViewportUnits = BrushMappingMode.Absolute
+                    ViewportUnits = BrushMappingMode.Absolute 
                 };
                 oldFields = new GeometryDrawing(fieldBrush, new Pen(Brushes.DimGray, 1), g);
                 oldPath = rndPath;
@@ -247,13 +264,13 @@ namespace TowerDefenseGame.Renderer
                 switch (tower.Grade)
                 {
                     case 1:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1.jpg"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1_dryground.png"), null, towerGeo));
                         break;
                     case 2:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2.jpg"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2_dryground.png"), null, towerGeo));
                         break;
                     case 3:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3.jpg"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3_dryground.png"), null, towerGeo));
                         break;
                 }
             }

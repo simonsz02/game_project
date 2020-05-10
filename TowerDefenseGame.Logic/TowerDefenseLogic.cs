@@ -47,6 +47,9 @@ namespace TowerDefenseGame.Logic
             model.Path = new bool[width, height];
             SetPath(model.Path);
             model.Fields = new bool[width, height];
+
+            //Ha a képernyő szélessége nagyobb mint 2000 pixel akkor a cellák oldallap nagysága a 
+            //amennyiben pedig a 
             model.TileSize = Math.Min(Math.Min((model.GameWidth * 0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
             for (int i = 0; i < height; i++)
             {

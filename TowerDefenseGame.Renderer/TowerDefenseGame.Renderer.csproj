@@ -100,10 +100,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\Enemy\scythe.png" />
+    <EmbeddedResource Include="Image\Enemy\scythe.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Image\Enemy\scythe_small.png" />
+    <EmbeddedResource Include="Image\Enemy\scythe_small.png" />
     <EmbeddedResource Include="Image\Field\grass.jpg" />
     <EmbeddedResource Include="Image\Towers\bullet1.jpg" />
     <EmbeddedResource Include="Image\Towers\bullet2.jpg" />
@@ -112,6 +112,13 @@
     <EmbeddedResource Include="Image\Towers\rocket2.jpg" />
     <EmbeddedResource Include="Image\Towers\rocket3.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Enemy\ork.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Towers\rocket1_dryground.png" />
+    <EmbeddedResource Include="Image\Towers\rocket2_dryground.png" />
+    <EmbeddedResource Include="Image\Towers\rocket3_dryground.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

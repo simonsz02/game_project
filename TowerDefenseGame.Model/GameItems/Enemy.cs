@@ -13,16 +13,32 @@ namespace TowerDefenseGame.Model.GameItems
     [Serializable]
     public class Enemy : MovingGameItem, IEnemy
     {
+
         double health;
         double armor;
         int reward;
+
         //Represents the survival abiltiy of the unit
-        public double Health { get { return health; } set { health = value; } }
+        public double Health
+        {
+            get { return health; }
+            set { health = value; }
+        }
+
         //Represents the damage mitigation ability of the unit
-        public double Armor { get { return armor; } set { armor = value; } }
+        public double Armor
+        {
+            get { return armor; }
+            set { armor = value; }
+        }
+
         ////Represents the reward the player gets after killing the given enemy. 
         ///The reward depends on how fast and healthy the killed enemy was
-        public int Reward { get { return reward; } }
+        public int Reward
+        {
+            get { return reward; }
+        }
+
         /// <summary>
         /// This class represents an enemy
         /// </summary>
