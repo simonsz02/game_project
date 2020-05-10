@@ -10,6 +10,7 @@ namespace TowerDefenseGame.Repository
             {
                 var binaryFormatter = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
                 binaryFormatter.Serialize(stream, objectToWrite);
+                stream.Close();
             }
         }
         public static T Import<T>(string filePath)

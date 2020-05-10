@@ -91,6 +91,17 @@ namespace TowerDefenseGame.Renderer
             }
             return oldCastle;
         }
+
+        public void ShowWinAnimation()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowLostAnimation()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Draw all enemies
         /// </summary>

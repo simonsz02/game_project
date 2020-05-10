@@ -41,9 +41,10 @@ namespace TowerDefenseGame
         /// <param name="e"></param>
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (Content.GetType().Name== "TowerDefenseControl")
+            if (Content.GetType().Name == "TowerDefenseControl")
             {
-                SerializationAsBinary.Export("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
+                //SerializationAsBinary.Export("TowerDefenseLastState.bin", ((TowerDefenseControl)Content).Model);
+                ((TowerDefenseControl)Content).SaveState();
             }
         }
     }

@@ -11,32 +11,17 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using TowerDefenseGame.Model;
-
+using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame.Renderer
 {
+    [Serializable]
     public class MenuRenderer
     {
         MenuModel model;
         DrawingGroup dg;
         public Drawing[] MenuItems { get; private set; }
         public bool showHighScoreList { get; set; }
-        struct Row : IComparable
-        {
-            public Row(string name, int score)
-            {
-                Name = name;
-                Score = score;
-            }
-
-            public string Name { get; set; }
-            public int Score { get; set; }
-
-            public int CompareTo(Object obj)
-            {
-                return Score.CompareTo(((Row)obj).Score);
-            }
-        }
 
         public MenuRenderer(MenuModel model)
         {
@@ -73,7 +58,7 @@ namespace TowerDefenseGame.Renderer
                                                 new LineGeometry(new Point(reference.X, reference.Y),
                                                                  new Point(reference.X, reference.Y += 280))
                                                 ));
-            List<Row> hsk = readHighScoreFile();
+            List<HighScoreHandler.Row> hsk = HighScoreHandler.ReadHighScoreFile();
             hsk.Sort((x, y) => y.CompareTo(x));
             FormattedText formattedText;
             for (int i = 0; i < Math.Min(hsk.Count,10); i++)
@@ -100,22 +85,6 @@ namespace TowerDefenseGame.Renderer
                     formattedText.BuildGeometry(Point.Add(new Point(model.GameWidth / 2, 280 + i * 20), new Vector(30, -5))));
                 dg.Children.Add(scoreText);
             }
-        }
-
-        private List<Row> readHighScoreFile()
-        {
-            var list = new List<Row>();
-            var fileStream = new FileStream(@"highscore.txt", FileMode.Open, FileAccess.Read);
-            using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
-            {
-                string line;
-                while ((line = streamReader.ReadLine()) != null)
-                {
-
-                    list.Add(new Row(line.Split(':')[0], int.Parse(line.Split(':')[1])));
-                }
-            }
-            return list;
         }
 
         private void GetBackground()

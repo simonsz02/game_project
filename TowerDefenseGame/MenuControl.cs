@@ -5,6 +5,8 @@ using System.Windows.Media;
 using TowerDefenseGame.Model;
 using TowerDefenseGame.Renderer;
 using TowerDefenseGame.Repository;
+using Microsoft.VisualBasic;
+using System;
 
 namespace TowerDefenseGame
 {
@@ -13,6 +15,7 @@ namespace TowerDefenseGame
         MenuModel model;
         MenuRenderer renderer;
         Window win;
+        string userName;
         public MenuControl()
         {
             Loaded += MenuControl_Loaded;
@@ -39,13 +42,21 @@ namespace TowerDefenseGame
                     switch (i)
                     {
                         case 0:
-                            win.Content = new TowerDefenseControl();
+                            while (userName == null)
+                            {
+                                userName = Interaction.InputBox($"Dear player!" + Environment.NewLine + "Please insert your username that will be used during the game", "What's your name?", "", (int)model.GameWidth / 2, (int)model.GameHeight / 2);
+                            };
+                            win.Content = new TowerDefenseControl(userName);
                             break;
                         case 1:
-                            if (File.Exists("TowerDefenseLastState.bin"))
+                            while (userName == null)
                             {
-                                win.Content = new TowerDefenseControl();
-                                ((TowerDefenseControl)win.Content).Model = SerializationAsBinary.Import<TowerDefenseModel>("TowerDefenseLastState.bin");
+                                userName = Interaction.InputBox($"Dear player!" + Environment.NewLine + "Please insert your username that will be used during the game", "What's your name?", "", (int)model.GameWidth / 2, (int)model.GameHeight / 2);
+                            };
+                            if (File.Exists("TowerDefenseLastState"+userName+".bin"))
+                            {
+                                win.Content = new TowerDefenseControl(userName);
+                                ((TowerDefenseControl)win.Content).Model = SerializationAsBinary.Import<TowerDefenseModel>("TowerDefenseLastState" + userName + ".bin");
                             }
                             else
                             {

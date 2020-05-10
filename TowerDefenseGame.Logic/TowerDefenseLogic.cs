@@ -18,21 +18,26 @@ namespace TowerDefenseGame.Logic
 
         public bool debug = false;
         public int baseTickSpeed = 40;
-        int enemyCounter = 0;
-
+        #region finishing the game
+        public int enemyCounter = 0;
+        public int playerHealth;
+        public Action finishGame;
+        #endregion
         List<Enemy> deleteEnemies = new List<Enemy>();
 
         TowerDefenseModel model;
+        private string userName;
 
         public TowerDefenseLogic(TowerDefenseModel model)
         {
             this.model = model;
             InitModel();
         }
-        public TowerDefenseLogic(TowerDefenseModel model, string fname)
+        public TowerDefenseLogic(TowerDefenseModel model, string userName)
         {
             this.model = model;
-            InitModel(fname);
+            this.userName = userName;
+            InitModel();
         }
         /// <summary>
         /// A -100-as paraméter arra szolgál, hogy lefoglaljunk 
@@ -207,7 +212,13 @@ namespace TowerDefenseGame.Logic
             if (enemy.Area.Right < 0)
             {
                 deleteEnemies.Add((Enemy)enemy);
-                //TODO sebződik a CASTLE
+                //sebződik a CASTLE
+                playerHealth--;
+                if (playerHealth<=0 || enemyCounter >= 110)
+                {
+                    finishGame();
+                }
+
             }
             for (int i = -1; i < 2; i++)
             {
@@ -351,10 +362,6 @@ namespace TowerDefenseGame.Logic
             path[13, 5] = true;
             path[13, 4] = true;
             path[14, 4] = true;
-        }
-        private void InitModel(string fname)
-        {
-            throw new NotImplementedException();
         }
     }
 }
