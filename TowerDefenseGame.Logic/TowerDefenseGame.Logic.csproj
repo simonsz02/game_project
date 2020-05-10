@@ -54,6 +54,10 @@
       <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
       <Name>TowerDefenseGame.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame.Repository\TowerDefenseGame.Repository.csproj">
+      <Project>{B7BE39E3-239A-4532-98E6-5F7E1B45416E}</Project>
+      <Name>TowerDefenseGame.Repository</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
