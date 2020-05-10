@@ -120,5 +120,20 @@
     <EmbeddedResource Include="Image\Towers\rocket2_dryground.png" />
     <EmbeddedResource Include="Image\Towers\rocket3_dryground.png" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Selectors\poison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Selectors\sample.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Wallpaper\stone.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Wallpaper\stone2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Selectors\sexylady.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

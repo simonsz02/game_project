@@ -48,8 +48,6 @@ namespace TowerDefenseGame.Logic
             SetPath(model.Path);
             model.Fields = new bool[width, height];
 
-            //Ha a képernyő szélessége nagyobb mint 2000 pixel akkor a cellák oldallap nagysága a 
-            //amennyiben pedig a 
             model.TileSize = Math.Min(Math.Min((model.GameWidth * 0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
             for (int i = 0; i < height; i++)
             {
@@ -76,7 +74,21 @@ namespace TowerDefenseGame.Logic
                     }
                 }
             }
+
+            for (int i = 0; i < model.TowerSelectorRects.Length; i++)
+            {
+                model.TowerSelectorRects[i] = new TowerSelectorRect(model.TileSize * width + 15,
+                                                                        i* model.GameHeight / model.TowerSelectorRects.Length,
+                                                                        model.GameHeight / model.TowerSelectorRects.Length * 0.85 *2/3,
+                                                                        model.GameHeight/ model.TowerSelectorRects.Length * 0.85);
+                if (i==0)
+                {
+                    model.TowerSelectorRects[i].Selected = true;
+                }
+            }
+
         }
+
         /// <summary>
         /// Move all enemies on the path 
         /// </summary>

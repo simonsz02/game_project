@@ -118,8 +118,8 @@ namespace TowerDefenseGame.Model.GameItems
                             break;
                     }
                     break;
-                case DamageType.magic:
-                    break;  
+                //case DamageType.magic:
+                //    break;  
                 case DamageType.poison:
                     //Poison típusú sebzésnél a sebzés másodpercenként feleződik,
                     //ameddig többet sebezne, mint 2

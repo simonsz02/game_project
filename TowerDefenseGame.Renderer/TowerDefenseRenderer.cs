@@ -27,6 +27,7 @@ namespace TowerDefenseGame.Renderer
         Drawing oldCastle;
         Drawing oldTowers;
         Drawing oldEnemies;
+        Drawing oldSelectors;
 
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
@@ -42,6 +43,7 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(GetTowers());
             dg.Children.Add(GetNumberOfTowers());
             dg.Children.Add(GetNumberOfCoins());
+            dg.Children.Add(GetTowerSelectorPanel());
             //dg.Children.Add(GetEnemies());
 
             //AddEnemiesDrawing(dg);
@@ -49,6 +51,55 @@ namespace TowerDefenseGame.Renderer
 
             return dg;
         }
+
+        private Drawing GetTowerSelectorPanel()
+        {
+            DrawingGroup selectorGroups = new DrawingGroup();
+            Brush image = null;
+
+            for (int i = 0; i < model.TowerSelectorRects.Length; i++)
+            {
+                Geometry selectorGeo = new RectangleGeometry(new Rect(model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y, model.TowerSelectorRects[i].Area.Width, model.TowerSelectorRects[i].Area.Height));
+
+                switch (i)
+                {
+                    case 0:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png",false);
+                        break;
+                    case 1:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        break;
+                    case 2:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        break;
+                    case 3:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        break;
+                    case 4:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        break;
+                    case 5:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        break;
+                }
+
+                if (model.TowerSelectorRects[i].Selected)
+                {
+                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.DarkRed,3), selectorGeo));
+                }
+                else
+                {
+                    selectorGroups.Children.Add(new GeometryDrawing(image, null, selectorGeo));
+                }
+                
+            }
+
+            oldSelectors = selectorGroups;
+
+            return oldSelectors;
+
+        }
+
 
         private Drawing GetNumberOfTowers()
         {
@@ -81,15 +132,15 @@ namespace TowerDefenseGame.Renderer
             {
                 DrawingGroup castle = new DrawingGroup();
                 Geometry upperCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e800.bmp"), null, upperCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e800.bmp",true), null, upperCorner));
                 Geometry upperWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp"), null, upperWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp",true), null, upperWall));
                 Geometry gate = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b801.bmp"), null, gate));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b801.bmp",true), null, gate));
                 Geometry lowerWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp"), null, lowerWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp",true), null, lowerWall));
                 Geometry lowerCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e810.bmp"), null, lowerCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e810.bmp",true), null, lowerCorner));
                 oldCastle = castle;
             }
             return oldCastle;
@@ -107,7 +158,7 @@ namespace TowerDefenseGame.Renderer
             {
                 Geometry enemyGeo = new RectangleGeometry(new Rect(enemy.Area.X, enemy.Area.Y, enemy.Area.Width, enemy.Area.Height));
 
-                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png"), null, enemyGeo));
+                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png",true), null, enemyGeo));
             }
 
             oldEnemies = enemies;
@@ -179,7 +230,7 @@ namespace TowerDefenseGame.Renderer
             if (oldBackground == null)
             {
                 Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
-                oldBackground = new GeometryDrawing(Brushes.Black, null, backgroundGeometry);
+                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone2.jpg",false), null, backgroundGeometry);
             }
             return oldBackground;
         }
@@ -264,13 +315,13 @@ namespace TowerDefenseGame.Renderer
                 switch (tower.Grade)
                 {
                     case 1:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1_dryground.png"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1_dryground.png",true), null, towerGeo));
                         break;
                     case 2:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2_dryground.png"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2_dryground.png",true), null, towerGeo));
                         break;
                     case 3:
-                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3_dryground.png"), null, towerGeo));
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3_dryground.png",true), null, towerGeo));
                         break;
                 }
             }
@@ -278,7 +329,7 @@ namespace TowerDefenseGame.Renderer
 
             return oldTowers;
         }
-        private Brush GetBrush(string image)
+        private Brush GetBrush(string image, bool IsTiled)
         {
             if (imageBrushCache.ContainsKey(image))
             {
@@ -291,12 +342,15 @@ namespace TowerDefenseGame.Renderer
                 img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(image);
                 img.EndInit();
 
-                ImageBrush imgBrush = new ImageBrush(img)
+                ImageBrush imgBrush = new ImageBrush(img);
+
+                if (IsTiled)
                 {
-                    TileMode = TileMode.Tile,
-                    Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
-                    ViewportUnits = BrushMappingMode.Absolute
-                };
+                    imgBrush.TileMode = TileMode.Tile;
+                    imgBrush.Viewport = new Rect(0, 0, model.TileSize, model.TileSize);
+                    imgBrush.ViewportUnits = BrushMappingMode.Absolute;
+                }
+
                 imageBrushCache.Add(image, imgBrush);
                 return imageBrushCache[image];
             }

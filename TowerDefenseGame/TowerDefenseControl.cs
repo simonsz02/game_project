@@ -140,7 +140,7 @@ namespace TowerDefenseGame
                 case Key.A:
                     if (logic.debug)
                     {
-                        model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.magic, model.Enemies.First()));
+                        model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.physical, model.Enemies.First()));
                     }
                     break;
                 case Key.D:
