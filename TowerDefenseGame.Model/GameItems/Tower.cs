@@ -33,7 +33,6 @@ namespace TowerDefenseGame.Model.GameItems
             canShot = false;
             LoadGun = L;
             timer.Tick += Timer_Tick;
-            //Ennek lehet hogy nem itt kéne lennie
             Range = 2*w;
             TypeOfDamage = dt;
         }

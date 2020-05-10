@@ -13,7 +13,6 @@ using TowerDefenseGame.Logic;
 
 namespace TowerDefenseGame.Renderer
 {
-    [Serializable]
     public class TowerDefenseRenderer
     {
         TowerDefenseModel model;

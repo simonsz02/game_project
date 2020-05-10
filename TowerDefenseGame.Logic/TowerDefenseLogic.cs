@@ -21,6 +21,7 @@ namespace TowerDefenseGame.Logic
         #region finishing the game
         public int enemyCounter = 0;
         public int playerHealth;
+        [NonSerialized]
         public Action finishGame;
         #endregion
         List<Enemy> deleteEnemies = new List<Enemy>();

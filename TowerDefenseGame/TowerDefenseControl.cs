@@ -14,7 +14,6 @@ using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame
 {
-    [Serializable]
     public class TowerDefenseControl : FrameworkElement
     {
         TowerDefenseLogic logic;

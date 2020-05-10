@@ -15,7 +15,6 @@ using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame.Renderer
 {
-    [Serializable]
     public class MenuRenderer
     {
         MenuModel model;
