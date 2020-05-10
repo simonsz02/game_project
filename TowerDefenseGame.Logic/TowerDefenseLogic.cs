@@ -8,6 +8,7 @@ using System.Windows;
 using TowerDefenseGame.Model;
 using TowerDefenseGame.Model.Abstracts;
 using TowerDefenseGame.Model.GameItems;
+using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame.Logic
 {
@@ -18,21 +19,27 @@ namespace TowerDefenseGame.Logic
 
         public bool debug = false;
         public int baseTickSpeed = 40;
-        int enemyCounter = 0;
-
+        #region finishing the game
+        public int enemyCounter = 0;
+        public int playerHealth;
+        [NonSerialized]
+        public Action finishGame;
+        #endregion
         List<Enemy> deleteEnemies = new List<Enemy>();
 
         TowerDefenseModel model;
+        private string userName;
 
         public TowerDefenseLogic(TowerDefenseModel model)
         {
             this.model = model;
             InitModel();
         }
-        public TowerDefenseLogic(TowerDefenseModel model, string fname)
+        public TowerDefenseLogic(TowerDefenseModel model, string userName)
         {
             this.model = model;
-            InitModel(fname);
+            this.userName = userName;
+            InitModel();
         }
         /// <summary>
         /// A -100-as paraméter arra szolgál, hogy lefoglaljunk 
@@ -207,7 +214,13 @@ namespace TowerDefenseGame.Logic
             if (enemy.Area.Right < 0)
             {
                 deleteEnemies.Add((Enemy)enemy);
-                //TODO sebződik a CASTLE
+                //sebződik a CASTLE
+                playerHealth--;
+                if (playerHealth<=0 || enemyCounter >= 110)
+                {
+                    finishGame();
+                }
+
             }
             for (int i = -1; i < 2; i++)
             {
@@ -320,41 +333,10 @@ namespace TowerDefenseGame.Logic
         }
         private void SetPath(bool[,] path)
         {
-            path[0, 4] = true;
-            path[1, 4] = true;
-            path[2, 4] = true;
-            path[2, 5] = true;
-            path[2, 6] = true;
-            path[3, 6] = true;
-            path[4, 6] = true;
-            path[5, 6] = true;
-            path[5, 5] = true;
-            path[5, 4] = true;
-            path[5, 3] = true;
-            path[5, 2] = true;
-            path[5, 1] = true;
-            path[6, 1] = true;
-            path[7, 1] = true;
-            path[8, 1] = true;
-            path[9, 1] = true;
-            path[10, 1] = true;
-            path[11, 1] = true;
-            path[11, 2] = true;
-            path[11, 3] = true;
-            path[11, 4] = true;
-            path[11, 5] = true;
-            path[11, 6] = true;
-            path[11, 7] = true;
-            path[12, 7] = true;
-            path[13, 7] = true;
-            path[13, 6] = true;
-            path[13, 5] = true;
-            path[13, 4] = true;
-            path[14, 4] = true;
-        }
-        private void InitModel(string fname)
-        {
-            throw new NotImplementedException();
+            foreach (Point p in PathLoader.ReadPathFile())
+            {
+                path[(int)p.X, (int)p.Y] = true;
+            }
         }
     }
 }

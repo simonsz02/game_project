@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using TowerDefenseGame.Model;
 using TowerDefenseGame.Logic;
 using TowerDefenseGame.Renderer;
-using TowerDefenseGame.Model.Abstracts;
 using TowerDefenseGame.Model.GameItems;
 using System.Media;
+using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame
 {
-    [Serializable]
     public class TowerDefenseControl : FrameworkElement
     {
         TowerDefenseLogic logic;
@@ -30,24 +25,30 @@ namespace TowerDefenseGame
         DispatcherTimer towerShotTimer;
         private DamageType choosenDamageType = DamageType.physical;
         SoundPlayer pl = new SoundPlayer();
+        string userName;
+        private bool gameEnd = false;
 
         public TowerDefenseModel Model { get => model; set => model = value; }
 
-        public TowerDefenseControl()
+        public TowerDefenseControl(string userName)
         {
+            this.userName = userName;
             Loaded += TowerDefenseControl_Loaded;
         }
         private void TowerDefenseControl_Loaded(object sender, RoutedEventArgs e)
         {
             stw = new Stopwatch();
             model = model ?? new TowerDefenseModel(ActualWidth, ActualHeight, 1500);
-            logic = new TowerDefenseLogic(model);
+            logic = new TowerDefenseLogic(model, userName)
+            {
+                playerHealth = 10,
+                finishGame = FinishGame
+            };
             renderer = new TowerDefenseRenderer(model);
 
             Window win = Window.GetWindow(this);
             if (win != null)
             {
-                //Drive the game
                 tickTimer = new DispatcherTimer
                 {
                     Interval = TimeSpan.FromMilliseconds(logic.baseTickSpeed)
@@ -78,6 +79,32 @@ namespace TowerDefenseGame
             }
             InvalidateVisual();
             stw.Start();
+        }
+
+        private void FinishGame()
+        {
+            if (logic.playerHealth <= 0)
+            {
+                gameEnd = true;
+                tickTimer.Stop();
+                spawnEnemyTimer.Stop();
+                towerShotTimer.Stop();
+                //renderer.showLostAnimation();
+                HighScoreHandler.AddRowToHighScoreFile(new HighScoreHandler.Row(userName, model.Coins));
+                MessageBox.Show("The horde has won"+Environment.NewLine+"Bad news for you, 'cause you have lost!");
+                Window.GetWindow(this).Content = new MenuControl();
+            }
+            else if (logic.enemyCounter >= 100)
+            {
+                gameEnd = true;
+                tickTimer.Stop();
+                spawnEnemyTimer.Stop();
+                towerShotTimer.Stop();
+                //renderer.showWinAnimation();
+                HighScoreHandler.AddRowToHighScoreFile(new HighScoreHandler.Row(userName, model.Coins));
+                MessageBox.Show("That was awesome! You have won!" + Environment.NewLine + "Check the highscore list, if you were good enough!");
+                Window.GetWindow(this).Content = new MenuControl();
+            }
         }
 
         private void SpawnEnemyTimer_Tick(object sender, EventArgs e)
@@ -169,9 +196,12 @@ namespace TowerDefenseGame
                     }                
                     break;
                 case Key.P:
-                    tickTimer.IsEnabled = !tickTimer.IsEnabled;
-                    spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
-                    towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
+                    if (!gameEnd)
+                    {
+                        tickTimer.IsEnabled = !tickTimer.IsEnabled;
+                        spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
+                        towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
+                    }
                     break;
                 case Key.D0:
                     choosenDamageType = DamageType.physical;
@@ -193,6 +223,10 @@ namespace TowerDefenseGame
                     break;
 
             }
+        }
+        internal void SaveState()
+        {
+            SerializationAsBinary.Export("TowerDefenseLastState" + userName + ".bin", model);
         }
         protected override void OnRender(DrawingContext drawingContext)
         {
