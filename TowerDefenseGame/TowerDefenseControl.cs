@@ -28,7 +28,7 @@ namespace TowerDefenseGame
         DispatcherTimer tickTimer;
         DispatcherTimer spawnEnemyTimer;
         DispatcherTimer towerShotTimer;
-        private DamageType choosenDamageType = DamageType.physical;
+        //private DamageType choosenDamageType;
         SoundPlayer pl = new SoundPlayer();
 
         public TowerDefenseModel Model { get => model; set => model = value; }
@@ -54,7 +54,7 @@ namespace TowerDefenseGame
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
-                win.KeyDown += Win_KeyDown;
+                //win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
                 //Spawn enemy
                 spawnEnemyTimer = new DispatcherTimer
@@ -105,13 +105,21 @@ namespace TowerDefenseGame
             bool TowerActionIsFailed = false;
 
             Point mousePos = e.GetPosition(this);
-            if (e.ChangedButton == MouseButton.Left)
+
+            if(mousePos.X <= model.TileSize * model.Path.GetLength(0))
             {
-                TowerActionIsFailed = logic.AddOrUpgradeTower(mousePos, towerShotTimer, choosenDamageType);
+                if (e.ChangedButton == MouseButton.Left)
+                {
+                    TowerActionIsFailed = logic.AddOrUpgradeTower(mousePos, towerShotTimer);
+                }
+                else
+                {
+                    TowerActionIsFailed = logic.RemoveTower(mousePos);
+                }
             }
-            else if (e.ChangedButton == MouseButton.Right)
+            else
             {
-                TowerActionIsFailed = logic.RemoveTower(mousePos);
+                logic.Framing(mousePos);
             }
 
             if (TowerActionIsFailed) MessageBox.Show("Tower operation is failed");
@@ -119,61 +127,62 @@ namespace TowerDefenseGame
             InvalidateVisual();
 
         }        
-        private void Win_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-                case Key.Enter: 
-                    if (logic.debug)
-                    {
-                        model.Enemies.Add(new Enemy(model.EntryPoint.X,
-                                                    model.EntryPoint.Y + model.TileSize / 4,
-                                                    model.TileSize / 2,
-                                                    model.TileSize / 2,
-                                                    20,
-                                                    5,
-                                                    logic.GetTilePos(model.EntryPoint),
-                                                    5));
-                        InvalidateVisual();
-                    }
-                    break;
-                case Key.A:
-                    if (logic.debug)
-                    {
-                        model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.physical, model.Enemies.First()));
-                    }
-                    break;
-                case Key.D:
-                    if (logic.debug)
-                    {
-                    }                
-                    break;
-                case Key.P:
-                    tickTimer.IsEnabled = !tickTimer.IsEnabled;
-                    spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
-                    towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
-                    break;
-                case Key.D0:
-                    choosenDamageType = DamageType.physical;
-                    break;
-                case Key.D1:
-                    choosenDamageType = DamageType.poison;
-                    break;
-                case Key.D2:
-                    choosenDamageType = DamageType.fire;
-                    break;
-                case Key.D3:
-                    choosenDamageType = DamageType.frost;
-                    break;
-                case Key.D4:
-                    choosenDamageType = DamageType.air;
-                    break;
-                case Key.D5:
-                    choosenDamageType = DamageType.earth;
-                    break;
+        //private void Win_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    switch (e.Key)
+        //    {
+        //        case Key.Enter: 
+        //            if (logic.debug)
+        //            {
+        //                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+        //                                            model.EntryPoint.Y + model.TileSize / 4,
+        //                                            model.TileSize / 2,
+        //                                            model.TileSize / 2,
+        //                                            20,
+        //                                            5,
+        //                                            logic.GetTilePos(model.EntryPoint),
+        //                                            5));
+        //                InvalidateVisual();
+        //            }
+        //            break;
+        //        case Key.A:
+        //            if (logic.debug)
+        //            {
+        //                model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.physical, model.Enemies.First()));
+        //            }
+        //            break;
+        //        case Key.D:
+        //            if (logic.debug)
+        //            {
+        //            }                
+        //            break;
+        //        case Key.P:
+        //            tickTimer.IsEnabled = !tickTimer.IsEnabled;
+        //            spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
+        //            towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
+        //            break;
+        //        case Key.D0:
+        //            choosenDamageType = DamageType.physical;
+        //            break;
+        //        case Key.D1:
+        //            choosenDamageType = DamageType.poison;
+        //            break;
+        //        case Key.D2:
+        //            choosenDamageType = DamageType.fire;
+        //            break;
+        //        case Key.D3:
+        //            choosenDamageType = DamageType.frost;
+        //            break;
+        //        case Key.D4:
+        //            choosenDamageType = DamageType.air;
+        //            break;
+        //        case Key.D5:
+        //            choosenDamageType = DamageType.earth;
+        //            break;
 
-            }
-        }
+        //    }
+        //}
+
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());

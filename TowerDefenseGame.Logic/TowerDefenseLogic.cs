@@ -286,7 +286,7 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
-        public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
+        public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
             bool OperationIsFailed = false;
             Tower choosenTower =null;
@@ -306,7 +306,7 @@ namespace TowerDefenseGame.Logic
                            model.TileSize,
                            (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
                            timer,
-                           damageType
+                           GetDamageType()
                            );
 
                 model.Towers.Add(tempTower);
@@ -354,6 +354,68 @@ namespace TowerDefenseGame.Logic
                 }
             }
             return founded;
+        }
+
+        //Végigmegyünk a torony kiválasztó képeken. A korábban kijelölt képet elhelyezzük egy változóban.
+        //Amennyiben kiválasztásra került egy kép akkor a korábban kiválasztott képről lekerül a keretezés
+        //és az új képre kerül fel.
+        public void Framing(Point mousePos)
+        {
+            TowerSelectorRect preSelected = null;
+            TowerSelectorRect newlySelected = null;
+            bool newImageWasSelected = false;
+
+            foreach (TowerSelectorRect selector in model.TowerSelectorRects)
+            {
+                if (selector.Selected)
+                {
+                    preSelected = selector;
+                }
+
+                if (selector.Area.Contains(mousePos))
+                {
+                    newImageWasSelected = true;
+                    newlySelected = selector;
+                }
+            }
+
+            if (newImageWasSelected)
+            {
+                preSelected.Selected = false;
+                newlySelected.Selected = true;
+            }
+        }
+
+        private DamageType GetDamageType()
+        {
+            int selectedNum = 0;
+            DamageType choosenDamageType = DamageType.physical;
+
+            while (!model.TowerSelectorRects[selectedNum].Selected)
+            {
+                selectedNum++;
+            }
+
+            switch (selectedNum)
+            {
+                case 1:
+                    choosenDamageType = DamageType.poison;
+                    break;
+                case 2:
+                    choosenDamageType = DamageType.fire;
+                    break;
+                case 3:
+                    choosenDamageType = DamageType.frost;
+                    break;
+                case 4:
+                    choosenDamageType = DamageType.air;
+                    break;
+                case 5:
+                    choosenDamageType = DamageType.earth;
+                    break;
+            }
+
+            return choosenDamageType;
         }
 
         /// <summary>

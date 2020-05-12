@@ -44,7 +44,7 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(GetNumberOfTowers());
             dg.Children.Add(GetNumberOfCoins());
             dg.Children.Add(GetTowerSelectorPanel());
-            //dg.Children.Add(GetEnemies());
+            dg.Children.Add(GetEnemies());
 
             //AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
@@ -67,19 +67,19 @@ namespace TowerDefenseGame.Renderer
                         image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png",false);
                         break;
                     case 1:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.poison.png", false);
                         break;
                     case 2:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.fire.png", false);
                         break;
                     case 3:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.frost.png", false);
                         break;
                     case 4:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.air.png", false);
                         break;
                     case 5:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png", false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.earth.png", false);
                         break;
                 }
 
@@ -158,7 +158,7 @@ namespace TowerDefenseGame.Renderer
             {
                 Geometry enemyGeo = new RectangleGeometry(new Rect(enemy.Area.X, enemy.Area.Y, enemy.Area.Width, enemy.Area.Height));
 
-                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png",true), null, enemyGeo));
+                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png",false), null, enemyGeo));
             }
 
             oldEnemies = enemies;
@@ -230,7 +230,7 @@ namespace TowerDefenseGame.Renderer
             if (oldBackground == null)
             {
                 Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
-                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone2.jpg",false), null, backgroundGeometry);
+                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone3.jpg",false), null, backgroundGeometry);
             }
             return oldBackground;
         }
