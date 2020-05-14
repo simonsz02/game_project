@@ -149,40 +149,20 @@ namespace TowerDefenseGame
                 logic.Framing(mousePos);
             }
 
-            if (TowerActionIsFailed) MessageBox.Show("Tower operation is failed");
+            if (TowerActionIsFailed) MessageBox.Show("Tower operation has failed");
 
             InvalidateVisual();
 
         }        
-<<<<<<< HEAD
         private void Win_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
             {
                 case Key.Enter: 
-                    if (logic.debug)
-                    {
-                        model.Enemies.Add(new Enemy(model.EntryPoint.X,
-                                                    model.EntryPoint.Y + model.TileSize / 4,
-                                                    model.TileSize / 2,
-                                                    model.TileSize / 2,
-                                                    20,
-                                                    5,
-                                                    logic.GetTilePos(model.EntryPoint),
-                                                    5));
-                        InvalidateVisual();
-                    }
                     break;
                 case Key.A:
-                    if (logic.debug)
-                    {
-                        model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.magic, model.Enemies.First()));
-                    }
                     break;
-                case Key.D:
-                    if (logic.debug)
-                    {
-                    }                
+                case Key.D:        
                     break;
                 case Key.P:
                     if (!gameEnd)
@@ -192,24 +172,24 @@ namespace TowerDefenseGame
                         towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
                     }
                     break;
-                case Key.D0:
-                    choosenDamageType = DamageType.physical;
-                    break;
-                case Key.D1:
-                    choosenDamageType = DamageType.poison;
-                    break;
-                case Key.D2:
-                    choosenDamageType = DamageType.fire;
-                    break;
-                case Key.D3:
-                    choosenDamageType = DamageType.frost;
-                    break;
-                case Key.D4:
-                    choosenDamageType = DamageType.air;
-                    break;
-                case Key.D5:
-                    choosenDamageType = DamageType.earth;
-                    break;
+                //case Key.D0:
+                //    choosenDamageType = DamageType.physical;
+                //    break;
+                //case Key.D1:
+                //    choosenDamageType = DamageType.poison;
+                //    break;
+                //case Key.D2:
+                //    choosenDamageType = DamageType.fire;
+                //    break;
+                //case Key.D3:
+                //    choosenDamageType = DamageType.frost;
+                //    break;
+                //case Key.D4:
+                //    choosenDamageType = DamageType.air;
+                //    break;
+                //case Key.D5:
+                //    choosenDamageType = DamageType.earth;
+                //    break;
 
             }
         }
@@ -217,64 +197,6 @@ namespace TowerDefenseGame
         {
             SerializationAsBinary.Export("TowerDefenseLastState" + userName + ".bin", model);
         }
-=======
-        //private void Win_KeyDown(object sender, KeyEventArgs e)
-        //{
-        //    switch (e.Key)
-        //    {
-        //        case Key.Enter: 
-        //            if (logic.debug)
-        //            {
-        //                model.Enemies.Add(new Enemy(model.EntryPoint.X,
-        //                                            model.EntryPoint.Y + model.TileSize / 4,
-        //                                            model.TileSize / 2,
-        //                                            model.TileSize / 2,
-        //                                            20,
-        //                                            5,
-        //                                            logic.GetTilePos(model.EntryPoint),
-        //                                            5));
-        //                InvalidateVisual();
-        //            }
-        //            break;
-        //        case Key.A:
-        //            if (logic.debug)
-        //            {
-        //                model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.physical, model.Enemies.First()));
-        //            }
-        //            break;
-        //        case Key.D:
-        //            if (logic.debug)
-        //            {
-        //            }                
-        //            break;
-        //        case Key.P:
-        //            tickTimer.IsEnabled = !tickTimer.IsEnabled;
-        //            spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
-        //            towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
-        //            break;
-        //        case Key.D0:
-        //            choosenDamageType = DamageType.physical;
-        //            break;
-        //        case Key.D1:
-        //            choosenDamageType = DamageType.poison;
-        //            break;
-        //        case Key.D2:
-        //            choosenDamageType = DamageType.fire;
-        //            break;
-        //        case Key.D3:
-        //            choosenDamageType = DamageType.frost;
-        //            break;
-        //        case Key.D4:
-        //            choosenDamageType = DamageType.air;
-        //            break;
-        //        case Key.D5:
-        //            choosenDamageType = DamageType.earth;
-        //            break;
-
-        //    }
-        //}
-
->>>>>>> DevSimon
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());
