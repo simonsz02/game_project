@@ -7,6 +7,7 @@ using TowerDefenseGame.Model.Abstracts;
 
 namespace TowerDefenseGame.Model.GameItems
 {
+    [Serializable]
     public class TowerSelectorRect : GameItem
     {
         private bool selected;
