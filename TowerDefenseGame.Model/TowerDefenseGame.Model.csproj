@@ -51,9 +51,7 @@
     <Compile Include="Abstracts\GameItem.cs" />
     <Compile Include="Abstracts\MovingGameItem.cs" />
     <Compile Include="Abstracts\Projectile.cs" />
-    <Compile Include="GameItems\Bullet.cs" />
     <Compile Include="GameItems\Enemy.cs" />
-    <Compile Include="GameItems\GunTower.cs" />
     <Compile Include="GameItems\Missile.cs" />
     <Compile Include="GameItems\RocketTower.cs" />
     <Compile Include="GameItems\Tower.cs" />
