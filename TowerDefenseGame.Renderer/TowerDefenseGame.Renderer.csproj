@@ -124,12 +124,6 @@
     <EmbeddedResource Include="Image\Wallpaper\stone.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Image\Wallpaper\stone2.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Image\Wallpaper\stone3.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Image\Selectors\air.png" />
     <EmbeddedResource Include="Image\Selectors\earth.png" />
     <EmbeddedResource Include="Image\Selectors\fire.png" />
@@ -137,7 +131,7 @@
     <EmbeddedResource Include="Image\Selectors\poison.png" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Image\Selectors\sexylady.png" />
+    <EmbeddedResource Include="Image\Selectors\hammer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

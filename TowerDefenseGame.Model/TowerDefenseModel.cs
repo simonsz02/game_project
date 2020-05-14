@@ -9,7 +9,7 @@ namespace TowerDefenseGame.Model
     [Serializable]
     public enum DamageType
     {
-        physical, frost, fire, earth, air, poison
+        physical, poison, fire, frost, air, earth,  
     }
     [Serializable]
     public class TowerDefenseModel

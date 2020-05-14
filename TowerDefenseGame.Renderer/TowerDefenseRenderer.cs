@@ -64,7 +64,7 @@ namespace TowerDefenseGame.Renderer
                 switch (i)
                 {
                     case 0:
-                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.sexylady.png",false);
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.hammer.png",false);
                         break;
                     case 1:
                         image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.poison.png", false);
@@ -85,12 +85,15 @@ namespace TowerDefenseGame.Renderer
 
                 if (model.TowerSelectorRects[i].Selected)
                 {
-                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.DarkRed,3), selectorGeo));
+                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.Green,3), selectorGeo));
                 }
                 else
                 {
                     selectorGroups.Children.Add(new GeometryDrawing(image, null, selectorGeo));
                 }
+
+                selectorGroups.Children.Add(GetDamageTypeName(i,model.TowerSelectorRects[i].Area.Width, model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y));
+                selectorGroups.Children.Add(GetPricesTexts(i, model.TowerSelectorRects[i].Area.Height, model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y));
                 
             }
 
@@ -100,6 +103,54 @@ namespace TowerDefenseGame.Renderer
 
         }
 
+        private Drawing GetDamageTypeName(int pictNum, double w, double x, double y)
+        {
+            GeometryDrawing text;
+
+            FormattedText formattedText = new FormattedText($"{model.TowerSelectorRects[pictNum].damageType}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 20, Brushes.Yellow);
+
+            text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 2), formattedText.BuildGeometry(new Point(x+w+20, y)));
+
+            return text;
+        } 
+
+        private Drawing GetPricesTexts(int pictNum,double h, double x, double y)
+        {
+            DrawingGroup pricesTexts = new DrawingGroup();
+
+            for (int i = 1; i <= 3; i++)
+            {
+                GeometryDrawing text;
+                GeometryDrawing price;
+
+                FormattedText formattedText = null;
+                FormattedText formattedPrice = null;
+
+                switch (i)
+                {
+                    case 1:
+                        formattedText = new FormattedText("Price", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                    case 2:
+                        formattedText = new FormattedText("Upgrade I.", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price* ((int)Math.Pow(2,i-1))}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                    case 3:
+                        formattedText = new FormattedText("Upgrade II.", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price * ((int)Math.Pow(2, i - 1))}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                }
+
+                text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedText.BuildGeometry(new Point(x, y + h + (i*20))));
+                price = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedPrice.BuildGeometry(new Point(x + 90, y + h + (i * 20))));
+
+                pricesTexts.Children.Add(text);
+                pricesTexts.Children.Add(price);
+            }
+
+            return pricesTexts;
+        }
 
         private Drawing GetNumberOfTowers()
         {
@@ -230,7 +281,7 @@ namespace TowerDefenseGame.Renderer
             if (oldBackground == null)
             {
                 Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
-                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone3.jpg",false), null, backgroundGeometry);
+                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone.jpg",false), null, backgroundGeometry);
             }
             return oldBackground;
         }

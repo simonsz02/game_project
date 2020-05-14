@@ -79,8 +79,9 @@ namespace TowerDefenseGame.Logic
             {
                 model.TowerSelectorRects[i] = new TowerSelectorRect(model.TileSize * width + 15,
                                                                         i* model.GameHeight / model.TowerSelectorRects.Length,
-                                                                        model.GameHeight / model.TowerSelectorRects.Length * 0.85 *2/3,
-                                                                        model.GameHeight/ model.TowerSelectorRects.Length * 0.85);
+                                                                        model.GameHeight / model.TowerSelectorRects.Length * 0.3,
+                                                                        model.GameHeight/ model.TowerSelectorRects.Length * 0.3,
+                                                                        i);
                 if (i==0)
                 {
                     model.TowerSelectorRects[i].Selected = true;
@@ -294,11 +295,10 @@ namespace TowerDefenseGame.Logic
             if (model.Towers.Count != 0)
                 choosenTower = ExistsTower(mousePos);
 
-            //torony ára nem változóként megadva. Rossz és csúny megoldás! Javítani!
             if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false &&
                 model.Towers.Count < 6 &&
                 choosenTower == null &&
-                (model.Coins - 300) >= 0)
+                (model.Coins - GetSelectedTower().Price) >= 0)
             {
                 RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
                            GetTilePos(mousePos).Y * model.TileSize,
@@ -306,7 +306,8 @@ namespace TowerDefenseGame.Logic
                            model.TileSize,
                            (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
                            timer,
-                           GetDamageType()
+                           GetSelectedTower().damageType,
+                           GetSelectedTower().Price
                            );
 
                 model.Towers.Add(tempTower);
@@ -314,9 +315,9 @@ namespace TowerDefenseGame.Logic
                 model.Coins -= tempTower.Price;
             }
             else if (choosenTower != null && choosenTower.Grade < 3 &&
-                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price / 5))>=0)
+                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price))>=0)
             {
-                model.Coins -= (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price / 5);
+                model.Coins -= (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price);
                 choosenTower.Grade++;
             }
             else
@@ -386,36 +387,16 @@ namespace TowerDefenseGame.Logic
             }
         }
 
-        private DamageType GetDamageType()
+        private TowerSelectorRect GetSelectedTower()
         {
             int selectedNum = 0;
-            DamageType choosenDamageType = DamageType.physical;
 
             while (!model.TowerSelectorRects[selectedNum].Selected)
             {
                 selectedNum++;
             }
 
-            switch (selectedNum)
-            {
-                case 1:
-                    choosenDamageType = DamageType.poison;
-                    break;
-                case 2:
-                    choosenDamageType = DamageType.fire;
-                    break;
-                case 3:
-                    choosenDamageType = DamageType.frost;
-                    break;
-                case 4:
-                    choosenDamageType = DamageType.air;
-                    break;
-                case 5:
-                    choosenDamageType = DamageType.earth;
-                    break;
-            }
-
-            return choosenDamageType;
+            return model.TowerSelectorRects[selectedNum];
         }
 
         /// <summary>
