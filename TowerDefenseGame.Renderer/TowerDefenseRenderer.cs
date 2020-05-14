@@ -25,6 +25,9 @@ namespace TowerDefenseGame.Renderer
         Drawing oldPath;
         Drawing oldCastle;
         Drawing oldTowers;
+        Drawing oldEnemies;
+        Drawing oldSelectors;
+
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
             this.model = model;
@@ -37,16 +40,118 @@ namespace TowerDefenseGame.Renderer
             dg.Children.Add(GetPath());
             dg.Children.Add(GetCastle());
             dg.Children.Add(GetTowers());
-            dg.Children.Add(NumberOfTowers());
-            dg.Children.Add(NumberOfCoins());
+            dg.Children.Add(GetNumberOfTowers());
+            dg.Children.Add(GetNumberOfCoins());
+            dg.Children.Add(GetTowerSelectorPanel());
+            dg.Children.Add(GetEnemies());
 
-            AddEnemiesDrawing(dg);
+            //AddEnemiesDrawing(dg);
             AddProjectileDrawing(dg);
 
             return dg;
         }
 
-        private Drawing NumberOfTowers()
+        private Drawing GetTowerSelectorPanel()
+        {
+            DrawingGroup selectorGroups = new DrawingGroup();
+            Brush image = null;
+
+            for (int i = 0; i < model.TowerSelectorRects.Length; i++)
+            {
+                Geometry selectorGeo = new RectangleGeometry(new Rect(model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y, model.TowerSelectorRects[i].Area.Width, model.TowerSelectorRects[i].Area.Height));
+
+                switch (i)
+                {
+                    case 0:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.hammer.png",false);
+                        break;
+                    case 1:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.poison.png", false);
+                        break;
+                    case 2:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.fire.png", false);
+                        break;
+                    case 3:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.frost.png", false);
+                        break;
+                    case 4:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.air.png", false);
+                        break;
+                    case 5:
+                        image = GetBrush("TowerDefenseGame.Renderer.Image.Selectors.earth.png", false);
+                        break;
+                }
+
+                if (model.TowerSelectorRects[i].Selected)
+                {
+                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.Green,3), selectorGeo));
+                }
+                else
+                {
+                    selectorGroups.Children.Add(new GeometryDrawing(image, null, selectorGeo));
+                }
+
+                selectorGroups.Children.Add(GetDamageTypeName(i,model.TowerSelectorRects[i].Area.Width, model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y));
+                selectorGroups.Children.Add(GetPricesTexts(i, model.TowerSelectorRects[i].Area.Height, model.TowerSelectorRects[i].Area.X, model.TowerSelectorRects[i].Area.Y));
+                
+            }
+
+            oldSelectors = selectorGroups;
+
+            return oldSelectors;
+
+        }
+
+        private Drawing GetDamageTypeName(int pictNum, double w, double x, double y)
+        {
+            GeometryDrawing text;
+
+            FormattedText formattedText = new FormattedText($"{model.TowerSelectorRects[pictNum].damageType}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 20, Brushes.Yellow);
+
+            text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 2), formattedText.BuildGeometry(new Point(x+w+20, y)));
+
+            return text;
+        } 
+
+        private Drawing GetPricesTexts(int pictNum,double h, double x, double y)
+        {
+            DrawingGroup pricesTexts = new DrawingGroup();
+
+            for (int i = 1; i <= 3; i++)
+            {
+                GeometryDrawing text;
+                GeometryDrawing price;
+
+                FormattedText formattedText = null;
+                FormattedText formattedPrice = null;
+
+                switch (i)
+                {
+                    case 1:
+                        formattedText = new FormattedText("Price", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                    case 2:
+                        formattedText = new FormattedText("Upgrade I.", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price* ((int)Math.Pow(2,i-1))}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                    case 3:
+                        formattedText = new FormattedText("Upgrade II.", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        formattedPrice = new FormattedText($"{model.TowerSelectorRects[pictNum].Price * ((int)Math.Pow(2, i - 1))}", System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 15, Brushes.Yellow);
+                        break;
+                }
+
+                text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedText.BuildGeometry(new Point(x, y + h + (i*20))));
+                price = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedPrice.BuildGeometry(new Point(x + 90, y + h + (i * 20))));
+
+                pricesTexts.Children.Add(text);
+                pricesTexts.Children.Add(price);
+            }
+
+            return pricesTexts;
+        }
+
+        private Drawing GetNumberOfTowers()
         {
             GeometryDrawing text;
             
@@ -63,7 +168,7 @@ namespace TowerDefenseGame.Renderer
             return text;
         }
 
-        private Drawing NumberOfCoins()
+        private Drawing GetNumberOfCoins()
         {
             FormattedText formattedText = new FormattedText(model.Coins.ToString(), System.Globalization.CultureInfo.CurrentCulture, FlowDirection.LeftToRight, new Typeface("Arial"), 26, Brushes.Black);
             GeometryDrawing text = new GeometryDrawing(null, new Pen(Brushes.Gold, 2), formattedText.BuildGeometry(new Point(model.GameWidth * 0.75, 50)));
@@ -77,15 +182,15 @@ namespace TowerDefenseGame.Renderer
             {
                 DrawingGroup castle = new DrawingGroup();
                 Geometry upperCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e800.bmp").First()), null, upperCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e800.bmp",true), null, upperCorner));
                 Geometry upperWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y - model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, upperWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp",true), null, upperWall));
                 Geometry gate = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b801.bmp").First()), null, gate));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b801.bmp",true), null, gate));
                 Geometry lowerWall = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + model.TileSize, model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0b800.bmp").First()), null, lowerWall));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0b800.bmp",true), null, lowerWall));
                 Geometry lowerCorner = new RectangleGeometry(new Rect(model.ExitPoint.X, model.ExitPoint.Y + (2 * model.TileSize), model.TileSize, model.TileSize));
-                castle.Children.Add(new GeometryDrawing(GetImageBrush(GetEmbendedResourceInFolder("Image.Castle.s2d0e810.bmp").First()), null, lowerCorner));
+                castle.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Castle.s2d0e810.bmp",true), null, lowerCorner));
                 oldCastle = castle;
             }
             return oldCastle;
@@ -105,34 +210,48 @@ namespace TowerDefenseGame.Renderer
         /// Draw all enemies
         /// </summary>
         /// <param name="dg"></param>
-        private void AddEnemiesDrawing(DrawingGroup dg)
-        {            
-            foreach (MovingGameItem enemy in model.Enemies)
+        private Drawing GetEnemies()
+        {
+
+            DrawingGroup enemies = new DrawingGroup();
+
+            foreach (Enemy enemy in model.Enemies)
             {
-                int key = enemy.GetHashCode();
+                Geometry enemyGeo = new RectangleGeometry(new Rect(enemy.Area.X, enemy.Area.Y, enemy.Area.Width, enemy.Area.Height));
 
-                if (!imageCache.ContainsKey(key))
-                {
-                    /*
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Enemy.scythe.png")[0]);
-                    bi.Rotation = Rotation.Rotate270;
-                    bi.EndInit();
-                    */
-                    System.Drawing.Bitmap bim = new System.Drawing.Bitmap(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe_small.png");
-                    BitmapImage bi = ToBitmapImage(bim);
-                    //BitmapImage bi = new BitmapImage(new Uri(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe.png", UriKind.Absolute));
-
-                    imageCache.Add(key, bi);
-                }
-                ImageDrawing img = new ImageDrawing
-                {                   
-                    Rect = enemy.Area,
-                    ImageSource = imageCache[key]
-                };               
-                dg.Children.Add(img);
+                enemies.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Enemy.ork.png",false), null, enemyGeo));
             }
+
+            oldEnemies = enemies;
+
+            return oldEnemies;
+
+            //foreach (MovingGameItem enemy in model.Enemies)
+            //{
+            //    int key = enemy.GetHashCode();
+
+            //    if (!imageCache.ContainsKey(key))
+            //    {
+            //        /*
+            //        BitmapImage bi = new BitmapImage();
+            //        bi.BeginInit();
+            //        bi.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(GetEmbendedResourceInFolder("Image.Enemy.scythe.png")[0]);
+            //        bi.Rotation = Rotation.Rotate270;
+            //        bi.EndInit();
+            //        */
+            //        System.Drawing.Bitmap bim = new System.Drawing.Bitmap(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe_small.png");
+            //        BitmapImage bi = ToBitmapImage(bim);
+            //        //BitmapImage bi = new BitmapImage(new Uri(@"C:\Users\ladeak\Source\Repos\Prog4\oenik_prog4_2020_2_l0gkpu_oseu51\TowerDefenseGame.Renderer\Image\Enemy\scythe.png", UriKind.Absolute));
+
+            //        imageCache.Add(key, bi);
+            //    }
+            //    ImageDrawing img = new ImageDrawing
+            //    {                   
+            //        Rect = enemy.Area,
+            //        ImageSource = imageCache[key]
+            //    };               
+            //    dg.Children.Add(img);
+            //}
         }
         /// <summary>
         /// Draw all projectiles
@@ -172,7 +291,7 @@ namespace TowerDefenseGame.Renderer
             if (oldBackground == null)
             {
                 Geometry backgroundGeometry = new RectangleGeometry(new Rect(0, 0, model.GameWidth, model.GameHeight));
-                oldBackground = new GeometryDrawing(Brushes.Black, null, backgroundGeometry);
+                oldBackground = new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Wallpaper.stone.jpg",false), null, backgroundGeometry);
             }
             return oldBackground;
         }
@@ -230,11 +349,11 @@ namespace TowerDefenseGame.Renderer
                     fieldPics[i].EndInit();
                 }
                 #endregion
-                ImageBrush fieldBrush = new ImageBrush(fieldPics[1])
+                ImageBrush fieldBrush = new ImageBrush(fieldPics[0])
                 {
                     TileMode = TileMode.Tile,
                     Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
-                    ViewportUnits = BrushMappingMode.Absolute
+                    ViewportUnits = BrushMappingMode.Absolute 
                 };
                 oldFields = new GeometryDrawing(fieldBrush, new Pen(Brushes.DimGray, 1), g);
                 oldPath = rndPath;
@@ -248,20 +367,30 @@ namespace TowerDefenseGame.Renderer
         
         private Drawing GetTowers()
         {
-
-            GeometryGroup g = new GeometryGroup();
+            DrawingGroup towers = new DrawingGroup();
 
             foreach (Tower tower in model.Towers)
             {
-                Geometry towerGeo = new EllipseGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
-                g.Children.Add(towerGeo);
-            }
+                Geometry towerGeo = new RectangleGeometry(new Rect(tower.Area.X, tower.Area.Y, model.TileSize, model.TileSize));
 
-            oldTowers = new GeometryDrawing(Brushes.DarkGray, new Pen(Brushes.Black, 1), g);
+                switch (tower.Grade)
+                {
+                    case 1:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket1_dryground.png",true), null, towerGeo));
+                        break;
+                    case 2:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket2_dryground.png",true), null, towerGeo));
+                        break;
+                    case 3:
+                        towers.Children.Add(new GeometryDrawing(GetBrush("TowerDefenseGame.Renderer.Image.Towers.rocket3_dryground.png",true), null, towerGeo));
+                        break;
+                }
+            }
+            oldTowers = towers;
 
             return oldTowers;
         }
-        private ImageBrush GetImageBrush(string image)
+        private Brush GetBrush(string image, bool IsTiled)
         {
             if (imageBrushCache.ContainsKey(image))
             {
@@ -274,14 +403,17 @@ namespace TowerDefenseGame.Renderer
                 img.StreamSource = Assembly.GetExecutingAssembly().GetManifestResourceStream(image);
                 img.EndInit();
 
-                ImageBrush imgBrush = new ImageBrush(img)
+                ImageBrush imgBrush = new ImageBrush(img);
+
+                if (IsTiled)
                 {
-                    TileMode = TileMode.Tile,
-                    Viewport = new Rect(0, 0, model.TileSize, model.TileSize),
-                    ViewportUnits = BrushMappingMode.Absolute
-                };
+                    imgBrush.TileMode = TileMode.Tile;
+                    imgBrush.Viewport = new Rect(0, 0, model.TileSize, model.TileSize);
+                    imgBrush.ViewportUnits = BrushMappingMode.Absolute;
+                }
+
                 imageBrushCache.Add(image, imgBrush);
-                return imgBrush;
+                return imageBrushCache[image];
             }
         }
         private string[] GetEmbendedResourceInFolder(string folder)

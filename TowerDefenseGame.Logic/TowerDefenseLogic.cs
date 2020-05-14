@@ -54,6 +54,7 @@ namespace TowerDefenseGame.Logic
             model.Path = new bool[width, height];
             SetPath(model.Path);
             model.Fields = new bool[width, height];
+
             model.TileSize = Math.Min(Math.Min((model.GameWidth * 0.95) / width, (model.GameWidth - 100) / width), model.GameHeight / height);
             for (int i = 0; i < height; i++)
             {
@@ -80,7 +81,22 @@ namespace TowerDefenseGame.Logic
                     }
                 }
             }
+
+            for (int i = 0; i < model.TowerSelectorRects.Length; i++)
+            {
+                model.TowerSelectorRects[i] = new TowerSelectorRect(model.TileSize * width + 15,
+                                                                        i* model.GameHeight / model.TowerSelectorRects.Length,
+                                                                        model.GameHeight / model.TowerSelectorRects.Length * 0.3,
+                                                                        model.GameHeight/ model.TowerSelectorRects.Length * 0.3,
+                                                                        i);
+                if (i==0)
+                {
+                    model.TowerSelectorRects[i].Selected = true;
+                }
+            }
+
         }
+
         /// <summary>
         /// Move all enemies on the path 
         /// </summary>
@@ -284,23 +300,118 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
-        public void AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer, DamageType damageType = DamageType.physical)
+        public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
+            bool OperationIsFailed = false;
+            Tower choosenTower =null;
 
+            if (model.Towers.Count != 0)
+                choosenTower = ExistsTower(mousePos);
+
+            if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false &&
+                model.Towers.Count < 6 &&
+                choosenTower == null &&
+                (model.Coins - GetSelectedTower().Price) >= 0)
+            {
                 RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
-                                           GetTilePos(mousePos).Y * model.TileSize,
-                                           model.TileSize,
-                                           model.TileSize,
-                                           (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
-                                           timer,
-                                           damageType
-                                           );
+                           GetTilePos(mousePos).Y * model.TileSize,
+                           model.TileSize,
+                           model.TileSize,
+                           (x, y, w, h, m, d, dt, t) => model.Projectiles.Add(new Missile(x, y, w / 4, h / 4, m, d, dt, t)),
+                           timer,
+                           GetSelectedTower().damageType,
+                           GetSelectedTower().Price
+                           );
 
                 model.Towers.Add(tempTower);
 
                 model.Coins -= tempTower.Price;
+            }
+            else if (choosenTower != null && choosenTower.Grade < 3 &&
+                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price))>=0)
+            {
+                model.Coins -= (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price);
+                choosenTower.Grade++;
+            }
+            else
+                OperationIsFailed = true;
 
+            return OperationIsFailed;
         }
+
+        public bool RemoveTower(Point mousePos)
+        {
+            bool OperationIsFailed = false;
+            Tower choosenTower = null;
+
+            if (model.Towers.Count != 0)
+                choosenTower = ExistsTower(mousePos);
+
+            if (choosenTower != null)
+                model.Towers.Remove(choosenTower);
+            else
+                OperationIsFailed = true;
+
+            return OperationIsFailed;
+        }
+
+        private Tower ExistsTower(Point mousePos)
+        {
+            Tower founded = null;
+
+            foreach (Tower t in model.Towers)
+            {
+                if (t.Area.X == GetTilePos(mousePos).X * model.TileSize &&
+                    t.Area.Y == GetTilePos(mousePos).Y * model.TileSize)
+                {
+                    founded = t;
+                }
+            }
+            return founded;
+        }
+
+        //Végigmegyünk a torony kiválasztó képeken. A korábban kijelölt képet elhelyezzük egy változóban.
+        //Amennyiben kiválasztásra került egy kép akkor a korábban kiválasztott képről lekerül a keretezés
+        //és az új képre kerül fel.
+        public void Framing(Point mousePos)
+        {
+            TowerSelectorRect preSelected = null;
+            TowerSelectorRect newlySelected = null;
+            bool newImageWasSelected = false;
+
+            foreach (TowerSelectorRect selector in model.TowerSelectorRects)
+            {
+                if (selector.Selected)
+                {
+                    preSelected = selector;
+                }
+
+                if (selector.Area.Contains(mousePos))
+                {
+                    newImageWasSelected = true;
+                    newlySelected = selector;
+                }
+            }
+
+            if (newImageWasSelected)
+            {
+                preSelected.Selected = false;
+                newlySelected.Selected = true;
+            }
+        }
+
+        private TowerSelectorRect GetSelectedTower()
+        {
+            int selectedNum = 0;
+
+            while (!model.TowerSelectorRects[selectedNum].Selected)
+            {
+                selectedNum++;
+            }
+
+            return model.TowerSelectorRects[selectedNum];
+        }
+
         /// <summary>
         /// Converts pixel to tile coordinates
         /// </summary>

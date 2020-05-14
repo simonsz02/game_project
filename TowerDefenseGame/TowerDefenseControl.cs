@@ -23,7 +23,7 @@ namespace TowerDefenseGame
         DispatcherTimer tickTimer;
         DispatcherTimer spawnEnemyTimer;
         DispatcherTimer towerShotTimer;
-        private DamageType choosenDamageType = DamageType.physical;
+        //private DamageType choosenDamageType;
         SoundPlayer pl = new SoundPlayer();
         string userName;
         private bool gameEnd = false;
@@ -55,7 +55,7 @@ namespace TowerDefenseGame
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
-                win.KeyDown += Win_KeyDown;
+                //win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
                 //Spawn enemy
                 spawnEnemyTimer = new DispatcherTimer
@@ -129,43 +129,32 @@ namespace TowerDefenseGame
         }
         private void TowerDefenseControl_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            bool TowerActionIsFailed = false;
+
             Point mousePos = e.GetPosition(this);
-            if (e.ChangedButton == MouseButton.Left)
+
+            if(mousePos.X <= model.TileSize * model.Path.GetLength(0))
             {
-                bool TowerExistsThere = false;
-
-                if (model.Towers.Count != 0)
+                if (e.ChangedButton == MouseButton.Left)
                 {
-                    foreach (Tower t in model.Towers)
-                    {
-                        if (t.Area.X == logic.GetTilePos(mousePos).X * model.TileSize &&
-                            t.Area.Y == logic.GetTilePos(mousePos).Y * model.TileSize) TowerExistsThere = true;
-                    }
+                    TowerActionIsFailed = logic.AddOrUpgradeTower(mousePos, towerShotTimer);
                 }
-
-                if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == false && model.Towers.Count < 6 && !TowerExistsThere)
+                else
                 {
-                    logic.AddTower(mousePos, towerShotTimer, choosenDamageType);
-                }
-                else if (model.Towers.Count == 6)
-                {
-                    MessageBox.Show("Number of the towers has already reached its maximum");
-                }
-                else if (model.Path[(int)logic.GetTilePos(mousePos).X, (int)logic.GetTilePos(mousePos).Y] == true)
-                {
-                    MessageBox.Show("Tower can't be placed on the road");
-                }
-                else if (TowerExistsThere)
-                {
-                    MessageBox.Show("There is already a tower in the selected field");
+                    TowerActionIsFailed = logic.RemoveTower(mousePos);
                 }
             }
-            else if (e.ChangedButton == MouseButton.Right)
+            else
             {
-                //Ide jön a toronyrombolás
+                logic.Framing(mousePos);
             }
+
+            if (TowerActionIsFailed) MessageBox.Show("Tower operation is failed");
+
             InvalidateVisual();
+
         }        
+<<<<<<< HEAD
         private void Win_KeyDown(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -228,6 +217,64 @@ namespace TowerDefenseGame
         {
             SerializationAsBinary.Export("TowerDefenseLastState" + userName + ".bin", model);
         }
+=======
+        //private void Win_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    switch (e.Key)
+        //    {
+        //        case Key.Enter: 
+        //            if (logic.debug)
+        //            {
+        //                model.Enemies.Add(new Enemy(model.EntryPoint.X,
+        //                                            model.EntryPoint.Y + model.TileSize / 4,
+        //                                            model.TileSize / 2,
+        //                                            model.TileSize / 2,
+        //                                            20,
+        //                                            5,
+        //                                            logic.GetTilePos(model.EntryPoint),
+        //                                            5));
+        //                InvalidateVisual();
+        //            }
+        //            break;
+        //        case Key.A:
+        //            if (logic.debug)
+        //            {
+        //                model.Projectiles.Add(new Missile(0, 0, model.TileSize / 4, model.TileSize / 4, 8, 10, DamageType.physical, model.Enemies.First()));
+        //            }
+        //            break;
+        //        case Key.D:
+        //            if (logic.debug)
+        //            {
+        //            }                
+        //            break;
+        //        case Key.P:
+        //            tickTimer.IsEnabled = !tickTimer.IsEnabled;
+        //            spawnEnemyTimer.IsEnabled = !spawnEnemyTimer.IsEnabled;
+        //            towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
+        //            break;
+        //        case Key.D0:
+        //            choosenDamageType = DamageType.physical;
+        //            break;
+        //        case Key.D1:
+        //            choosenDamageType = DamageType.poison;
+        //            break;
+        //        case Key.D2:
+        //            choosenDamageType = DamageType.fire;
+        //            break;
+        //        case Key.D3:
+        //            choosenDamageType = DamageType.frost;
+        //            break;
+        //        case Key.D4:
+        //            choosenDamageType = DamageType.air;
+        //            break;
+        //        case Key.D5:
+        //            choosenDamageType = DamageType.earth;
+        //            break;
+
+        //    }
+        //}
+
+>>>>>>> DevSimon
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());

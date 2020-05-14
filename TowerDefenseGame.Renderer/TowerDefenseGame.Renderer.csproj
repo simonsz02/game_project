@@ -71,9 +71,6 @@
     <EmbeddedResource Include="Image\Field\dryground.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Image\Field\grass.png" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Image\Menu\menubg2.jpg" />
   </ItemGroup>
   <ItemGroup>
@@ -107,10 +104,38 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\Enemy\scythe.png" />
+    <EmbeddedResource Include="Image\Enemy\scythe.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Image\Enemy\scythe_small.png" />
+    <EmbeddedResource Include="Image\Enemy\scythe_small.png" />
+    <EmbeddedResource Include="Image\Field\grass.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet1.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet2.jpg" />
+    <EmbeddedResource Include="Image\Towers\bullet3.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket1.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket2.jpg" />
+    <EmbeddedResource Include="Image\Towers\rocket3.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Enemy\ork.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Towers\rocket1_dryground.png" />
+    <EmbeddedResource Include="Image\Towers\rocket2_dryground.png" />
+    <EmbeddedResource Include="Image\Towers\rocket3_dryground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Wallpaper\stone.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Selectors\air.png" />
+    <EmbeddedResource Include="Image\Selectors\earth.png" />
+    <EmbeddedResource Include="Image\Selectors\fire.png" />
+    <EmbeddedResource Include="Image\Selectors\frost.png" />
+    <EmbeddedResource Include="Image\Selectors\poison.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Image\Selectors\hammer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

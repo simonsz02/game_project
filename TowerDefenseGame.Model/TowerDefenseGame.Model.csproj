@@ -57,6 +57,7 @@
     <Compile Include="GameItems\Missile.cs" />
     <Compile Include="GameItems\RocketTower.cs" />
     <Compile Include="GameItems\Tower.cs" />
+    <Compile Include="GameItems\TowerSelectorRect.cs" />
     <Compile Include="Interface\IEnemy.cs" />
     <Compile Include="Interface\IGameItem.cs" />
     <Compile Include="Interface\IProjectile.cs" />

@@ -9,17 +9,18 @@ namespace TowerDefenseGame.Model
     [Serializable]
     public enum DamageType
     {
-        physical, frost, fire, earth, air, magic, poison
+        physical, poison, fire, frost, air, earth,  
     }
     [Serializable]
     public class TowerDefenseModel
     {
         private readonly List<Enemy> enemies = new List<Enemy>();
-        private readonly List<Tower> towers = new List<Tower>(); 
-        private readonly List<Projectile> projectiles = new List<Projectile>(); 
+        private readonly List<Tower> towers = new List<Tower>();
+        private readonly List<Projectile> projectiles = new List<Projectile>();
         public List<Enemy> Enemies { get { return enemies; } }
         public List<Tower> Towers { get { return towers; } }
         public List<Projectile> Projectiles { get { return projectiles; } }
+        public TowerSelectorRect[] TowerSelectorRects { get; set; } 
         public bool[,] Fields { get; set; }
         public bool[,] Path { get; set; }
         public double GameWidth { get; set; }
@@ -34,6 +35,7 @@ namespace TowerDefenseGame.Model
             GameWidth = w;
             GameHeight = h;
             Coins = c;
+            TowerSelectorRects = new TowerSelectorRect[Enum.GetValues(typeof(DamageType)).Length];
         }
     }
 }
