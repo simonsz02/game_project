@@ -54,11 +54,16 @@
   <ItemGroup>
     <Compile Include="DamageTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TowerOperations.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TowerDefenseGame.Logic\TowerDefenseGame.Logic.csproj">
+      <Project>{727197c6-35bd-48f2-bfff-c854a22c28fc}</Project>
+      <Name>TowerDefenseGame.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TowerDefenseGame.Model\TowerDefenseGame.Model.csproj">
       <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
       <Name>TowerDefenseGame.Model</Name>
