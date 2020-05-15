@@ -48,7 +48,7 @@ namespace TowerDefenseGame.Repository
         public static List<Row> ReadHighScoreFile()
         {
             var list = new List<Row>();
-            var fileStream = new FileStream(@"highscore.txt", FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(@"Config\highscore.txt", FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
                 string line;
