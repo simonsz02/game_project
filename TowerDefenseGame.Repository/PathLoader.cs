@@ -10,7 +10,7 @@ namespace TowerDefenseGame.Repository
         public static List<Point> ReadPathFile()
         {
             var list = new List<Point>();
-            var fileStream = new FileStream(@"path.txt", FileMode.Open, FileAccess.Read);
+            var fileStream = new FileStream(@"Config\path.txt", FileMode.Open, FileAccess.Read);
             using (var streamReader = new StreamReader(fileStream, Encoding.UTF8))
             {
                 string line;

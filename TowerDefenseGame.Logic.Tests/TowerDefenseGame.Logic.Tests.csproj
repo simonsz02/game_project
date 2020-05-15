@@ -59,9 +59,25 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TowerDefenseGame.Logic\TowerDefenseGame.Logic.csproj">
+      <Project>{727197c6-35bd-48f2-bfff-c854a22c28fc}</Project>
+      <Name>TowerDefenseGame.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TowerDefenseGame.Model\TowerDefenseGame.Model.csproj">
       <Project>{081bef1c-1d16-4192-8e0e-fee81866cf6d}</Project>
       <Name>TowerDefenseGame.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame.Renderer\TowerDefenseGame.Renderer.csproj">
+      <Project>{6666f8fb-214e-499f-9880-14f0307c919d}</Project>
+      <Name>TowerDefenseGame.Renderer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame.Repository\TowerDefenseGame.Repository.csproj">
+      <Project>{b7be39e3-239a-4532-98e6-5f7e1b45416e}</Project>
+      <Name>TowerDefenseGame.Repository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TowerDefenseGame\TowerDefenseGame.WpfApp.csproj">
+      <Project>{b53a7d2d-e6d1-4ac0-a2de-0e5e30741bc4}</Project>
+      <Name>TowerDefenseGame.WpfApp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

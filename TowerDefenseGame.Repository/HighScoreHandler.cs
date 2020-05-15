@@ -34,7 +34,7 @@ namespace TowerDefenseGame.Repository
             byte[] bytes = Encoding.UTF8.GetBytes(data);
             try
             {
-                fileStream = new FileStream(@"highscore.txt", fm, FileAccess.Write);
+                fileStream = new FileStream(@"Config\highscore.txt", fm, FileAccess.Write);
                 fileStream.Write(bytes, 0, bytes.Length);
                 fileStream.Close();
             }
