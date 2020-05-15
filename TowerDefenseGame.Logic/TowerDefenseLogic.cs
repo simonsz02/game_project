@@ -300,17 +300,33 @@ namespace TowerDefenseGame.Logic
                 }
             }
         }
+
         public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
-            bool OperationIsFailed = false;
-            Tower choosenTower =null;
+            bool OperationHasFailed = false;
+            Tower choosenTower = null;
 
             if (model.Towers.Count != 0)
                 choosenTower = ExistsTower(mousePos);
 
+            if (choosenTower==null)
+            {
+                OperationHasFailed = AddTower(mousePos, timer);
+            }
+            else
+            {
+                OperationHasFailed = UpgradeTower(choosenTower);
+            }
+
+            return OperationHasFailed;
+        }
+
+        private bool AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
+        {
+            bool OperationHasFailed = false;
+
             if (model.Path[(int)GetTilePos(mousePos).X, (int)GetTilePos(mousePos).Y] == false &&
                 model.Towers.Count < 6 &&
-                choosenTower == null &&
                 (model.Coins - GetSelectedTower().Price) >= 0)
             {
                 RocketTower tempTower = new RocketTower(GetTilePos(mousePos).X * model.TileSize,
@@ -327,16 +343,26 @@ namespace TowerDefenseGame.Logic
 
                 model.Coins -= tempTower.Price;
             }
-            else if (choosenTower != null && choosenTower.Grade < 3 &&
-                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price))>=0)
+            else
+                OperationHasFailed = true;
+
+            return OperationHasFailed;
+        }
+
+        private bool UpgradeTower(Tower choosenTower)
+        {
+            bool OperationHasFailed = false;
+
+            if (choosenTower.Grade < 3 &&
+                     (model.Coins - (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price)) >= 0)
             {
                 model.Coins -= (int)(Math.Pow(2, choosenTower.Grade) * choosenTower.Price);
                 choosenTower.Grade++;
             }
             else
-                OperationIsFailed = true;
+                OperationHasFailed = true;
 
-            return OperationIsFailed;
+            return OperationHasFailed;
         }
 
         public bool RemoveTower(Point mousePos)
@@ -370,9 +396,6 @@ namespace TowerDefenseGame.Logic
             return founded;
         }
 
-        //Végigmegyünk a torony kiválasztó képeken. A korábban kijelölt képet elhelyezzük egy változóban.
-        //Amennyiben kiválasztásra került egy kép akkor a korábban kiválasztott képről lekerül a keretezés
-        //és az új képre kerül fel.
         public void Framing(Point mousePos)
         {
             TowerSelectorRect preSelected = null;
@@ -400,7 +423,7 @@ namespace TowerDefenseGame.Logic
             }
         }
 
-        private TowerSelectorRect GetSelectedTower()
+        public TowerSelectorRect GetSelectedTower()
         {
             int selectedNum = 0;
 

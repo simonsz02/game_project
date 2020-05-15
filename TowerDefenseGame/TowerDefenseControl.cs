@@ -55,7 +55,7 @@ namespace TowerDefenseGame
                 };
                 tickTimer.Tick += TickTimer_Tick;
                 tickTimer.Start();
-                //win.KeyDown += Win_KeyDown;
+                win.KeyDown += Win_KeyDown;
                 MouseDown += TowerDefenseControl_MouseDown;
                 //Spawn enemy
                 spawnEnemyTimer = new DispatcherTimer
@@ -172,25 +172,30 @@ namespace TowerDefenseGame
                         towerShotTimer.IsEnabled = !towerShotTimer.IsEnabled;
                     }
                     break;
-                //case Key.D0:
-                //    choosenDamageType = DamageType.physical;
-                //    break;
-                //case Key.D1:
-                //    choosenDamageType = DamageType.poison;
-                //    break;
-                //case Key.D2:
-                //    choosenDamageType = DamageType.fire;
-                //    break;
-                //case Key.D3:
-                //    choosenDamageType = DamageType.frost;
-                //    break;
-                //case Key.D4:
-                //    choosenDamageType = DamageType.air;
-                //    break;
-                //case Key.D5:
-                //    choosenDamageType = DamageType.earth;
-                //    break;
-
+                case Key.D1:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[0].Selected = true;
+                    break;
+                case Key.D2:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[1].Selected = true;
+                    break;
+                case Key.D3:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[2].Selected = true;
+                    break;
+                case Key.D4:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[3].Selected = true;
+                    break;
+                case Key.D5:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[4].Selected = true;
+                    break;
+                case Key.D6:
+                    logic.GetSelectedTower().Selected = false;
+                    model.TowerSelectorRects[5].Selected = true;
+                    break;
             }
         }
         internal void SaveState()
