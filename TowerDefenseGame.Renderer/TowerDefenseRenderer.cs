@@ -84,7 +84,7 @@ namespace TowerDefenseGame.Renderer
 
                 if (model.TowerSelectorRects[i].Selected)
                 {
-                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.Green,3), selectorGeo));
+                    selectorGroups.Children.Add(new GeometryDrawing(image, new Pen(Brushes.Red,3), selectorGeo));
                 }
                 else
                 {
@@ -125,6 +125,8 @@ namespace TowerDefenseGame.Renderer
                 FormattedText formattedText = null;
                 FormattedText formattedPrice = null;
 
+                int lineSpacing = 0;
+
                 switch (i)
                 {
                     case 1:
@@ -141,8 +143,13 @@ namespace TowerDefenseGame.Renderer
                         break;
                 }
 
-                text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedText.BuildGeometry(new Point(x, y + h + (i*20))));
-                price = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedPrice.BuildGeometry(new Point(x + 90, y + h + (i * 20))));
+                if (i == 1)
+                    lineSpacing = 10;
+                else
+                    lineSpacing = 20;
+
+                text = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedText.BuildGeometry(new Point(x, y + h + (i* lineSpacing))));
+                price = new GeometryDrawing(null, new Pen(Brushes.Yellow, 1.5), formattedPrice.BuildGeometry(new Point(x + 90, y + h + (i * lineSpacing))));
 
                 pricesTexts.Children.Add(text);
                 pricesTexts.Children.Add(price);
@@ -390,6 +397,7 @@ namespace TowerDefenseGame.Renderer
 
             return oldTowers;
         }
+
         private Brush GetBrush(string image, bool IsTiled)
         {
             if (imageBrushCache.ContainsKey(image))
@@ -416,6 +424,7 @@ namespace TowerDefenseGame.Renderer
                 return imageBrushCache[image];
             }
         }
+
         private string[] GetEmbendedResourceInFolder(string folder)
         {
             var assembly = Assembly.GetCallingAssembly().GetManifestResourceNames();
