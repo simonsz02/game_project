@@ -17,7 +17,6 @@ namespace TowerDefenseGame.Model.GameItems
         public double Range { get; set; }
         // Ez határozza meg, hogy miylen típusú sebzést okoz a lőszere
         DamageType TypeOfDamage { get; set; }
-
         // Ez az az ellenség, amire lő a torony
         Enemy target;
         public Enemy Target
@@ -51,7 +50,7 @@ namespace TowerDefenseGame.Model.GameItems
             timer.Tick += Timer_Tick;
             Range = 2*w;
             TypeOfDamage = dt;
-            this.grade = 1;
+            grade = 1;
         }
         public void Timer_Tick(object sender, EventArgs e)
         {
@@ -64,7 +63,7 @@ namespace TowerDefenseGame.Model.GameItems
             {
                 if (target.Health > 0 & (target.Centre - Centre).Length < Range)
                 {
-                    LoadGun(Centre.X, Centre.Y, Area.Width, Area.Height, 8, 10, TypeOfDamage, Target);
+                    LoadGun(Centre.X, Centre.Y, Area.Width, Area.Height, 8, 10+((grade-1)*5), TypeOfDamage, Target);
                     canShot = false;
                 }
             }

@@ -139,8 +139,8 @@ namespace TowerDefenseGame.Logic
             double hp = rnd.Next(50, 100);
             model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                         model.EntryPoint.Y,
-                                        model.TileSize / 2,
-                                        model.TileSize / 2,
+                                        model.TileSize * 0.6,
+                                        model.TileSize * 0.6,
                                         hp,
                                         rnd.Next(2,10),
                                         GetTilePos(model.EntryPoint),
@@ -151,8 +151,8 @@ namespace TowerDefenseGame.Logic
                 Thread.Sleep(baseTickSpeed*20);
                 model.Enemies.Add(new Enemy(model.EntryPoint.X,
                                             model.EntryPoint.Y,
-                                            model.TileSize / 3 * 2,
-                                            model.TileSize / 3 * 2,
+                                            model.TileSize * 0.9,
+                                            model.TileSize * 0.9,
                                             hp*3,
                                             rnd.Next(10, 25),
                                             GetTilePos(model.EntryPoint),
