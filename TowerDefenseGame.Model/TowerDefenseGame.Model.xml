@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TowerDefenseGame.Model</name>
+    </assembly>
+    <members>
+        <member name="P:TowerDefenseGame.Model.Abstracts.MovingGameItem.Movement">
+            <summary>
+            Change of distance pixel!
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.MovingGameItem.Destination">
+            <summary>
+            A point to be reached in a straight line TILE!
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.MovingGameItem.Direction">
+            <summary>
+            The angle representing the heading of the entity
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.MovingGameItem.Origin">
+            <summary>
+            Previous position TILE!
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.Projectile.GetTarget(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy})">
+            <summary>
+            Get nearest target
+            </summary>
+            <param name="targetList"></param>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Enemy.Reward">
+            The reward depends on how fast and healthy the killed enemy was
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Enemy.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Windows.Point,System.Double)">
+            <summary>
+            This class represents an enemy
+            </summary>
+            <param name="x">position X coordinate</param>
+            <param name="y">position Y coordinate</param>
+            <param name="w">width of unit pixels</param>
+            <param name="h">height of unit in pixels</param>
+            <param name="health">Health</param>
+            <param name="armor">Armor</param>
+            <param name="d">Initial destination</param>
+            <param name="m">Movement pixels/tick</param>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Enemy.ReceiveDamage(System.Double,TowerDefenseGame.Model.DamageType,System.Action{TowerDefenseGame.Model.GameItems.Enemy})">
+            <summary>
+            Every unit handles its received damage on its own
+            </summary>
+            <param name="damage">received damage value</param>
+            <param name="type">received damage type</param>
+            <param name="die">death handler</param>
+            <returns>Boolean value true if the units health is over 0, false if not</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Missile.CauseDamage(TowerDefenseGame.Model.GameItems.Enemy,System.Action{TowerDefenseGame.Model.GameItems.Enemy},TowerDefenseGame.Model.DamageType)">
+            <summary>
+            Do damage. A missile causes splash damage in radius of tileSize
+            </summary>
+            <param name="enemy">The primary target of the damage</param>
+            <param name="die"></param>
+            <param name="dmgtype">Type of damage</param>
+            <returns>Returns true if the health of the target is above 0, false if not</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Model.IEnemy.ReceiveDamage(System.Double,TowerDefenseGame.Model.DamageType,System.Action{TowerDefenseGame.Model.GameItems.Enemy})">
+            <summary>
+            Handles amount of damage received
+            </summary>
+            <param name="dam">Value of damage caused to the enemy</param>
+            <returns>True if enemy is alive False if not</returns>
+        </member>
+    </members>
+</doc>

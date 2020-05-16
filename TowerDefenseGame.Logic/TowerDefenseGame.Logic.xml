@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TowerDefenseGame.Logic</name>
+    </assembly>
+    <members>
+        <member name="T:TowerDefenseGame.Logic.TowerDefenseLogic">
+            <summary>
+            Contains the logic that drives the game
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.rnd">
+            <summary>
+            Random number generator
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.debug">
+            <summary>
+            Debug mode flag
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.baseTickSpeed">
+            <summary>
+            Base tick speed of the enemy is 40
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.enemyCounter">
+            <summary>
+            Counts spawned enemies
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.playerHealth">
+            <summary>
+            Counts players actual health
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Logic.TowerDefenseLogic.finishGame">
+            <summary>
+            Action that finishes the game, saves player score and loads the menu
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.#ctor(TowerDefenseGame.Model.TowerDefenseModel,System.Boolean)">
+            <summary>
+            Constructor of the logic class
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.#ctor(TowerDefenseGame.Model.TowerDefenseModel,System.String)">
+            <summary>
+            Constructor of the logic class
+            </summary>
+            <param name="model"></param>
+            <param name="userName">Name of the player</param>
+            <param name="staticPath">for testing purposes</param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.InitModel(System.Boolean)">
+            <summary>
+            A -100-as paraméter arra szolgál, hogy lefoglaljunk 
+            egy minimum 100, maximum a szélesség 5%-a pixel 
+            széles sávot oldalt a menünek!
+            Nilván szebb lenne paraméterbe tenni
+            </summary>
+            <param name="staticPath">for testing purposes</param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveEnemies(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy})">
+            <summary>
+            Move all enemies on the path 
+            </summary>
+            <param name="enemyList"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.SpawnNewEnemy(System.Action)">
+            <summary>
+            Puts new enemy on the gamefield
+            </summary>
+            <param name="raiseSpawnSpeed">An action that shortens the spawntimer interval</param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveProjectiles(System.Collections.Generic.List{TowerDefenseGame.Model.Abstracts.Projectile})">
+            <summary>
+            Move all existing projectiles
+            </summary>
+            <param name="projList"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.SetNewDestionation(TowerDefenseGame.Model.Abstracts.MovingGameItem)">
+            <summary>
+            Set and returns a new destionation for the enemy on a tile based coordinate
+            </summary>
+            <param name="enemy">Object thats destination has to be changed</param>
+            <returns>Tile type new destination of the enemy</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.SetTowerTargets(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy},System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Tower})">
+            <summary>
+            Tower shoots an enemy untill it leaves the range of the tower or dies
+            </summary>
+            <param name="enemyList"></param>
+            <param name="towerList"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.AddOrUpgradeTower(System.Windows.Point,System.Windows.Threading.DispatcherTimer)">
+            <summary>
+            Player add or upgrade an existing tower
+            </summary>
+            <param name="mousePos"></param>
+            <param name="timer"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.RemoveTower(System.Windows.Point)">
+            <summary>
+            Removes an existing tower
+            </summary>
+            <param name="mousePos"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.Framing(System.Windows.Point)">
+            <summary>
+            Frames the choosen tower selector image
+            </summary>
+            <param name="mousePos"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetSelectedTower">
+            <summary>
+            Gives back the choosen tower type
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetTilePos(System.Windows.Point)">
+            <summary>
+            Converts pixel to tile coordinates
+            </summary>
+            <param name="mousePos">Pixel coordinates</param>
+            <returns>Tile</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetPosTile(System.Windows.Point)">
+            <summary>
+            Gets top left quarter point of tile
+            </summary>
+            <param name="tile"></param>
+            <returns>Point</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetPosTileCentre(System.Windows.Point)">
+            <summary>
+            Gets center coordinates of tile
+            </summary>
+            <param name="tile"></param>
+            <returns>Point</returns>
+        </member>
+    </members>
+</doc>
