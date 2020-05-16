@@ -27,6 +27,4 @@ namespace TowerDefenseGame.Logic.Tests
             Assert.AreEqual(enemy.Health, expect);
         }
     }
-
-
 }

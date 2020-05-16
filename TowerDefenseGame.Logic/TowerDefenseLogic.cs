@@ -15,9 +15,19 @@ namespace TowerDefenseGame.Logic
     [Serializable]
     public class TowerDefenseLogic
     {
+        /// <summary>
+        /// Random number generator
+        /// </summary>
         public static Random rnd = new Random();
 
+        /// <summary>
+        /// Debuging flag
+        /// </summary>
         public bool debug = false;
+
+        /// <summary>
+        /// Base tick speed of the enemy is 40
+        /// </summary>
         public int baseTickSpeed = 40;
         #region finishing the game
         public int enemyCounter = 0;
@@ -30,11 +40,21 @@ namespace TowerDefenseGame.Logic
         TowerDefenseModel model;
         private string userName;
 
+        /// <summary>
+        /// Constructor of the logic class
+        /// </summary>
+        /// <param name="model"></param>
         public TowerDefenseLogic(TowerDefenseModel model)
         {
             this.model = model;
             InitModel();
         }
+
+        /// <summary>
+        /// Constructor of the logic class
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="userName">Name of the player</param>
         public TowerDefenseLogic(TowerDefenseModel model, string userName)
         {
             this.model = model;
@@ -132,10 +152,18 @@ namespace TowerDefenseGame.Logic
             }
             deleteEnemies = new List<Enemy>();
         }
+<<<<<<< HEAD
         /// <summary>
         /// Puts new enemy on the gamefield
         /// </summary>
         /// <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
+=======
+
+        /// <summary>
+        /// Creating new enemies
+        /// </summary>
+        /// <param name="raiseSpawnSpeed"></param>
+>>>>>>> DevSimon
         /// <returns></returns>
         public int SpawnNewEnemy(Action raiseSpawnSpeed)
         {
@@ -272,6 +300,12 @@ namespace TowerDefenseGame.Logic
             }
             return enemy.Destination;
         }
+
+        /// <summary>
+        /// Tower shoots an enemy untill it leaves the range of the tower or dies
+        /// </summary>
+        /// <param name="enemyList"></param>
+        /// <param name="towerList"></param>
         public void SetTowerTargets(List<Enemy> enemyList, List<Tower> towerList)
         {
             foreach (Tower tow in towerList)
@@ -305,6 +339,12 @@ namespace TowerDefenseGame.Logic
             }
         }
 
+        /// <summary>
+        /// Player add or upgrade an existing tower
+        /// </summary>
+        /// <param name="mousePos"></param>
+        /// <param name="timer"></param>
+        /// <returns></returns>
         public bool AddOrUpgradeTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
             bool OperationHasFailed = false;
@@ -369,6 +409,11 @@ namespace TowerDefenseGame.Logic
             return OperationHasFailed;
         }
 
+        /// <summary>
+        /// Removes an existing tower
+        /// </summary>
+        /// <param name="mousePos"></param>
+        /// <returns></returns>
         public bool RemoveTower(Point mousePos)
         {
             bool OperationIsFailed = false;
@@ -400,6 +445,10 @@ namespace TowerDefenseGame.Logic
             return founded;
         }
 
+        /// <summary>
+        /// Frames the choosen tower selector image
+        /// </summary>
+        /// <param name="mousePos"></param>
         public void Framing(Point mousePos)
         {
             TowerSelectorRect preSelected = null;
@@ -427,6 +476,10 @@ namespace TowerDefenseGame.Logic
             }
         }
 
+        /// <summary>
+        /// Gives back the choosen tower type
+        /// </summary>
+        /// <returns></returns>
         public TowerSelectorRect GetSelectedTower()
         {
             int selectedNum = 0;
