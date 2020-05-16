@@ -15,12 +15,12 @@ namespace TowerDefenseGame.Logic.Tests
     [TestFixture]
     public class TowerOperations
     {
-
         [TestCase]
         public void AddTower()
         {
             //Arrange
-            TowerDefenseLogic logic = new TowerDefenseLogic();
+            TowerDefenseModel model = new TowerDefenseModel(1920, 1080, 1000);
+            TowerDefenseLogic logic = new TowerDefenseLogic(model, true);
             bool OperationHasFailed;
 
             //Act
@@ -28,13 +28,15 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed,false);
+            Assert.AreEqual(model.Towers.Count, 1);
         }
 
         [TestCase]
         public void UpgradeTower()
         {
             //Arrang
-            TowerDefenseLogic logic = new TowerDefenseLogic();
+            TowerDefenseModel model = new TowerDefenseModel(1920, 1080, 1000);
+            TowerDefenseLogic logic = new TowerDefenseLogic(model, true);
             bool OperationHasFailed;
 
             //Act
@@ -43,13 +45,15 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed, false);
+            Assert.AreEqual(model.Towers[0].Grade,2);
         }
 
         [TestCase]
         public void RemoveTower()
         {
             //Arrange
-            TowerDefenseLogic logic = new TowerDefenseLogic();
+            TowerDefenseModel model = new TowerDefenseModel(1920, 1080, 1000);
+            TowerDefenseLogic logic = new TowerDefenseLogic(model, true);
             bool OperationHasFailed;
 
             //Act
@@ -58,6 +62,7 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed, false);
+            Assert.AreEqual(model.Towers.Count,0);
         }
     }
 }
