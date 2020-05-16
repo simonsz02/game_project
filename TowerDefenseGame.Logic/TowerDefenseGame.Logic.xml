@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TowerDefenseGame.Logic</name>
+    </assembly>
+    <members>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.InitModel">
+            <summary>
+            A -100-as paraméter arra szolgál, hogy lefoglaljunk 
+            egy minimum 100, maximum a szélesség 5%-a pixel 
+            széles sávot oldalt a menünek!
+            Nilván szebb lenne paraméterbe tenni
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveEnemies(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy})">
+            <summary>
+            Move all enemies on the path 
+            </summary>
+            <param name="enemyList"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.SpawnNewEnemy(System.Action)">
+            <summary>
+            Puts new enemy on the gamefield
+            </summary>
+            <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveProjectiles(System.Collections.Generic.List{TowerDefenseGame.Model.Abstracts.Projectile})">
+            <summary>
+            Move all existing projectiles
+            </summary>
+            <param name="projList"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.SetNewDestionation(TowerDefenseGame.Model.Abstracts.MovingGameItem)">
+            <summary>
+            Set and returns a new destionation for the enemy on a tile based coordinate
+            </summary>
+            <param name="enemy">Object thats destination has to be changed</param>
+            <returns>Tile type new destination of the enemy</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetTilePos(System.Windows.Point)">
+            <summary>
+            Converts pixel to tile coordinates
+            </summary>
+            <param name="mousePos">Pixel coordinates</param>
+            <returns>Tile</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetPosTile(System.Windows.Point)">
+            <summary>
+            Gets top left quarter point of tile
+            </summary>
+            <param name="tile"></param>
+            <returns>Point</returns>
+        </member>
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.GetPosTileCentre(System.Windows.Point)">
+            <summary>
+            Gets center coordinates of tile
+            </summary>
+            <param name="tile"></param>
+            <returns>Point</returns>
+        </member>
+    </members>
+</doc>

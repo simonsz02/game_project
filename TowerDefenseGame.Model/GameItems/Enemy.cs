@@ -125,13 +125,13 @@ namespace TowerDefenseGame.Model.GameItems
                     //ameddig többet sebezne, mint 2
                     if (damage > 2 && Health > 0)
                     {
-                        Health -= damage;
+                        Health -= Math.Max(damage - Armor, 0);
                         new Thread(() => {
                             Thread.Sleep(1000);
                             if (!ReceiveDamage(damage / 2, DamageType.poison, die))
                             {
                                 die(this);
-                            }                            
+                            }
                         }).Start();
                     };
                     break;
