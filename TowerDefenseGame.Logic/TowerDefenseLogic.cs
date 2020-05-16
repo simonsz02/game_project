@@ -173,11 +173,7 @@ namespace TowerDefenseGame.Logic
         /// <summary>
         /// Puts new enemy on the gamefield
         /// </summary>
-<<<<<<< HEAD
         /// <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
-=======
-        /// <param name="raiseSpawnSpeed">An action that shortens the spawntimer interval</param>
->>>>>>> 603ddff3f968b33f595578b95d7a1876249eb903
         /// <returns></returns>
         public int SpawnNewEnemy(Action raiseSpawnSpeed)
         {

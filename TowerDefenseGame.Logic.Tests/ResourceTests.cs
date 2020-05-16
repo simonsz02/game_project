@@ -30,6 +30,22 @@ namespace TowerDefenseGame.Logic.Tests
             //Assert
             Assert.Greater(model.Coins, coin);
         }
+
+        [TestCase(1000)]
+        public void PayWithCoinTest(int coin)
+        {
+            //Arrange
+            TowerDefenseModel model = new TowerDefenseModel(1920, 1080, coin);
+            TowerDefenseLogic logic = new TowerDefenseLogic(model, true);
+            bool OperationHasFailed;
+
+            //Act
+            OperationHasFailed = logic.AddOrUpgradeTower(new Point(1, 1), new System.Windows.Threading.DispatcherTimer()); ;
+
+            //Assert
+            Assert.AreEqual(OperationHasFailed, false);
+            Assert.Greater(coin, model.Coins);
+        }
     }
 }
 
