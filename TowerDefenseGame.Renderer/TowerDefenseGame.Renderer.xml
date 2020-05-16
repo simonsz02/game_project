@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>TowerDefenseGame.Renderer</name>
+    </assembly>
+    <members>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetEnemies">
+            <summary>
+            Draw all enemies
+            </summary>
+            <param name="dg"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.AddProjectileDrawing(System.Windows.Media.DrawingGroup)">
+            <summary>
+            Draw all projectiles
+            </summary>
+            <param name="dg"></param>
+        </member>
+    </members>
+</doc>
