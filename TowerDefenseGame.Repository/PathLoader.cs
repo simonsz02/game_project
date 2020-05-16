@@ -5,8 +5,15 @@ using System.Windows;
 
 namespace TowerDefenseGame.Repository
 {
+    /// <summary>
+    /// Handles the file containing the path
+    /// </summary>
     public class PathLoader
     {
+        /// <summary>
+        /// Reads the file containing the path
+        /// </summary>
+        /// <returns>List of points representing the path</returns>
         public static List<Point> ReadPathFile()
         {
             var list = new List<Point>();

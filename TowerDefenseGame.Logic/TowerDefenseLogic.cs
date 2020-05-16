@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using TowerDefenseGame.Model;
 using TowerDefenseGame.Model.Abstracts;
@@ -12,6 +9,9 @@ using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame.Logic
 {
+    /// <summary>
+    /// Contains the logic that drives the game
+    /// </summary>
     [Serializable]
     public class TowerDefenseLogic
     {
@@ -21,7 +21,7 @@ namespace TowerDefenseGame.Logic
         public static Random rnd = new Random();
 
         /// <summary>
-        /// Debuging flag
+        /// Debug mode flag
         /// </summary>
         public bool debug = false;
 
@@ -30,8 +30,17 @@ namespace TowerDefenseGame.Logic
         /// </summary>
         public int baseTickSpeed = 40;
         #region finishing the game
+        /// <summary>
+        /// Counts spawned enemies
+        /// </summary>
         public int enemyCounter = 0;
+        /// <summary>
+        /// Counts players actual health
+        /// </summary>
         public int playerHealth;
+        /// <summary>
+        /// Action that finishes the game, saves player score and loads the menu
+        /// </summary>
         [NonSerialized]
         public Action finishGame;
         #endregion
@@ -152,18 +161,10 @@ namespace TowerDefenseGame.Logic
             }
             deleteEnemies = new List<Enemy>();
         }
-<<<<<<< HEAD
         /// <summary>
         /// Puts new enemy on the gamefield
         /// </summary>
-        /// <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
-=======
-
-        /// <summary>
-        /// Creating new enemies
-        /// </summary>
-        /// <param name="raiseSpawnSpeed"></param>
->>>>>>> DevSimon
+        /// <param name="raiseSpawnSpeed">An action that shortens the spawntimer interval</param>
         /// <returns></returns>
         public int SpawnNewEnemy(Action raiseSpawnSpeed)
         {
