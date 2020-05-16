@@ -53,6 +53,7 @@ namespace TowerDefenseGame.Logic
         /// Constructor of the logic class
         /// </summary>
         /// <param name="model"></param>
+        /// <param name="staticPath">for testing purposes</param>
         public TowerDefenseLogic(TowerDefenseModel model, bool staticPath = false)
         {
             this.model = model;
@@ -64,7 +65,6 @@ namespace TowerDefenseGame.Logic
         /// </summary>
         /// <param name="model"></param>
         /// <param name="userName">Name of the player</param>
-        /// <param name="staticPath">for testing purposes</param>
         public TowerDefenseLogic(TowerDefenseModel model, string userName)
         {
             this.model = model;
@@ -375,6 +375,12 @@ namespace TowerDefenseGame.Logic
             return OperationHasFailed;
         }
 
+        /// <summary>
+        /// Creates new tower on given position and an own timer
+        /// </summary>
+        /// <param name="mousePos">position of the new tower</param>
+        /// <param name="timer">shot timer</param>
+        /// <returns>returns true if placement happend</returns>
         private bool AddTower(Point mousePos, System.Windows.Threading.DispatcherTimer timer)
         {
             bool OperationHasFailed = false;
@@ -402,7 +408,11 @@ namespace TowerDefenseGame.Logic
 
             return OperationHasFailed;
         }
-
+        /// <summary>
+        /// Upgrades tower if possible
+        /// </summary>
+        /// <param name="choosenTower">The entity that needs to be upgraded</param>
+        /// <returns></returns>
         private bool UpgradeTower(Tower choosenTower)
         {
             bool OperationHasFailed = false;
@@ -440,6 +450,11 @@ namespace TowerDefenseGame.Logic
             return OperationIsFailed;
         }
 
+        /// <summary>
+        /// Returns a tower entity if there is one on the specific tile
+        /// </summary>
+        /// <param name="mousePos">the specific point</param>
+        /// <returns>Tower Entity</returns>
         private Tower ExistsTower(Point mousePos)
         {
             Tower founded = null;
@@ -532,6 +547,10 @@ namespace TowerDefenseGame.Logic
             return new Point(tile.X * model.TileSize + model.TileSize / 2,
                               tile.Y * model.TileSize + model.TileSize / 2);
         }
+        /// <summary>
+        /// Sets the path based on the datacontainer of the repository
+        /// </summary>
+        /// <param name="path">matrix representing the path</param>
         private void SetPath(bool[,] path)
         {
             foreach (Point p in PathLoader.ReadPathFile())
@@ -539,6 +558,11 @@ namespace TowerDefenseGame.Logic
                 path[(int)p.X, (int)p.Y] = true;
             }
         }
+        /// <summary>
+        /// Sets the path based on static data in the function
+        /// Built for testing purposes
+        /// </summary>
+        /// <param name="path">matrix representing the path</param>
         private void SetPathStatic(bool[,] path)
         {
             path[0, 4] = true;

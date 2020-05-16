@@ -24,6 +24,9 @@ namespace TowerDefenseGame
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// Initialization
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
