@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TowerDefenseGame.Model
 {
+    /// <summary>
+    /// MenuModel constructor
+    /// </summary>
     public class MenuModel
     {
         public double GameWidth { get; set; }
