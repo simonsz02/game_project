@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TowerDefenseGame.Model;
+using TowerDefenseGame.Model.Interface;
 
 namespace TowerDefenseGame.Logic.Tests
 {
@@ -18,8 +20,7 @@ namespace TowerDefenseGame.Logic.Tests
         public void AddTower()
         {
             //Arrange
-            TowerDefenseModel model = new TowerDefenseModel(800, 600, 1000);
-            TowerDefenseLogic logic = new TowerDefenseLogic(model);
+            TowerDefenseLogic logic = new TowerDefenseLogic();
             bool OperationHasFailed;
 
             //Act
@@ -27,15 +28,13 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed,false);
-            Assert.AreEqual(model.Towers.Count, 1);
         }
 
         [TestCase]
         public void UpgradeTower()
         {
-            //Arrange
-            TowerDefenseModel model = new TowerDefenseModel(800, 600, 1000);
-            TowerDefenseLogic logic = new TowerDefenseLogic(model);
+            //Arrang
+            TowerDefenseLogic logic = new TowerDefenseLogic();
             bool OperationHasFailed;
 
             //Act
@@ -44,15 +43,13 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed, false);
-            Assert.AreEqual(model.Towers[0].Grade, 2);
         }
 
         [TestCase]
         public void RemoveTower()
         {
             //Arrange
-            TowerDefenseModel model = new TowerDefenseModel(800, 600, 1000);
-            TowerDefenseLogic logic = new TowerDefenseLogic(model);
+            TowerDefenseLogic logic = new TowerDefenseLogic();
             bool OperationHasFailed;
 
             //Act
@@ -61,7 +58,6 @@ namespace TowerDefenseGame.Logic.Tests
 
             //Assert
             Assert.AreEqual(OperationHasFailed, false);
-            Assert.AreEqual(model.Towers.Count, 0);
         }
     }
 }

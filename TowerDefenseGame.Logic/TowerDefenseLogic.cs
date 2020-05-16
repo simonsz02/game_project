@@ -152,18 +152,10 @@ namespace TowerDefenseGame.Logic
             }
             deleteEnemies = new List<Enemy>();
         }
-<<<<<<< HEAD
         /// <summary>
         /// Puts new enemy on the gamefield
         /// </summary>
         /// <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
-=======
-
-        /// <summary>
-        /// Creating new enemies
-        /// </summary>
-        /// <param name="raiseSpawnSpeed"></param>
->>>>>>> DevSimon
         /// <returns></returns>
         public int SpawnNewEnemy(Action raiseSpawnSpeed)
         {
