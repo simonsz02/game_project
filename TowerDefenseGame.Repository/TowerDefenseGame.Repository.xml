@@ -4,5 +4,38 @@
         <name>TowerDefenseGame.Repository</name>
     </assembly>
     <members>
+        <member name="T:TowerDefenseGame.Repository.PathLoader">
+            <summary>
+            Handles the file containing the path
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.PathLoader.ReadPathFile">
+            <summary>
+            Reads the file containing the path
+            </summary>
+            <returns>List of points representing the path</returns>
+        </member>
+        <member name="T:TowerDefenseGame.Repository.SerializationAsBinary">
+            <summary>
+            Handles serialization
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.SerializationAsBinary.Export``1(System.String,``0,System.Boolean)">
+            <summary>
+            Exports the model into a file
+            </summary>
+            <typeparam name="T">type of model</typeparam>
+            <param name="filePath">path of file</param>
+            <param name="objectToWrite">type of model</param>
+            <param name="append">Append or overwrite</param>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.SerializationAsBinary.Import``1(System.String)">
+            <summary>
+            Imports the model from a binary file
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="filePath">path of the file</param>
+            <returns>returns a "model" type result</returns>
+        </member>
     </members>
 </doc>
