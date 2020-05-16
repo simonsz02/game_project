@@ -18,10 +18,10 @@ namespace TowerDefenseGame.Logic.Tests
         {
             //Arrange
             TowerDefenseModel model = new TowerDefenseModel(100, 100, coin);
-            TowerDefenseLogic logic = new TowerDefenseLogic(model);
-            Enemy enemy = new Enemy(0, 0, 1, 1, 1, 0, new Point(0, 0), 0);
+            TowerDefenseLogic logic = new TowerDefenseLogic(model,true);
+            Enemy enemy = new Enemy(10, 10, 10, 10, 1, 0, new Point(10, 10), 10);
             model.Enemies.Add(enemy);
-            Missile missile = new Missile(0, 0, 1, 1, 1000, 1000, DamageType.fire, enemy);
+            Missile missile = new Missile(11, 11, 11, 11, 1000, 1000, DamageType.fire, enemy);
             model.Projectiles.Add(missile);
 
             //Act

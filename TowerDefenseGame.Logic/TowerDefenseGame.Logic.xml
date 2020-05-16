@@ -39,7 +39,7 @@
             Action that finishes the game, saves player score and loads the menu
             </summary>
         </member>
-        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.#ctor(TowerDefenseGame.Model.TowerDefenseModel)">
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.#ctor(TowerDefenseGame.Model.TowerDefenseModel,System.Boolean)">
             <summary>
             Constructor of the logic class
             </summary>
@@ -51,14 +51,16 @@
             </summary>
             <param name="model"></param>
             <param name="userName">Name of the player</param>
+            <param name="staticPath">for testing purposes</param>
         </member>
-        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.InitModel">
+        <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.InitModel(System.Boolean)">
             <summary>
             A -100-as paraméter arra szolgál, hogy lefoglaljunk 
             egy minimum 100, maximum a szélesség 5%-a pixel 
             széles sávot oldalt a menünek!
             Nilván szebb lenne paraméterbe tenni
             </summary>
+            <param name="staticPath">for testing purposes</param>
         </member>
         <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveEnemies(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy})">
             <summary>
