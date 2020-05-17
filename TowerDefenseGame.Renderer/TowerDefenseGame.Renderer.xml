@@ -4,17 +4,107 @@
         <name>TowerDefenseGame.Renderer</name>
     </assembly>
     <members>
+        <member name="T:TowerDefenseGame.Renderer.MenuRenderer">
+            <summary>
+            Draws the Main menu
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Renderer.MenuRenderer.MenuItems">
+            <summary>
+            Array of the menu items
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Renderer.MenuRenderer.showHighScoreList">
+            <summary>
+            If it is true, it shows the highscore list
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.MenuRenderer.#ctor(TowerDefenseGame.Model.MenuModel)">
+            <summary>
+            Constructor of the Menu Renderer
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.MenuRenderer.BuildDrawing">
+            <summary>
+            Draws menu items
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:TowerDefenseGame.Renderer.TowerDefenseRenderer">
+            <summary>
+            Draws the Game items on the screen
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.#ctor(TowerDefenseGame.Model.TowerDefenseModel)">
+            <summary>
+            Constructor of the Renderer
+            </summary>
+            <param name="model"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.BuildDrawing">
+            <summary>
+            Gets back all the game items that will be drawn
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetCastle">
+            <summary>
+            Returns the castle tiles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.ShowWinAnimation">
+            <summary>
+            Animation when player wins
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.ShowLostAnimation">
+            <summary>
+            Animation when player loses
+            </summary>
+        </member>
         <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetEnemies">
             <summary>
             Draw all enemies
             </summary>
-            <param name="dg"></param>
         </member>
         <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.AddProjectileDrawing(System.Windows.Media.DrawingGroup)">
             <summary>
             Draw all projectiles
             </summary>
             <param name="dg"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetBackground">
+            <summary>
+            Returns the background
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetFields">
+            <summary>
+            Returns the fields
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetTowers">
+            <summary>
+            Returns the existing towers drawings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Renderer.TowerDefenseRenderer.GetBrush(System.String,System.Boolean)">
+            <summary>
+            Returns the image from the cache or the StreamSource
+            </summary>
+            <param name="image"></param>
+            <param name="IsTiled"></param>
+            <returns></returns>
+        </member>
+        <member name="T:TowerDefenseGame.Renderer.TransformBitmap">
+            <summary>
+            
+            </summary>
         </member>
     </members>
 </doc>

@@ -30,6 +30,11 @@
             MainWindow
             </summary>
         </member>
+        <member name="M:TowerDefenseGame.MainWindow.#ctor">
+            <summary>
+            Initialization
+            </summary>
+        </member>
         <member name="M:TowerDefenseGame.MainWindow.MainWindow_Closing(System.Object,System.ComponentModel.CancelEventArgs)">
             <summary>
             If the window is closed during a game, its state will be saved

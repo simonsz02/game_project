@@ -252,7 +252,7 @@ namespace TowerDefenseGame.Logic
                     p.GetTarget(model.Enemies);
                 }
             }
-            /// Remove projectiles that hit their target
+            //Remove projectiles that hit their target
             foreach (Projectile del in delete)
             {
                 projList.Remove(del);

@@ -7,6 +7,9 @@ using TowerDefenseGame.Model.Abstracts;
 
 namespace TowerDefenseGame.Model.GameItems
 {
+    /// <summary>
+    /// Class of the tower selector rectangulars 
+    /// </summary>
     [Serializable]
     public class TowerSelectorRect : GameItem
     {

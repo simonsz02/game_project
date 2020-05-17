@@ -9,6 +9,9 @@ using System.Windows.Interop;
 
 namespace TowerDefenseGame.Renderer
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class TransformBitmap
     {
         /*
