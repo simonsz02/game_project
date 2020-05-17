@@ -4,6 +4,45 @@
         <name>TowerDefenseGame.Model</name>
     </assembly>
     <members>
+        <member name="T:TowerDefenseGame.Model.Abstracts.GameItem">
+            <summary>
+            Top class of the game items hierarchy
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.Abstracts.GameItem.area">
+            <summary>
+            Store the area of the object
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.GameItem.Area">
+            <summary>
+            Returns the area of the game item
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.GameItem.Centre">
+            <summary>
+            Returns the coordinates of center of the game item
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.GameItem.Location">
+            <summary>
+            Returns the location of the game item
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.GameItem.#ctor(System.Double,System.Double,System.Double,System.Double)">
+            <summary>
+            Constructor of the GameItem class
+            </summary>
+            <param name="x">X coordinate of the game item</param>
+            <param name="y">Y coordinate of the game item</param>
+            <param name="w">Width of the game item</param>
+            <param name="h">Height of the game item</param>
+        </member>
+        <member name="T:TowerDefenseGame.Model.Abstracts.MovingGameItem">
+            <summary>
+            Class of the game items which move
+            </summary>
+        </member>
         <member name="P:TowerDefenseGame.Model.Abstracts.MovingGameItem.Movement">
             <summary>
             Change of distance pixel!
@@ -24,14 +63,98 @@
             Previous position TILE!
             </summary>
         </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.MovingGameItem.#ctor(System.Double,System.Double,System.Double,System.Double,System.Windows.Point,System.Double)">
+            <summary>
+            Constructor of the MovingGameItem class
+            </summary>
+            <param name="x">X coordinate of the game item</param>
+            <param name="y">Y coordinate of the game item</param>
+            <param name="w">Width of the game item</param>
+            <param name="h">Height of the game item</param>
+            <param name="d">Destination of the moving game item</param>
+            <param name="m">Movement pixels/tick</param>
+        </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.MovingGameItem.SetXY(System.Double,System.Double)">
+            <summary>
+            Set the X and Y coordinates of the moving game item
+            </summary>
+            <param name="x">X coordinate of the game item</param>
+            <param name="y">Y coordinate of the game item</param>
+        </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.MovingGameItem.SetXY(System.Windows.Point)">
+            <summary>
+            Set the X and Y coordinates of the moving game item by a point
+            </summary>
+            <param name="p">point that give the its coordinates</param>
+        </member>
+        <member name="T:TowerDefenseGame.Model.Abstracts.Projectile">
+            <summary>
+            Projectile class of the MovingGameItem class
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.Projectile.Target">
+            <summary>
+            Enemy that the projectile aims to reach
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.Projectile.Damage">
+            <summary>
+            Volume of the damage caused by the projectile
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.Abstracts.Projectile.TypeOfDamage">
+            <summary>
+            Type of the damage the projecile has
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.Projectile.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32,System.Int32,TowerDefenseGame.Model.DamageType,TowerDefenseGame.Model.GameItems.Enemy)">
+            <summary>
+            Constuctor of the projectile class
+            </summary>
+            <param name="x">X coordinate of the projectile</param>
+            <param name="y">Y coordinate of the projectile</param>
+            <param name="w">Width of the projectile</param>
+            <param name="h">Height of the projectile</param>
+            <param name="m">Movement pixels/tick</param>
+            <param name="d">Initial destination</param>
+            <param name="dt">Damage typeof the projectile</param>
+            <param name="t">Target of the projectile</param>
+        </member>
         <member name="M:TowerDefenseGame.Model.Abstracts.Projectile.GetTarget(System.Collections.Generic.List{TowerDefenseGame.Model.GameItems.Enemy})">
             <summary>
             Get nearest target
             </summary>
             <param name="targetList"></param>
         </member>
+        <member name="M:TowerDefenseGame.Model.Abstracts.Projectile.CauseDamage(TowerDefenseGame.Model.GameItems.Enemy,System.Action{TowerDefenseGame.Model.GameItems.Enemy},TowerDefenseGame.Model.DamageType)">
+            <summary>
+            Decrease the health of the target enemy
+            </summary>
+            <param name="enemy">Target enemy</param>
+            <param name="die">Die action</param>
+            <param name="dt">Damage type the projectile has</param>
+            <returns></returns>
+        </member>
+        <member name="T:TowerDefenseGame.Model.GameItems.Enemy">
+            <summary>
+            Enemy class of the MovingGameItem class
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Enemy.Health">
+            <summary>
+            Represents the survival abiltiy of the unit
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Enemy.Armor">
+            <summary>
+            Represents the damage mitigation ability of the unit
+            </summary>
+        </member>
         <member name="P:TowerDefenseGame.Model.GameItems.Enemy.Reward">
+            <summary>
+            Represents the reward the player gets after killing the given enemy. 
             The reward depends on how fast and healthy the killed enemy was
+            </summary>
         </member>
         <member name="M:TowerDefenseGame.Model.GameItems.Enemy.#ctor(System.Double,System.Double,System.Double,System.Double,System.Double,System.Double,System.Windows.Point,System.Double)">
             <summary>
@@ -55,6 +178,24 @@
             <param name="die">death handler</param>
             <returns>Boolean value true if the units health is over 0, false if not</returns>
         </member>
+        <member name="T:TowerDefenseGame.Model.GameItems.Missile">
+            <summary>
+            Missile class of the Projectile class
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Missile.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32,System.Int32,TowerDefenseGame.Model.DamageType,TowerDefenseGame.Model.GameItems.Enemy)">
+            <summary>
+            Constructor of the Missile class
+            </summary>
+            <param name="x">position X coordinate</param>
+            <param name="y">position Y coordinate</param>
+            <param name="w">width of unit pixels</param>
+            <param name="h">height of unit in pixels</param>
+            <param name="m">Movement pixels/tick</param>
+            <param name="d">Initial destination</param>
+            <param name="dt">Damage type of the missile</param>
+            <param name="t">Target enemy</param>
+        </member>
         <member name="M:TowerDefenseGame.Model.GameItems.Missile.CauseDamage(TowerDefenseGame.Model.GameItems.Enemy,System.Action{TowerDefenseGame.Model.GameItems.Enemy},TowerDefenseGame.Model.DamageType)">
             <summary>
             Do damage. A missile causes splash damage in radius of tileSize
@@ -63,6 +204,108 @@
             <param name="die"></param>
             <param name="dmgtype">Type of damage</param>
             <returns>Returns true if the health of the target is above 0, false if not</returns>
+        </member>
+        <member name="T:TowerDefenseGame.Model.GameItems.RocketTower">
+            <summary>
+            Rocket class of the tower class
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.RocketTower.#ctor(System.Double,System.Double,System.Double,System.Double,System.Action{System.Double,System.Double,System.Double,System.Double,System.Int32,System.Int32,TowerDefenseGame.Model.DamageType,TowerDefenseGame.Model.GameItems.Enemy},System.Windows.Threading.DispatcherTimer,TowerDefenseGame.Model.DamageType,System.Int32)">
+            <summary>
+            Constructor of the Rocket class
+            </summary>
+            <param name="x">position X coordinate</param>
+            <param name="y">position Y coordinate</param>
+            <param name="w">width of unit pixels</param>
+            <param name="h">height of unit pixels</param>
+            <param name="L">Creates the projectile object</param>
+            <param name="timer">Time interval the tower shoots</param>
+            <param name="dt">Damage type of the rocket tower</param>
+            <param name="price">Price of the rocket tower</param>
+        </member>
+        <member name="T:TowerDefenseGame.Model.GameItems.Tower">
+            <summary>
+            Top class of the tower hierarchy
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.GameItems.Tower.price">
+            <summary>
+            Store the price of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.Armour">
+            <summary>
+            Armour of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.SelfHealing">
+            <summary>
+            Self healing skill volume of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.Range">
+            <summary>
+            Range in pixel where the tower can shoots an enemy
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.TypeOfDamage">
+            <summary>
+            Damage Type of the tower
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.GameItems.Tower.target">
+            <summary>
+            Stores the target of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.Target">
+            <summary>
+            Returns and sets the target of the tower
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.GameItems.Tower.grade">
+            <summary>
+            Stores the grade of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.Grade">
+            <summary>
+            Returns and sets the target of the tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.Tower.Price">
+            <summary>
+            Returns the price of the tower
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.GameItems.Tower.LoadGun">
+            <summary>
+            Creates the projectile object
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Tower.#ctor(System.Double,System.Double,System.Double,System.Double,System.Action{System.Double,System.Double,System.Double,System.Double,System.Int32,System.Int32,TowerDefenseGame.Model.DamageType,TowerDefenseGame.Model.GameItems.Enemy},System.Windows.Threading.DispatcherTimer,TowerDefenseGame.Model.DamageType)">
+            <summary>
+            Constructor of the tower class
+            </summary>
+            <param name="x">position X coordinate</param>
+            <param name="y">position Y coordinate</param>
+            <param name="w">width of unit pixels</param>
+            <param name="h">height of unit pixels</param>
+            <param name="L">Creates the projectile object</param>
+            <param name="timer">Time interval the tower shoots</param>
+            <param name="dt">Damage type of the tower</param>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Tower.Timer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            Shoot event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.Tower.Boom">
+            <summary>
+            Shoot if the enemy within the range and still alive
+            </summary>
         </member>
         <member name="M:TowerDefenseGame.Model.IEnemy.ReceiveDamage(System.Double,TowerDefenseGame.Model.DamageType,System.Action{TowerDefenseGame.Model.GameItems.Enemy})">
             <summary>
@@ -74,6 +317,46 @@
         <member name="T:TowerDefenseGame.Model.MenuModel">
             <summary>
             MenuModel constructor
+            </summary>
+        </member>
+        <member name="T:TowerDefenseGame.Model.DamageType">
+            <summary>
+            Damage types
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.physical">
+            <summary>
+            physical damage type
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.poison">
+            <summary>
+            poison damage type
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.fire">
+            <summary>
+            fire damage type
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.frost">
+            <summary>
+            frost damage type
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.air">
+            <summary>
+            air damage type
+            </summary>
+        </member>
+        <member name="F:TowerDefenseGame.Model.DamageType.earth">
+            <summary>
+            air damage type
+            </summary>
+        </member>
+        <member name="T:TowerDefenseGame.Model.TowerDefenseModel">
+            <summary>
+            Class of the game items
             </summary>
         </member>
         <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Enemies">
@@ -118,8 +401,31 @@
         </member>
         <member name="P:TowerDefenseGame.Model.TowerDefenseModel.TileSize">
             <summary>
-            
+            size of the tile
             </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.EntryPoint">
+            <summary>
+            entry pont where the enemies enter the game area
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.ExitPoint">
+            <summary>
+            exit pont where the enemies leave the game area
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Coins">
+            <summary>
+            coins with the player can buy tower
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.TowerDefenseModel.#ctor(System.Double,System.Double,System.Int32)">
+            <summary>
+            Constructor of the model class
+            </summary>
+            <param name="w">width of the screen</param>
+            <param name="h">height of the screen</param>
+            <param name="c">initial coins</param>
         </member>
     </members>
 </doc>

@@ -10,6 +10,9 @@ using TowerDefenseGame.Model.Interface;
 
 namespace TowerDefenseGame.Model.GameItems
 {
+    /// <summary>
+    /// Enemy class of the MovingGameItem class
+    /// </summary>
     [Serializable]
     public class Enemy : MovingGameItem, IEnemy
     {
@@ -18,22 +21,29 @@ namespace TowerDefenseGame.Model.GameItems
         double armor;
         int reward;
 
-        //Represents the survival abiltiy of the unit
+        /// <summary>
+        /// Represents the survival abiltiy of the unit
+        /// </summary>
         public double Health
         {
             get { return health; }
             set { health = value; }
         }
 
-        //Represents the damage mitigation ability of the unit
+        /// <summary>
+        /// Represents the damage mitigation ability of the unit
+        /// </summary>
         public double Armor
         {
             get { return armor; }
             set { armor = value; }
         }
 
-        ////Represents the reward the player gets after killing the given enemy. 
-        ///The reward depends on how fast and healthy the killed enemy was
+
+        /// <summary>
+        /// Represents the reward the player gets after killing the given enemy. 
+        /// The reward depends on how fast and healthy the killed enemy was
+        /// </summary>
         public int Reward
         {
             get { return reward; }

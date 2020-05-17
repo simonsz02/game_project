@@ -13,6 +13,9 @@ using TowerDefenseGame.Logic;
 
 namespace TowerDefenseGame.Renderer
 {
+    /// <summary>
+    /// Draws the Game items on the screen
+    /// </summary>
     public class TowerDefenseRenderer
     {
         TowerDefenseModel model;
@@ -28,10 +31,19 @@ namespace TowerDefenseGame.Renderer
         Drawing oldEnemies;
         Drawing oldSelectors;
 
+        /// <summary>
+        /// Constructor of the Renderer
+        /// </summary>
+        /// <param name="model"></param>
         public TowerDefenseRenderer(TowerDefenseModel model)
         {
             this.model = model;
         }
+
+        /// <summary>
+        /// Gets back all the game items that will be drawn
+        /// </summary>
+        /// <returns></returns>
         public Drawing BuildDrawing()
         {
             DrawingGroup dg = new DrawingGroup();
@@ -183,6 +195,10 @@ namespace TowerDefenseGame.Renderer
             return text;
         }
 
+        /// <summary>
+        /// Returns the castle tiles
+        /// </summary>
+        /// <returns></returns>
         private Drawing GetCastle()
         {
             if (oldCastle==null)
@@ -203,11 +219,17 @@ namespace TowerDefenseGame.Renderer
             return oldCastle;
         }
 
+        /// <summary>
+        /// Animation when player wins
+        /// </summary>
         public void ShowWinAnimation()
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Animation when player loses
+        /// </summary>
         public void ShowLostAnimation()
         {
             throw new NotImplementedException();
@@ -216,7 +238,6 @@ namespace TowerDefenseGame.Renderer
         /// <summary>
         /// Draw all enemies
         /// </summary>
-        /// <param name="dg"></param>
         private Drawing GetEnemies()
         {
 
@@ -293,6 +314,11 @@ namespace TowerDefenseGame.Renderer
                 dg.Children.Add(projGeo);
             }
         }
+
+        /// <summary>
+        /// Returns the background
+        /// </summary>
+        /// <returns></returns>
         private Drawing GetBackground()
         {
             if (oldBackground == null)
@@ -303,6 +329,11 @@ namespace TowerDefenseGame.Renderer
             return oldBackground;
         }
 
+
+        /// <summary>
+        /// Returns the fields
+        /// </summary>
+        /// <returns></returns>
         private Drawing GetFields()
         {
             if (oldFields == null)
@@ -372,6 +403,10 @@ namespace TowerDefenseGame.Renderer
             return oldPath;
         }        
         
+        /// <summary>
+        /// Returns the existing towers drawings
+        /// </summary>
+        /// <returns></returns>
         private Drawing GetTowers()
         {
             DrawingGroup towers = new DrawingGroup();
@@ -398,6 +433,12 @@ namespace TowerDefenseGame.Renderer
             return oldTowers;
         }
 
+        /// <summary>
+        /// Returns the image from the cache or the StreamSource
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="IsTiled"></param>
+        /// <returns></returns>
         private Brush GetBrush(string image, bool IsTiled)
         {
             if (imageBrushCache.ContainsKey(image))

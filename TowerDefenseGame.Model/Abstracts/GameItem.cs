@@ -7,14 +7,28 @@ using System.Windows;
 
 namespace TowerDefenseGame.Model.Abstracts
 {
+    /// <summary>
+    /// Top class of the game items hierarchy
+    /// </summary>
     [Serializable]
     public abstract class GameItem
     {
+        /// <summary>
+        /// Store the area of the object
+        /// </summary>
         protected Rect area;
+
+        /// <summary>
+        /// Returns the area of the game item
+        /// </summary>
         public Rect Area
         {
             get { return area; }
         }
+
+        /// <summary>
+        /// Returns the coordinates of center of the game item
+        /// </summary>
         public Point Centre
         {
             get
@@ -29,6 +43,9 @@ namespace TowerDefenseGame.Model.Abstracts
             }
         }
 
+        /// <summary>
+        /// Returns the location of the game item
+        /// </summary>
         public Point Location
         {
             get
@@ -40,6 +57,14 @@ namespace TowerDefenseGame.Model.Abstracts
                 area.Location = value;
             }
         }
+
+        /// <summary>
+        /// Constructor of the GameItem class
+        /// </summary>
+        /// <param name="x">X coordinate of the game item</param>
+        /// <param name="y">Y coordinate of the game item</param>
+        /// <param name="w">Width of the game item</param>
+        /// <param name="h">Height of the game item</param>
         public GameItem(double x, double y, double w, double h)
         {
             area = new Rect(x, y, w, h);

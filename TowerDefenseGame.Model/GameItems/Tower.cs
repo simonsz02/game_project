@@ -5,43 +5,91 @@ using TowerDefenseGame.Model.Abstracts;
 
 namespace TowerDefenseGame.Model.GameItems
 {
+    /// <summary>
+    /// Top class of the tower hierarchy
+    /// </summary>
     [Serializable]
     public class Tower : GameItem, ITower
     {
         // Ez a flag jelzi, hogy eltelt-e elég idő egy újabb lövés leadásához
         bool canShot;
+
+        /// <summary>
+        /// Store the price of the tower
+        /// </summary>
         protected int price;
+
+        /// <summary>
+        /// Armour of the tower
+        /// </summary>
         public int Armour { get; set; }
+
+        /// <summary>
+        /// Self healing skill volume of the tower
+        /// </summary>
         public int SelfHealing { get; set; }
-        // Az a pixelben vett távolság, ameddig a torony lőni képes
+
+        /// <summary>
+        /// Range in pixel where the tower can shoots an enemy
+        /// </summary>
         public double Range { get; set; }
-        // Ez határozza meg, hogy miylen típusú sebzést okoz a lőszere
+
+        /// <summary>
+        /// Damage Type of the tower
+        /// </summary>
         DamageType TypeOfDamage { get; set; }
-        // Ez az az ellenség, amire lő a torony
+
+        /// <summary>
+        /// Stores the target of the tower
+        /// </summary>
         Enemy target;
+
+        /// <summary>
+        /// Returns and sets the target of the tower
+        /// </summary>
         public Enemy Target
         {
             get { return target; }
             set { target = value; Boom(); }
         }
 
-        //torony létrehozásakor minden torony egyes szintű
+        /// <summary>
+        /// Stores the grade of the tower
+        /// </summary>
         private int grade;
+
+        /// <summary>
+        /// Returns and sets the target of the tower
+        /// </summary>
         public int Grade
         {
             get { return grade; }
             set { grade = value; }
         }
 
+        /// <summary>
+        /// Returns the price of the tower
+        /// </summary>
         public int Price
         {
             get { return price; }
         }
 
-        // Ez a metódus hozza létre a Projectile típusú objektumot, 
-        // aminek a sebzéstípusa a torony sebzéstípusa lesz
+        /// <summary>
+        /// Creates the projectile object
+        /// </summary>
         Action<double, double, double, double, int, int, DamageType, Enemy> LoadGun;
 
+        /// <summary>
+        /// Constructor of the tower class
+        /// </summary>
+        /// <param name="x">position X coordinate</param>
+        /// <param name="y">position Y coordinate</param>
+        /// <param name="w">width of unit pixels</param>
+        /// <param name="h">height of unit pixels</param>
+        /// <param name="L">Creates the projectile object</param>
+        /// <param name="timer">Time interval the tower shoots</param>
+        /// <param name="dt">Damage type of the tower</param>
         public Tower(double x, double y, double w, double h, Action<double, double, double, double, int, int, DamageType, Enemy>L, DispatcherTimer timer, DamageType dt = DamageType.physical) : base(x, y, w, h)
         {
             target = null;
@@ -52,11 +100,21 @@ namespace TowerDefenseGame.Model.GameItems
             TypeOfDamage = dt;
             grade = 1;
         }
+
+        /// <summary>
+        /// Shoot event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void Timer_Tick(object sender, EventArgs e)
         {
             canShot = true;
             Boom();
         }
+
+        /// <summary>
+        /// Shoot if the enemy within the range and still alive
+        /// </summary>
         private void Boom()
         {
             if (target != null & canShot)

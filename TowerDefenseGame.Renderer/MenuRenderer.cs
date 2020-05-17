@@ -15,19 +15,39 @@ using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame.Renderer
 {
+    /// <summary>
+    /// Draws the Main menu
+    /// </summary>
     public class MenuRenderer
     {
         MenuModel model;
         DrawingGroup dg;
+
+        /// <summary>
+        /// Array of the menu items
+        /// </summary>
         public Drawing[] MenuItems { get; private set; }
+
+        /// <summary>
+        /// If it is true, it shows the highscore list
+        /// </summary>
         public bool showHighScoreList { get; set; }
 
+        /// <summary>
+        /// Constructor of the Menu Renderer
+        /// </summary>
+        /// <param name="model"></param>
         public MenuRenderer(MenuModel model)
         {
             this.model = model;
             MenuItems = new GeometryDrawing[3];
             showHighScoreList = false;
         }
+
+        /// <summary>
+        /// Draws menu items
+        /// </summary>
+        /// <returns></returns>
         public Drawing BuildDrawing()
         {
             dg = new DrawingGroup();
