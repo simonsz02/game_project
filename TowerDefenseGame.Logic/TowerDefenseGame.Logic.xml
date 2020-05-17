@@ -72,7 +72,7 @@
             <summary>
             Puts new enemy on the gamefield
             </summary>
-            <param name="raiseSpawnSpeed">An action that shortens the spawntimer interval</param>
+            <param name="raiseSpawnSpeed">An action that shortens the speeds up spawntimer</param>
             <returns></returns>
         </member>
         <member name="M:TowerDefenseGame.Logic.TowerDefenseLogic.MoveProjectiles(System.Collections.Generic.List{TowerDefenseGame.Model.Abstracts.Projectile})">

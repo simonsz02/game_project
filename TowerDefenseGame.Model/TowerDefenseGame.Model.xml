@@ -71,5 +71,55 @@
             <param name="dam">Value of damage caused to the enemy</param>
             <returns>True if enemy is alive False if not</returns>
         </member>
+        <member name="T:TowerDefenseGame.Model.MenuModel">
+            <summary>
+            MenuModel constructor
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Enemies">
+            <summary>
+            list of the enemies
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Towers">
+            <summary>
+            list of the towers
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Projectiles">
+            <summary>
+            list of the projectiles
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.TowerSelectorRects">
+            <summary>
+            array of the tower selector rectangular
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Fields">
+            <summary>
+            two dimension array of the fields
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.Path">
+            <summary>
+            two dimension array of the path
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.GameWidth">
+            <summary>
+            actual gamewidth
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.GameHeight">
+            <summary>
+            actual gameheight
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.TowerDefenseModel.TileSize">
+            <summary>
+            
+            </summary>
+        </member>
     </members>
 </doc>
