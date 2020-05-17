@@ -202,7 +202,7 @@
             </summary>
             <param name="enemy">The primary target of the damage</param>
             <param name="die"></param>
-            <param name="dmgtype">Type of damage</param>
+            <param name="dt">damage type of the missile</param>
             <returns>Returns true if the health of the target is above 0, false if not</returns>
         </member>
         <member name="T:TowerDefenseGame.Model.GameItems.RocketTower">
@@ -307,17 +307,95 @@
             Shoot if the enemy within the range and still alive
             </summary>
         </member>
+        <member name="T:TowerDefenseGame.Model.GameItems.TowerSelectorRect">
+            <summary>
+            Class of the tower selector rectangulars 
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.TowerSelectorRect.Selected">
+            <summary>
+            Returns or sets true if the given tower was selected
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.TowerSelectorRect.Price">
+            <summary>
+            Price of the selected tower
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.GameItems.TowerSelectorRect.damageType">
+            <summary>
+            Damage type of the selected tower
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.GameItems.TowerSelectorRect.#ctor(System.Double,System.Double,System.Double,System.Double,System.Int32)">
+            <summary>
+            Constructor of the TowerSelectroRect class
+            </summary>
+            <param name="x">position X coordinate</param>
+            <param name="y">position Y coordinate</param>
+            <param name="w">width of unit pixels</param>
+            <param name="h">height of unit pixels</param>
+            <param name="i">the damage type depends on its number</param>
+        </member>
+        <member name="T:TowerDefenseGame.Model.IEnemy">
+            <summary>
+            Interface for the enemies
+            </summary>
+        </member>
         <member name="M:TowerDefenseGame.Model.IEnemy.ReceiveDamage(System.Double,TowerDefenseGame.Model.DamageType,System.Action{TowerDefenseGame.Model.GameItems.Enemy})">
             <summary>
             Handles amount of damage received
             </summary>
-            <param name="dam">Value of damage caused to the enemy</param>
+            <param name="damage">Value of damage caused to the enemy</param>
+            <param name="type">Damage type that the enemy receives</param>
+            <param name="die">Die action</param>
             <returns>True if enemy is alive False if not</returns>
+        </member>
+        <member name="T:TowerDefenseGame.Model.IProjectile">
+            <summary>
+            Interface of the projectile
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.IProjectile.CauseDamage(System.Int32,TowerDefenseGame.Model.IEnemy)">
+            <summary>
+            Damage caused by the projectile
+            </summary>
+            <param name="damage">Value of damage caused to the enemy</param>
+            <param name="enemy">Enemy that receives the damage</param>
+        </member>
+        <member name="T:TowerDefenseGame.Model.ITower">
+            <summary>
+            Interface for the towers
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.ITower.Timer_Tick(System.Object,System.EventArgs)">
+            <summary>
+            Shoot event
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="T:TowerDefenseGame.Model.MenuModel">
             <summary>
             MenuModel constructor
             </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.MenuModel.GameWidth">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Model.MenuModel.GameHeight">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Model.MenuModel.#ctor(System.Double,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="gameWidth"></param>
+            <param name="gameHeight"></param>
         </member>
         <member name="T:TowerDefenseGame.Model.DamageType">
             <summary>

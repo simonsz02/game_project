@@ -101,10 +101,5 @@
             <param name="IsTiled"></param>
             <returns></returns>
         </member>
-        <member name="T:TowerDefenseGame.Renderer.TransformBitmap">
-            <summary>
-            
-            </summary>
-        </member>
     </members>
 </doc>

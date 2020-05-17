@@ -4,6 +4,28 @@
         <name>TowerDefenseGame</name>
     </assembly>
     <members>
+        <member name="T:TowerDefenseGame.TowerDefenseControl">
+            <summary>
+            Class for handling the user interactions
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.TowerDefenseControl.Model">
+            <summary>
+            model property
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.TowerDefenseControl.#ctor(System.String)">
+            <summary>
+            Constructor of the Control class
+            </summary>
+            <param name="userName">Name if the player</param>
+        </member>
+        <member name="M:TowerDefenseGame.TowerDefenseControl.OnRender(System.Windows.Media.DrawingContext)">
+            <summary>
+            Draws the game items
+            </summary>
+            <param name="drawingContext"></param>
+        </member>
         <member name="T:TowerDefenseGame.App">
             <summary>
             Interaction logic for App.xaml
