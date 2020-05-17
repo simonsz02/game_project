@@ -28,7 +28,7 @@ namespace TowerDefenseGame.Model.GameItems
         /// </summary>
         /// <param name="enemy">The primary target of the damage</param>
         /// <param name="die"></param>
-        /// <param name="dmgtype">Type of damage</param>
+        /// <param name="dt">damage type of the missile</param>
         /// <returns>Returns true if the health of the target is above 0, false if not</returns>
         public override bool CauseDamage(Enemy enemy, Action<Enemy> die, DamageType dt)
         {

@@ -14,6 +14,9 @@ using TowerDefenseGame.Repository;
 
 namespace TowerDefenseGame
 {
+    /// <summary>
+    /// Class for handling the user interactions
+    /// </summary>
     public class TowerDefenseControl : FrameworkElement
     {
         TowerDefenseLogic logic;
@@ -28,8 +31,15 @@ namespace TowerDefenseGame
         string userName;
         private bool gameEnd = false;
 
+        /// <summary>
+        /// model property
+        /// </summary>
         public TowerDefenseModel Model { get => model; set => model = value; }
 
+        /// <summary>
+        /// Constructor of the Control class
+        /// </summary>
+        /// <param name="userName">Name if the player</param>
         public TowerDefenseControl(string userName)
         {
             this.userName = userName;
@@ -202,6 +212,11 @@ namespace TowerDefenseGame
         {
             SerializationAsBinary.Export("TowerDefenseLastState" + userName + ".bin", model);
         }
+
+        /// <summary>
+        /// Draws the game items
+        /// </summary>
+        /// <param name="drawingContext"></param>
         protected override void OnRender(DrawingContext drawingContext)
         {
             if (renderer != null) drawingContext.DrawDrawing(renderer.BuildDrawing());

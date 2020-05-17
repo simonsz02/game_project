@@ -4,6 +4,54 @@
         <name>TowerDefenseGame.Repository</name>
     </assembly>
     <members>
+        <member name="T:TowerDefenseGame.Repository.HighScoreHandler">
+            <summary>
+            Class for the Highscore
+            </summary>
+        </member>
+        <member name="T:TowerDefenseGame.Repository.HighScoreHandler.Row">
+            <summary>
+            Row class
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.HighScoreHandler.Row.#ctor(System.String,System.Int32)">
+            <summary>
+            Constructor of the row class
+            </summary>
+            <param name="name">name of the player</param>
+            <param name="score">score the player gets</param>
+        </member>
+        <member name="P:TowerDefenseGame.Repository.HighScoreHandler.Row.Name">
+            <summary>
+            Name property of the player
+            </summary>
+        </member>
+        <member name="P:TowerDefenseGame.Repository.HighScoreHandler.Row.Score">
+            <summary>
+            Score property of the player
+            </summary>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.HighScoreHandler.Row.CompareTo(System.Object)">
+            <summary>
+            CompareTo method
+            </summary>
+            <param name="obj"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.HighScoreHandler.AddRowToHighScoreFile(TowerDefenseGame.Repository.HighScoreHandler.Row,System.IO.FileMode)">
+            <summary>
+            Add row to Highscore file
+            </summary>
+            <param name="r"></param>
+            <param name="fm"></param>
+            <returns></returns>
+        </member>
+        <member name="M:TowerDefenseGame.Repository.HighScoreHandler.ReadHighScoreFile">
+            <summary>
+            Read the Highscore file
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:TowerDefenseGame.Repository.PathLoader">
             <summary>
             Handles the file containing the path

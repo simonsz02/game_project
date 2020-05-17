@@ -7,26 +7,56 @@ using System.Threading.Tasks;
 
 namespace TowerDefenseGame.Repository
 {
+    /// <summary>
+    /// Class for the Highscore
+    /// </summary>
     [Serializable]
     public static class HighScoreHandler
     {
+        /// <summary>
+        /// Row class
+        /// </summary>
         [Serializable]
         public struct Row : IComparable
         {
+            /// <summary>
+            /// Constructor of the row class
+            /// </summary>
+            /// <param name="name">name of the player</param>
+            /// <param name="score">score the player gets</param>
             public Row(string name, int score)
             {
                 Name = name;
                 Score = score;
             }
 
+            /// <summary>
+            /// Name property of the player
+            /// </summary>
             public string Name { get; set; }
+
+            /// <summary>
+            /// Score property of the player
+            /// </summary>
             public int Score { get; set; }
 
+            /// <summary>
+            /// CompareTo method
+            /// </summary>
+            /// <param name="obj"></param>
+            /// <returns></returns>
             public int CompareTo(Object obj)
             {
                 return Score.CompareTo(((Row)obj).Score);
             }
         }
+
+        /// <summary>
+        /// Add row to Highscore file
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="fm"></param>
+        /// <returns></returns>
         public static bool AddRowToHighScoreFile(Row r, FileMode fm = FileMode.Append)
         {
             FileStream fileStream;
@@ -45,6 +75,10 @@ namespace TowerDefenseGame.Repository
             return true;
         }
 
+        /// <summary>
+        /// Read the Highscore file
+        /// </summary>
+        /// <returns></returns>
         public static List<Row> ReadHighScoreFile()
         {
             var list = new List<Row>();
