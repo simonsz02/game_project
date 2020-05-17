@@ -1,0 +1,111 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TowerDefenseGame.Model.Abstracts.GameItem" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAQAAAAE=</HashCode>
+      <FileName>Abstracts\GameItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.Abstracts.MovingGameItem" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABCAAAAAAAAAAACAEAAAAAAgAAAA=</HashCode>
+      <FileName>Abstracts\MovingGameItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.Abstracts.Projectile" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAACAAAABAAAAAAAAACAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Abstracts\Projectile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.GameItems.Enemy" Collapsed="true">
+    <Position X="2.75" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABCAAAAAgAAAAAAAAAAAAAAAAAAAAAEAAAABAAAQg=</HashCode>
+      <FileName>GameItems\Enemy.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TowerDefenseGame.Model.GameItems.Missile" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\Missile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.GameItems.RocketTower" Collapsed="true">
+    <Position X="5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameItems\RocketTower.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.GameItems.Tower" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAARAACABQIAgAACAAAAAIAAAEAQAAAAFAAAA=</HashCode>
+      <FileName>GameItems\Tower.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TowerDefenseGame.Model.GameItems.TowerSelectorRect" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgAQAAAAAAEAAAAAAAAAABAAAAAAAAAgAAAgI=</HashCode>
+      <FileName>GameItems\TowerSelectorRect.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.MenuModel" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MenuModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TowerDefenseGame.Model.TowerDefenseModel" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAQgAAAEgAAAAMAAAAACAAAAAEAAEABABBBAAAAgAA=</HashCode>
+      <FileName>TowerDefenseModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TowerDefenseGame.Model.IEnemy" Collapsed="true">
+    <Position X="9.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IEnemy.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TowerDefenseGame.Model.IProjectile" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IProjectile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TowerDefenseGame.Model.ITower" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\ITower.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TowerDefenseGame.Model.Interface.IGameItem" Collapsed="true">
+    <Position X="11.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAACAAAAAgAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IGameItem.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TowerDefenseGame.Model.DamageType" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAIABAAAAAAAAAAAAAAAAAAAABAACAAAAAQA=</HashCode>
+      <FileName>TowerDefenseModel.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

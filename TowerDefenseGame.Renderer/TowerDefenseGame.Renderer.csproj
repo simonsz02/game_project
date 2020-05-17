@@ -101,6 +101,7 @@
     <EmbeddedResource Include="Image\Castle\s2d0e810.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
